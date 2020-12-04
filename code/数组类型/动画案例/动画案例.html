@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #2c3e50;
+    }
+
+    div {
+      color: #f0932b;
+      font-size: 5em;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    div>span {
+      display: inline-block;
+      position: relative;
+    }
+
+    .changeColor {
+      animation-name: changeColor;
+      animation-duration: 1s;
+      animation-timing-function: linear;
+      animation-iteration-count: 2;
+      animation-direction: alternate;
+    }
+
+    /* 关键帧动画 */
+    @keyframes changeColor {
+      50% {
+        color: #eb4d4b;
+        transform: scale(1.5);
+      }
+
+      to {
+        color: #f0932b;
+        transform: scale(0.5);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div>RainJS</div>
+
+  <script>
+    const div = document.querySelector("div");
+    [...div.textContent].reduce((pre, cur, index) => {
+      // 开始时清空 div 内的内容
+      pre == index && (div.innerHTML = '');
+      const span = document.createElement('span');
+      span.textContent = cur;
+      div.append(span);
+      span.addEventListener('mouseover', function () {
+        this.classList.add('changeColor');
+      });
+      // 动画结束时把动画类删掉
+      span.addEventListener('animationend', function () {
+        this.classList.remove('changeColor');
+      });
+    }, 0);
+  </script>
+</body>
+
+</html>

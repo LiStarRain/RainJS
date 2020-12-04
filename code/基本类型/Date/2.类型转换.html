@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let date = new Date('2020-11-29 10:52:12');
+    // console.log(date * 1);
+    // console.log(Number(date));
+    // console.log(date.valueOf());
+    // console.log(date.getTime());
+
+    // 将时间戳转换为标准日期的方法
+    const params = [2020, 10, 29, 13, 55, 50];
+    const date = new Date(...params);
+    const timeStamp = date.getTime();
+    console.log(timeStamp);
+    console.log(new Date(timeStamp));
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let name = Symbol.for('rain');
+    console.log(Symbol.keyFor(name)); // rain
+    let ame = Symbol('rain');
+    console.log(Symbol.keyFor(ame)); // undefined
+  </script>
+</body>
+
+</html>

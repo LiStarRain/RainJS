@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="http://wasser.net.cn" id="form">
+    <label for="username">用户名：</label>
+    <input type="text" name="username" id="username" />
+    <hr />
+    <input type="checkbox" name="copyright" id="copyright" />
+    <label for="copyright">接受协议</label>
+    <hr />
+    <input type="submit" />
+  </form>
+
+  <script>
+    function query(el) {
+      return document.querySelector(el);
+    }
+    query('#form').addEventListener("submit", function (event) {
+      let username = query('input[name="username"]').value;
+      let copyright = query('input[name="copyright"]').checked;
+      if (!username || !copyright) {
+        alert("请填写用户名并接受协议！");
+        // 阻止默认行为
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+
+</html>

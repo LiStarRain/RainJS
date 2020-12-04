@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const foods = [
+    //   {name: '面包', price: 6},
+    //   {name: '薯片', price: 7},
+    //   {name: '可乐', price: 3}
+    // ];
+    // console.log(foods.map(item => item.name)); // ["面包", "薯片", "可乐"]
+
+    // 为所有网址加上 http://
+    let data = [{
+        url: 'www.bilibili.com',
+        description: '美食网站'
+      },
+      {
+        url: 'wasser.net.cn',
+        description: '个人网站'
+      }
+    ];
+    data = data.map(item => {
+      item.url = 'http://' + item.url;
+      return item;
+    });
+    console.log(data);
+  </script>
+</body>
+
+</html>

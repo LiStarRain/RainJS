@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let n = true ? 1 : 2;
+    // console.log(n); // 1
+    // let m = true ? (1 == true ? 'yes' : 'no') : 'haha';
+    // console.log(m); // yes
+
+    function appendDiv(options = {}) {
+      const div = document.createElement("div");
+      div.style.width = options.width ? options.width : "100px";
+      div.style.height = options.height ? options.height : "100px";
+      div.style.backgroundColor = options.bgColor ? options.bgColor : 'red';
+      document.body.append(div);
+    }
+    appendDiv();
+    appendDiv({
+      width: '200px',
+      height: '200px',
+      bgColor: 'blue'
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const set = new Set(['ame', 'rain']);
+    // console.log(set.keys()); // SetIterator {"ame", "rain"}
+    // console.log(set.values()); // SetIterator {"ame", "rain"}
+    // console.log(set.entries()); // SetIterator {"ame" => "ame", "rain" => "rain"}
+
+    // const set = new Set('ame');
+    // set.forEach((item, key) => console.log(item, key)); // a a m m e e
+
+    // const set = new Set(['rain', 'ame']);
+    // for (const value of set) {
+    //   console.log(value);
+    // }
+
+    const set = new Set(['rain', 'ame']);
+    const iterator = set.values();
+    let result;
+    while (!(result = iterator.next()).done) {
+      console.log(result.value); // rain ame
+    }
+  </script>
+</body>
+
+</html>

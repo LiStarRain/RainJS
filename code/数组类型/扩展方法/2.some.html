@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let words = ['钱', '打'];
+    let message = '我，秦始皇，打钱';
+    let state = words.some(word => message.indexOf(word) > -1);
+    if (state) {
+      console.log("违规，包含敏感词汇");
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const set = new WeakSet();
+    let arr = ['rain', 'ame'];
+    // 添加操作
+    set.add(arr);
+    // 判断集合中是否有指定元素
+    console.log(set.has(arr)); // true
+
+    // 删除操作
+    set.delete(arr);
+    console.log(set.has(arr)); // false
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // var web = 'housunren';
+    // console.log(web);
+    // 解析过程中发现class不能作为变量名，因此没有到执行环节就出错了
+    // let class = 'lsr';
+
+    // var声明的变量具有提升效果
+    // console.log(lsr); // undefined
+    // var lsr = 'lxy';
+
+    // var web = 'houdunren';
+    // function test() {
+    //   if (false) {
+    //     // 注意 var 声明的变量不会添加到块级作用域中
+    //     var web = '豆花米线';
+    //   }
+    //   console.log(web); // undefined
+    // }
+    // test();
+    // console.log(web); // houdunren
+
+    // console.log(lsr);
+    // var lsr = 'lxy';
+    // 为了便于理解，可以将以上代码看成如下解析过程
+    // var lsr;
+    // console.log(lsr);
+    // lsr = 'houdunren';
+
+    console.log(rain); // function rain
+    var rain = 'lsr';
+    console.log(rain); // lsr
+    function rain() {
+      console.log("Hi,I'm Rain!");
+    }
+  </script>
+</body>
+
+</html>

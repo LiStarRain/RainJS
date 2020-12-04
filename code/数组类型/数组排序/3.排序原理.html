@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function sort(array, callback) {
+      // 选出一个最小或者最大值然后再依次换位
+      for (const n in array) {
+        for (const m in array) {
+          if (callback(array[n], array[m]) < 0) {
+            let temp = array[n];
+            array[n] = array[m];
+            array[m] = temp;
+          }
+        }
+      }
+      return arr;
+    }
+    let arr = [1, 3, 12, 3];
+    // 由于传入的arr是引用类型，所以会直接影响到函数外部的arr
+    sort(arr, function (pre, cur) {
+      return cur - pre;
+    });
+    console.log(arr); // [12,3,3,1]
+  </script>
+</body>
+
+</html>

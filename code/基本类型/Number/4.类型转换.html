@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="number" name="num" value="99">
+  <script>
+    let num = document.querySelector("input[name='num']").value;
+    console.log(num + 6); // 996
+    console.log(num * 1 + 6); // 105
+
+    // console.log(Number('1.5ame')); // NaN
+    // console.log(Number('true')); // 1
+    // console.log(Number('100')); // 100
+    // console.log(Number([])); // 0
+    // console.log(Number(['99'])); // 99
+    // console.log(Number([1, 2, 3])); // NaN
+    // console.log(Number(null)); // 0
+    // console.log(Number(undefined)); // NaN
+    // console.log(Number({})); // NaN
+
+    // console.log(parseInt('1.5ame')); // 1
+    // console.log(parseInt('  99ame')); // 99
+    // console.log(parseInt('0xa')); //10
+
+    // console.log(parseFloat(' 99ame')); // 99
+    // console.log(parseFloat("1.11ame")); // 1.11
+  </script>
+</body>
+
+</html>

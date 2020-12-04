@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://cdn.bootcdn.net/ajax/libs/decimal.js/10.2.1/decimal.min.js"></script>
+</head>
+
+<body>
+  <script>
+    let ame = 0.1 + 0.2;
+    console.log(ame); // 0.30000000000000004
+
+    console.log((0.1).toString(2)); //0.0001100110011001100110011001100110011001100110011001101
+    console.log((0.2).toString(2)); // 0.001100110011001100110011001100110011001100110011001101
+
+    // 处理方式
+    console.log((0.1 + 0.2).toFixed(1)); // 0.3
+    console.log(1.0 - 0.9); // 0.09999999999999998
+    console.log((1.0 - 0.9).toFixed(2)); // 0.10
+
+    Number.prototype.add = function (num) {
+      // 取两个操作数中最大的小数位数
+      let n1 = this.toString().split('.')[1].length;
+      let n2 = num.toString().split('.')[1].length;
+
+      // 得到10的n次幂
+      let m = Math.pow(10, Math.max(n1, n2));
+
+      return (this * m + num * m) / m;
+    };
+    console.log((0.1).add(0.2)); // 0.3
+
+    let res = Decimal.add(0.1, 0.2).valueOf();
+    console.log(res); // 0.3
+    console.log(typeof res); // string
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 定义生成器函数
+    function* createNum() {
+      yield 1;
+      yield 2;
+    }
+    // 产生迭代器
+    const iterator = createNum();
+    // 遍历 这里就是语法糖 for/of 的原理
+    let result;
+    while (!(result = iterator.next()).done) {
+      console.log(result.value); // 1 2
+    }
+  </script>
+</body>
+
+</html>

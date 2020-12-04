@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const arr = ['ame', 'rain'];
+    const iterator = arr.entries();
+    let res;
+    while (!(res = iterator.next()).done) {
+      let [key, value] = res.value;
+      console.log(key, value); // 0 "ame" / 1 "rain"
+    }
+    // for/of 语法糖
+    for (const [key, value] of arr.entries()) {
+      console.log(key, value); // 0 "ame" / 1 "rain"
+    }
+  </script>
+</body>
+
+</html>

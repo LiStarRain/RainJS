@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let time = new Date();
+    console.log(
+      `${time.getFullYear()}-${time.getMonth()+1}-${time.getDate()} ${time.getHours()}:${time.getMinutes()}:${time.getSeconds()}`
+    );
+
+    function dateFormat(date, format = 'YYYY-MM-DD HH:mm:ss') {
+      const config = {
+        YYYY: date.getFullYear(),
+        MM: date.getMonth() + 1,
+        DD: date.getDate(),
+        HH: date.getHours(),
+        mm: date.getMinutes(),
+        ss: date.getSeconds()
+      };
+      for (const key in config) {
+        format = format.replace(key, config[key]);
+      }
+      return format;
+    }
+    // console.log(dateFormat(new Date(), 'YYYY年MM月DD日')); // 2020年11月29日
+    console.log(new Date().getTimezoneOffset()); // -400
+    console.log(Date.parse('2020-11-29')); // 1606608000000
+    console.log(new Date().toTimeString()); // 15:03:41 GMT+0800 (中国标准时间)
+    console.log(new Date().toLocaleDateString()); // 2020/11/29
+    console.log(Date.UTC(2020, 10, 29)); // 1606608000000
+    console.log(new Date().valueOf()); //1606633421322
+  </script>
+</body>
+
+</html>

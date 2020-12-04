@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let map = new Map();
+    // map.set('rain', 'ame');
+    // console.log(map.get('rain')); // ame
+    // map.delete('rain');
+    // console.log(map.size); // 0
+
+
+    // 使用clear()方法清除元素
+    const map = new Map();
+    let obj1 = {
+      name: 'rain',
+      age: 22
+    };
+    let obj2 = {
+      name: 'rain',
+      age: 21
+    };
+    map.set(obj1, {
+      title: '好吃懒做的坏东西'
+    });
+    map.set(obj2, {
+      title: '一个普通的上班族'
+    });
+    console.log(map.size); // 2
+    console.log(map.get(obj1).title); // 好吃懒做的坏东西
+    map.clear();
+    console.log(map.size); // 0
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      padding: 20px;
+      width: 100vw;
+      display: flex;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+
+    div {
+      border: 2px solid #ddd;
+      padding: 10px;
+      flex: 1;
+    }
+
+    div:last-of-type {
+      margin-left: -2px;
+    }
+
+    ul {
+      list-style-type: none;
+      display: flex;
+      flex-direction: column;
+      width: 200px;
+    }
+
+    li {
+      height: 30px;
+      border: 2px solid #2ecc71;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      color: #333;
+      transition: 1s;
+    }
+
+    a {
+      text-decoration: none;
+      border-radius: 3px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #2ecc71;
+      color: #fff;
+      cursor: pointer;
+      margin-right: 5px;
+    }
+
+    .remove {
+      border: 2px solid #eee;
+      opacity: 0.8;
+      color: #eee;
+    }
+
+    .remove a {
+      background-color: #eee;
+    }
+
+    p {
+      margin-top: 20px;
+    }
+
+    p span {
+      display: inline-block;
+      background-color: #2ecc71;
+      padding: 5px;
+      color: #fff;
+      margin-right: 10px;
+      border-radius: 5px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <ul>
+      <li><span>高数</span> <a href="javascript:;">+</a></li>
+      <li><span>大物</span> <a href="javascript:;">+</a></li>
+      <li><span>离散数学</span> <a href="javascript:;">+</a></li>
+    </ul>
+  </div>
+  <div>
+    <strong id="count">共选了2门课</strong>
+    <p id="lists"></p>
+  </div>
+
+  <script>
+    class Lesson {
+      constructor() {
+        this.lis = document.querySelectorAll('ul>li');
+        this.countElem = document.getElementById('count');
+        this.listElem = document.getElementById('lists');
+        this.map = new WeakMap();
+      }
+
+      run() {
+        this.lis.forEach(li => {
+          li.querySelector('a').addEventListener('click', event => {
+            const elem = event.target;
+            const state = elem.getAttribute('select');
+            if (state) {
+              elem.removeAttribute('select');
+              this.map.delete(elem.parentElement);
+              elem.innerHTML = '+';
+              elem.parentElement.classList.remove('remove');
+              elem.style.backgroundColor = '#2ecc71';
+            } else {
+              elem.setAttribute('select', true);
+              this.map.set(elem.parentElement, true);
+              elem.innerHTML = '-';
+              elem.parentElement.classList.add('remove');
+              elem.style.backgroundColor = '#e74c3c';
+            }
+            this.render();
+          });
+        });
+      }
+
+      count() {
+        return [...this.lis].reduce((count, item) => {
+          return count += this.map.has(item) ? 1 : 0;
+        }, 0);
+      }
+
+      lists() {
+        return [...this.lis].filter(li => {
+          return this.map.has(li);
+        }).map(li => {
+          return `<span>${li.querySelector('span').innerHTML}</span>`;
+        });
+      }
+
+      render() {
+        this.countElem.innerHTML = `共选了${this.count()}门课程`;
+        this.listElem.innerHTML = this.lists().join('');
+      }
+    }
+
+    new Lesson().run();
+  </script>
+</body>
+
+</html>

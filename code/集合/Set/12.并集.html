@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const set1 = new Set(['rain', 'ame']);
+    const set2 = new Set(['ame', 'apple']);
+    const newSet = new Set([...set1, ...set2]);
+    console.log(newSet); // Set(3) {"rain", "ame", "apple"}
+  </script>
+</body>
+
+</html>

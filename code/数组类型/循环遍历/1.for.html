@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const users = [{
+        name: 'ame',
+        age: 22
+      },
+      {
+        name: 'rain',
+        age: 21
+      }
+    ];
+    for (let i = 0; i < users.length; i++) {
+      users[i] = `姓名：${users[i].name}-年龄：${users[i].age}`;
+    }
+    console.log(users); // ["姓名：ame-年龄：22", "姓名：rain-年龄：21"]
+  </script>
+</body>
+
+</html>

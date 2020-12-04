@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const map = new WeakMap();
+    const arr = ['rain'];
+    // 添加操作
+    map.set(arr, 'ame');
+
+    // 获取元素
+    console.log(map.get(arr)); // amr
+
+    // 删除操作
+    console.log(map.delete(arr)); // true 删除操作
+
+    // 检索判断
+    console.log(map.has(arr)); // false
+  </script>
+</body>
+
+</html>

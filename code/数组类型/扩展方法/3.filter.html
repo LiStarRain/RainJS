@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const goods = [{
+        good: 'iPhoneX',
+        price: 8999,
+        num: 1
+      },
+      {
+        good: 'milk',
+        price: 5,
+        num: 24
+      },
+      {
+        good: 'guitar',
+        price: 9999,
+        num: 1
+      }
+    ];
+    // let highlyGoods = goods.filter(good => {
+    //   return good.price * good.num > 1000;
+    // });
+    // highlyGoods.forEach(item => {
+    //   console.log(item.good); // iPhonX guitar
+    // });
+
+    function except(array, excepts) {
+      const newArray = [];
+      for (const element of array) {
+        if (!excepts.includes(element)) newArray.push(element);
+      }
+      return newArray;
+    }
+    const array = [1, 2, 3, 4];
+    console.log(except(array, [3, 4])); // [1,2]
+  </script>
+</body>
+
+</html>

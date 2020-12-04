@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    ul {
+      list-style: none;
+      width: 200px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    li {
+      height: 30px;
+      border: 2px solid #e67e22;
+      margin-bottom: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-left: 10px;
+      color: #333;
+      transition: 1s;
+    }
+
+    a {
+      text-decoration: none;
+      width: 20px;
+      height: 20px;
+      background-color: #16a085;
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 5px;
+      cursor: pointer;
+    }
+
+    .removed {
+      border: 2px solid #eee;
+      opacity: 0.8;
+      color: #eee;
+    }
+
+    .removed a {
+      background-color: #eee;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>吃饭 <a href="javascript:;">x</a></li>
+    <li>睡觉 <a href="javascript:;">x</a></li>
+    <li>打游戏 <a href="javascript:;">x</a></li>
+  </ul>
+
+  <script>
+    class Todos {
+      constructor() {}
+
+      run() {
+        this.items = document.querySelectorAll('ul>li');
+        this.lists = new WeakSet();
+        this.record();
+        this.addEvent();
+      }
+
+      // 向集合中添加数据
+      record() {
+        // 使用querySelectorALL()得到的是静态NodeList，有forEach()方法
+        this.items.forEach(item => {
+          this.lists.add(item);
+        });
+      }
+
+      // 添加事件
+      addEvent() {
+        this.items.forEach(item => {
+          item.querySelector('a').addEventListener("click", event => {
+            // 检测 WeakSet 中是否存在LI元素
+            const parentElement = event.target.parentElement;
+            if (!this.lists.has(parentElement)) {
+              alert("再点把你手剁了");
+            } else {
+              // 删除后从记录的lists中删除
+              parentElement.classList.add('removed');
+              this.lists.delete(parentElement);
+            }
+          });
+        });
+      }
+    }
+
+    new Todos().run();
+  </script>
+</body>
+
+</html>

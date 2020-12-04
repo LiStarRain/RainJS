@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div desc="一种水果">苹果</div>
+  <div desc="一种饮料">可乐</div>
+
+  <script>
+    const divMap = new Map();
+    const divs = document.querySelectorAll('div');
+
+    divs.forEach(div => {
+      divMap.set(div, {
+        content: div.getAttribute('desc')
+      });
+    });
+    divMap.forEach((config, elem) => {
+      elem.addEventListener('click', (event) => {
+        console.log(divMap.get(event.target).content);
+        console.log(config.content);
+      });
+    });
+  </script>
+</body>
+
+</html>

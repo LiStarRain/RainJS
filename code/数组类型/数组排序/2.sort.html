@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let arr = [3, 2, 1, 11];
+    // arr.sort();
+    // console.log(arr); //[1, 11, 2, 3]
+    // arr.sort(function (pre, cur) {
+    //   return cur - pre;
+    // });
+    // console.log(arr); // [11, 3, 2, 1]
+
+    const data = [{
+        title: '松果弹抖闪电五连鞭',
+        click: 200
+      },
+      {
+        title: '🥧的一下很快啊',
+        click: 199
+      },
+      {
+        title: '不讲武德',
+        click: 3012
+      }
+    ];
+    data.sort(function (pre, cur) {
+      return cur.click - pre.click;
+    });
+    console.log(data);
+  </script>
+</body>
+
+</html>

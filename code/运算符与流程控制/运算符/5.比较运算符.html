@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" name="age" />
+  <span id="msg"></span>
+
+  <script>
+    // 不允许年龄超过90岁
+    const span = document.querySelector("#msg");
+    const input = document.querySelector("input[name='age']");
+    input.addEventListener("keyup", function () {
+      span.innerHTML = this.value > 90 ? '年龄不能超过90岁' : `年龄：${this.value}`;
+    });
+
+    // 关系操作符
+    // console.log(1 > 2); // false
+    // // 比较两个字符串的每个字符的编码值
+    // console.log("AAa" > "ABA");
+    // console.log(1 < '3'); // true
+    // let test = {
+    //   valueOf() {
+    //     return 100;
+    //   }
+    // };
+    // console.log(99 < test); // true
+    // console.log(true < 2); // true
+    // console.log(NaN > 0); // false
+    // console.log(NaN <= 0); // false
+
+    // 相等和全等
+    // console.log(1 == 1); // true
+    // console.log(true == 1); // true
+    // console.log('2' == 2); // true
+    // let test = {
+    //   valueOf: () => 100
+    // };
+    // let test2 = test;
+    // console.log(100 == test); // true
+    // console.log(null == undefined); // true
+    // console.log(0 == NaN); // false
+    // console.log(NaN == NaN); // false
+    // console.log(test2 == test); // true
+
+    // 全等
+    // console.log(1 === 1); // true
+    // console.log(NaN === undefined); // false
+    // let test = {
+    //   valueOf: () => 100
+    // };
+    // console.log(test === 100); // false
+  </script>
+</body>
+
+</html>

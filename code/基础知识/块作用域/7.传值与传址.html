@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 传值
+    let a = 100;
+    let b = a;
+    a = 200;
+    console.log(b); // 100
+
+    // 传址
+    let user1 = {
+      name: 'lsr'
+    };
+    let user2 = user1;
+    user1.name = 'lxy';
+    console.log(user2.name); // lxy
+  </script>
+</body>
+
+</html>

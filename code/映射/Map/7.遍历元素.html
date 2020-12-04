@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const map = new Map([
+      ['rain', 'ame'],
+      ['lsr', 'lxy']
+    ]);
+    // console.log(map.keys()); // MapIterator {"rain", "lsr"}
+    // console.log(map.values()); // MapIterator {"ame", "lxy"}
+    // console.log(map.entries()); //MapIterator {"rain" => "ame", "lsr" => "lxy"}
+
+    // for (const key of map.keys()) {
+    //   console.log(key); // rain lsr
+    // }
+
+    // for (const value of map.values()) {
+    //   console.log(value); // ame lxy
+    // }
+
+    // for (const [key, value] of map) {
+    //   console.log(key, value); // rain ame lsr lxy
+    // }
+
+    map.forEach((value, key) => {
+      console.log(key, value); // rain ame lsr lxy
+    });
+  </script>
+</body>
+
+</html>

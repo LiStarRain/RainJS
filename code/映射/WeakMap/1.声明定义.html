@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>rain</div>
+  <div>ame</div>
+
+  <script>
+    const map = new Map();
+    const divs = document.querySelectorAll('div');
+    divs.forEach(div => {
+      map.set(div, div.innerHTML);
+    });
+    console.log(map); //  {div => "rain", div => "ame"}
+
+    // new WeakMap([
+    //   ['rain', 'ame']
+    // ]); //  Invalid value used as weak map key
+  </script>
+</body>
+
+</html>

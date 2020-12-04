@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const users = ['ame', 'rain', 'lsr'];
+    const keys = users.keys();
+    // console.log(keys.next().value); // 0
+    // console.log(keys.next().value); // 1
+
+    // for (const key of users.keys()) {
+    //   console.log(key); // 0 1 2
+    // }
+
+    let res;
+    while (!(res = keys.next()).done) {
+      console.log(res.value); // 0 1 2
+    }
+  </script>
+</body>
+
+</html>

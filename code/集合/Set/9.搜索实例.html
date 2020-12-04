@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #34495e;
+      flex-direction: column;
+    }
+
+    input {
+      width: 200px;
+      border: 1px solid #e74c3c;
+      outline: none;
+      box-sizing: border-box;
+      padding: 10px;
+    }
+
+    ul {
+      list-style-type: none;
+      width: 200px;
+      padding-top: 20px;
+    }
+
+    ul li {
+      font-size: 18px;
+      color: white;
+      padding: 3px;
+    }
+
+    ul li:nth-of-type(odd) {
+      background-color: #e67e22;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" />
+  <ul></ul>
+
+  <script>
+    let obj = {
+      words: new Set(),
+
+      set keyword(word) {
+        this.words.add(word);
+      },
+
+      show() {
+        const ul = document.querySelector('ul');
+        ul.innerHTML = '';
+        this.words.forEach(word => {
+          ul.innerHTML += `<li>${word}</li>`;
+        });
+      }
+    };
+    document.querySelector('input').addEventListener('blur', function () {
+      obj.keyword = this.value;
+      obj.show();
+    });
+  </script>
+</body>
+
+</html>

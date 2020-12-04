@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+  <script>
+    // let lessons = [{
+    //     title: '我想吃炸鸡',
+    //     author: 'ame'
+    //   },
+    //   {
+    //     title: '啤酒和炸鸡',
+    //     author: 'rain'
+    //   },
+    //   {
+    //     title: '炸鸡真好吃',
+    //     author: 'lsr'
+    //   }
+    // ];
+
+    // function links(strings, ...values) {
+    //   return strings.map((str, index) => {
+    //     return (str + (values[index] ? values[index].replace(/炸鸡/, $1 =>
+    //         `<a href='http://bilibili.com'>${$1}</a>`) :
+    //       ''));
+    //   }).join('');
+    // }
+
+    // function template() {
+    //   return `<ul>
+    //     ${lessons.map(item => links `<li>${item.author}：${item.title}</li>`).join('')}
+    //   </ul>`;
+    // }
+    // document.body.innerHTML = template();
+
+    let lesson = 'css';
+    let name = 'ame';
+    tag `一个叫${name}的人在学习${lesson}`;
+
+    function tag(strings, ...values) {
+      console.log(strings); // ["一个叫","的人在学习",""]
+      console.log(values); // ["ame","css"]
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function eat(...args) {
+      console.log(args);
+    }
+    eat('苹果', '菠萝', '西瓜'); // ["苹果", "菠萝", "西瓜"]
+
+    function play(game, ...args) {
+      console.log(game, args); // computer (2) ["ps4", "switch"]
+      console.log(...args); // ps4 switch
+    }
+    play('computer', 'ps4', 'switch');
+  </script>
+</body>
+
+</html>

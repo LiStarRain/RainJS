@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let a = ['汉堡', '可乐'];
+    let b = ['炸鸡', '米线', ...a];
+    console.log(b); // ["炸鸡", "米线", "汉堡", "可乐"]
+    console.log(...a); // 汉堡 可乐
+  </script>
+</body>
+
+</html>

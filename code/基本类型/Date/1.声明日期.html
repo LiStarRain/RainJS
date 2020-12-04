@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 获取当前的日期时间
+    // let now = new Date();
+    // console.log(now);
+    // console.log(typeof now); // object
+    // console.log(now * 1); // 获取时间戳（据1970年1月1日午夜至现在的毫秒数）
+    // console.log(Date());
+    // console.log(typeof Date()); // string
+    // console.log(Date.now());
+
+    // 计算代码执行时间
+    // const start = Date.now();
+    // for (let i = 0; i < 10000000; i++) {}
+    // const end = Date.now();
+    // console.log(end - start);
+
+    // 当然也可以使用控制台来进行测试
+    // console.time('testFor');
+    // for (let i = 0; i < 10000000; i++) {}
+    // console.timeEnd('testFor');
+
+    // 根据指定的日期与时间来定义日期对象
+    let now = new Date("2020-11-29 10:40:11");
+    console.log(now); //Sun Nov 29 2020 10:40:11 GMT+0800 (中国标准时间)
+    // 月份从0开始算，0 对应 1月份
+    now = new Date(2020, 10, 29, 10, 42, 32);
+    console.log(now); // Sun Nov 29 2020 10:42:32 GMT+0800 (中国标准时间)
+
+    let info = [2020, 10, 29, 10, 46, 29];
+    let date = new Date(...info);
+    console.dir(date); // Sun Nov 29 2020 10:46:29 GMT+0800 (中国标准时间)
+  </script>
+</body>
+
+</html>

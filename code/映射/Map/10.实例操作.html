@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="#" onsubmit="return post()">
+    <label for="agreement">接受协议</label>
+    <input type="checkbox" message="请接受协议" name="agreement" id="agreement">
+    <label for="student">我是学生</label>
+    <input type="checkbox" message="网站只对学生开放" name="student" id="student">
+    <input type="submit">
+  </form>
+
+  <script>
+    function post() {
+      const map = new Map();
+      const inputs = document.querySelectorAll('input[message]');
+      // 存储数据
+      inputs.forEach(input => {
+        map.set(input, {
+          message: input.getAttribute('message'),
+          status: input.checked
+        });
+      });
+      // 遍历Map数据
+      return [...map].every(([item, config]) => {
+        config.status || alert(config.message);
+        return config.status;
+      });
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: purple;
+      transition: all 1s;
+    }
+
+    div:last-of-type {
+      background-color: red;
+    }
+
+    .hide {
+      opacity: 0;
+      /* display: none; */
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+  <div></div>
+
+  <!-- <button message="啤酒">click me</button>
+  <button message="炸鸡">click me</button> -->
+
+
+  <script>
+    const divs = document.querySelectorAll("div");
+    [...divs].map(div => {
+      div.addEventListener("click", (e) => {
+        e.target.classList.toggle('hide');
+      });
+      div.addEventListener("transitionend", function () {
+        this.style.display = 'none';
+      });
+    });
+
+    // let btns = document.querySelectorAll('button[message]');
+    // console.log(btns); // NodeList(2) [button, button] 包含length属性
+    // Array.from(btns, item => {
+    //   item.addEventListener("click", (event) => {
+    //     event.target.textContent = event.target.getAttribute('message');
+    //     event.target.style.cssText = 'background-color: red; color: #fff';
+    //   });
+    // });
+
+    // let str = '牛头人';
+    // console.log(Array.from(str)); // ["牛", "头", "人"]
+    // console.log(Array.from(str, item => item + '!')); //  ["牛!", "头!", "人!"]
+
+    // 将对象转换成数组
+    // let users = {
+    //   "0": 'ame',
+    //   1: 'lsr',
+    //   length: 2
+    // }
+    // console.log(Array.from(users)); // ["ame", "lsr"]
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="password" name="password" />
+  <span></span>
+
+  <script>
+    const input = document.querySelector("[name='password']");
+    const span = document.querySelector("span");
+    input.addEventListener("keyup", function () {
+      let length = this.value.length;
+      let msg;
+      if (length > 10) {
+        msg = '你的密码牛牛牛！';
+      } else if (length > 6) {
+        msg = '密码强度高';
+      } else {
+        msg = '垃圾密码';
+      }
+      span.innerHTML = msg;
+    });
+  </script>
+</body>
+
+</html>

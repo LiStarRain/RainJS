@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // "use strict";
+    // var public = 'lsr';
+
+    // 不允许参数重名
+    // function test(name, name) {} //Duplicate parameter name not allowed in this context
+
+    // function strict() {
+    //   "use strict";
+    //   return "严格模式";
+    // }
+
+    // function noStrict() {
+    //   return "正常模式";
+    // }
+
+    // 防止全局设置严格模式对其他没有使用严格模式文件的影响，可以将代码放在一个自执行函数中
+    (function () {
+      "use strict";
+      let name = 'lsr';
+      console.log(name);
+    })();
+  </script>
+</body>
+
+</html>

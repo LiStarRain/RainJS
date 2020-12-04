@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const foods = ['apple', 'hamburger'];
+    // for (const value of foods) {
+    //   console.log(value); // apple hamburger
+    // }
+
+    // 使用数组的迭代器
+    // const foods = ['apple', 'hamburger'];
+    // const iterator = foods.entries();
+    // let value1 = iterator.next(); // {value: Array(2), done: false}
+    // console.log(value1.value); // [0,"apple"]
+    // let value2 = iterator.next();
+    // console.log(value2.value); // [1,hamburger]
+
+    // const foods = ['炸鸡', '薯条'];
+    // for (const [index, value] of foods.entries()) {
+    //   console.log(index, value);
+    // }
+
+    // 取数组中的最大值
+    function arrayMax(array) {
+      let max = array[0];
+      for (const elm of array) {
+        max = max > elm ? max : elm;
+      }
+      return max
+    }
+    console.log(arrayMax([2, 31, 4, 1, 2, 1])); // 31
+  </script>
+</body>
+
+</html>

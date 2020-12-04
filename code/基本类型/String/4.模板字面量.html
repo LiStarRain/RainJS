@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let name = 'ame';
+    console.log(`姓名：${name}`); // 姓名：ame
+
+    let url = 'wasser.net.cn';
+    document.write(`网址：
+    ${url}`);
+
+    function show() {
+      return 'hi';
+    }
+    console.log(`${show()}`);
+
+    let users = [{
+      name: 'ame'
+    }, {
+      name: 'lsr'
+    }, {
+      name: 'lxy'
+    }];
+
+    function template() {
+      return `<ul>
+        ${users.map(item => `<li>${item.name}</li>`).join('')}
+        </ul>`;
+    }
+    document.body.innerHTML = template();
+
+    console.log(`'${url}'`);
+  </script>
+</body>
+
+</html>

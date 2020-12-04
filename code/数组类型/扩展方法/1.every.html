@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 查看所有同学的数学成绩是否都及格
+    // const students = [
+    //   {name:'rain',math:100},
+    //   {name: 'ame',math: 59},
+    //   {name: 'lsr', math: 65}
+    // ];
+    // const result = students.every(item => item >= 60);
+    // console.log(result); // false
+
+    // 标题的关键词检查
+    let words = ['ame', '吃'];
+    let title = 'ame在吃烤鸡腿';
+    let state = words.every(word => {
+      return title.indexOf(word) > -1;
+    });
+    if (!state) {
+      console.log("标题必须包含所有关键词");
+    }
+    console.log(state); // true
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let ame = [];
+    let lsr = {};
+    console.log(ame instanceof Array); // true
+    console.log(lsr instanceof Array); // false
+
+    let c = [1, 2, 3];
+    console.log(c instanceof Array); // true
+
+    let d = {
+      name: 'lsr'
+    };
+    console.log(d instanceof Object); // true
+
+    function User() {}
+    console.log(new User() instanceof User); // true
+  </script>
+</body>
+
+</html>

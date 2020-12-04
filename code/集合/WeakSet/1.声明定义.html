@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let set1 = new WeakSet(['ame', 'rain']); // Invalid value used in weak set
+    // let set2 = new WeakSet('ame'); // Invalid value used in weak set
+
+    let set1 = new WeakSet([
+      ["ame"],
+      ["rain"]
+    ]);
+    console.log(set1); // WeakSet {Array(1), Array(1)}
+  </script>
+</body>
+
+</html>

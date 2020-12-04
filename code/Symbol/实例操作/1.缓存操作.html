@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 解决在保存数据时由于名称相同而造成的耦合覆盖问题
+    class Cache {
+      static data = {};
+      static set(name, value) {
+        this.data[name] = value;
+      }
+      static get(name) {
+        return this.data[name];
+      }
+    }
+    let user = {
+      name: 'ame',
+      key: Symbol('名字')
+    };
+    let cart = {
+      name: '购物车',
+      key: Symbol('购物车')
+    };
+    Cache.set(user.key, user.name);
+    Cache.set(cart.key, cart.name);
+    console.log(Cache.get(user.key)); // ame
+  </script>
+</body>
+
+</html>

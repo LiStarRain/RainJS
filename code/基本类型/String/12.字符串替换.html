@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const content = '多喝热水';
+    // let message = content.replace("热水", "岩浆");
+    // console.log(message); //多喝岩浆
+
+    // let str = '2020/11/28';
+    // console.log(str.replace(/\//ig, '-')); // 2020-11-28
+
+    // 生成关键词链接
+    const words = ['优惠券', '买东西'];
+    const content = '我喜欢抢优惠券但是不买东西';
+    const text = words.reduce((pre, word) => {
+      return pre.replace(word, `<a href='?word=${word}'>${word}</a>`);
+    }, content);
+    document.body.innerHTML = text;
+
+    let message = "你吃了吗，我吃了";
+    let res = message.replace(/吃/g, () => '睡');
+    console.log(res); //你睡了吗，我睡了
+  </script>
+</body>
+
+</html>

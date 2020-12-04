@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li>1</li>
+    <li>2</li>
+  </ul>
+
+  <script>
+    const lis = document.querySelectorAll("li");
+    for (const li of lis) {
+      li.addEventListener("click", function () {
+        console.log(this.textContent);
+      });
+    }
+
+    let arr = [1, 2, 3, 4, 5];
+    for (const value of arr) {
+      console.log(value);
+    }
+
+    const users = ['ame', 'lsr', 'lxy'];
+    for (const [key, value] of users.entries()) {
+      console.log(key, value);
+    }
+  </script>
+</body>
+
+</html>

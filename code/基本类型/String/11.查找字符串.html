@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 从字符串首开始查询字符串位置
+    console.log('amea'.indexOf('a')); //  0
+    console.log('amea'.indexOf('a', 1)); //  3
+
+    // 从字符串结尾开始搜索字符串位置
+    console.log('apple'.lastIndexOf("p")); // 2
+    console.log("apple".lastIndexOf("p", 1)); // 1
+
+    // search()方法
+    let content = '我困了，想睡觉';
+    console.log(content.search("睡")); // 5
+    console.log(content.search("a")); // -1
+    console.log(content.search(/我/)); // 0
+
+    // includes()方法
+    console.log("我倦了".includes("了", 1)); // true
+    console.log("我倦了".includes("哈")); // false
+
+    // startWith() 方法
+    console.log("rain".startsWith("r")); // true
+    console.log("rain".startsWith("r", 1)); // false
+
+    // endsWith() 方法
+    console.log("Ame".endsWith("m", 2)); // true 注意区间一般都是左开右闭
+    console.log("Ame".endsWith('e')); // true
+
+    // 示例
+    const words = ["厕所", "手机"];
+    const text = "我喜欢边上厕所边玩手机";
+    const status = words.some(word => text.includes(word));
+    console.log(status); // true
+  </script>
+</body>
+
+</html>

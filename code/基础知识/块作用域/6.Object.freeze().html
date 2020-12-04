@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    "use strict";
+    const INFO = {
+      url: "http://wasser.net.cn",
+      port: 8080
+    };
+    let name = 1;
+    // 冻结变量
+    Object.freeze(INFO);
+    INFO.port = 3000; // Cannot assign to read only property 'port' of object 
+    // console.log(INFO);
+  </script>
+</body>
+
+</html>

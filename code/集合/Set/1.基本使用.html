@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 对象的键名最终都会转换为字符串
+    // let obj = {
+    //   1: 'ame',
+    //   '1': 'rain'
+    // };
+    // console.log(obj); // {1: "rain"}
+
+    // 使用引用类型的值作为对象属性的键时，会自动将它转换为字符串后使用
+    // let obj = {
+    //   1: 'ame',
+    //   '1': 'rain'
+    // };
+    // let ame = {
+    //   [obj]: '牛头人'
+    // };
+    // console.table(ame);
+    // console.log(ame[obj.toString()]); // 牛头人
+    // console.log(obj.toString()); // [object Object]
+    // console.log(ame["[object Object]"]); // 牛头人
+
+    // 使用数组来初始化集合数据
+    // let ame = new Set([1, 2, 3, 4, 1]);
+    // console.log(ame); // Set(4) {1, 2, 3, 4}
+
+    严格类型约束
+    let set = new Set();
+    set.add('1');
+    set.add(1);
+    console.log(set); // Set(2) {"1", 1}
+  </script>
+</body>
+
+</html>

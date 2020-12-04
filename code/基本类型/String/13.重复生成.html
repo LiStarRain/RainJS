@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 重复生成
+    function star(num = 3) {
+      return '*'.repeat(num)
+    }
+    console.log(star()); //***
+
+    let phone = '13000000111';
+    console.log(phone.slice(0, 3) + '*'.repeat(phone.length - 6) + phone.slice(-3)); // 130*****111
+  </script>
+</body>
+
+</html>

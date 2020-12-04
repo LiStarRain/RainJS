@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let users = [{
+    //     name: 'lsr',
+    //     age: 22
+    //   },
+    //   {
+    //     name: 'ame',
+    //     age: 21
+    //   },
+    //   {
+    //     name: 'lxy',
+    //     age: 90
+    //   }
+    // ];
+    // document.write(`
+    //   <table border = '1' width='100%' align = 'center'>
+    //     <thead><tr><th>姓名</th><th>年龄</th></thead>
+    //     <tbody>
+    // `);
+    // for (const key in users) {
+    //   document.write(`
+    //     <tr>
+    //       <td>${users[key].name}</td>
+    //       <td>${users[key].age}</td>
+    //     </tr>
+    //   `);
+    // }
+    // document.write('</tbody></table>');
+
+    let user = {
+      name: 'lsr',
+      age: 22
+    };
+    for (const key in user) {
+      // 注意for-in 会遍历原型链
+      if (user.hasOwnProperty(key)) {
+        console.log(user[key]);
+      }
+    }
+
+    for (const name in window) {
+      console.log(name);
+    }
+  </script>
+</body>
+
+</html>

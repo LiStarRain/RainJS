@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let rain = Symbol("my name");
+    let ame = Symbol("my name");
+    // 获取描述参数
+    console.log(rain.description); // my name
+    // 值唯一
+    console.log(rain == ame); // false
+    console.log(rain); // Symbol(my name)
+    // 将 Symbol 转换成字符串
+    console.log(rain.toString()); // Symbol(my name)
+  </script>
+</body>
+
+</html>

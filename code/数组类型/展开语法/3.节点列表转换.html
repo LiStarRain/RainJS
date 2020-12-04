@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <button message="吃">click me</button>
+  <button message="不吃">click me</button> -->
+  <ul>
+    <li class="fruits">西瓜</li>
+    <li class="others">鸡腿</li>
+    <li class="others">薯片</li>
+    <li class="fruits">橘子</li>
+  </ul>
+  <button type="button" target="fruits">水果</button>
+
+  <script>
+    const ul = document.querySelector('ul');
+    const lis = document.querySelectorAll('li');
+    const btn = document.querySelector('button');
+    const targetClass = btn.getAttribute('target');
+    btn.addEventListener('click', function () {
+      // 将NodeList转化为数组
+      const newData = [...lis].filter(li => {
+        return li.classList.contains(targetClass);
+      });
+      ul.innerHTML = '';
+      ul.append(...newData);
+      this.disabled = true;
+    });
+
+    // 借用数组的原型方法
+    const filtedData = Array.prototype.filter.call(lis, item => {
+      if (item.classList.contains(targetClass)) {
+        return item;
+      }
+    });
+    filtedData.forEach(item => {
+      console.log(item);
+    });
+    // const btns = document.querySelectorAll("button");
+    // btns.map(item => {
+    //   console.log(item); // TypeError: btns.map is not a function
+    // });
+  </script>
+</body>
+
+</html>

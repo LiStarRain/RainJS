@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let arr = [1, 2, 3, 4, 5];
+
+    // function find(array, callback) {
+    //   for (const value of array) {
+    //     if (callback(value)) return value;
+    //   }
+    //   return undefined;
+    // }
+    // let res = find(arr, function (value) {
+    //   return value % 2 === 1;
+    // });
+    // console.log(res); // 1
+
+    // 下面添加原型方法
+    Array.prototype.findValue = function (callback) {
+      for (const value of this) {
+        if (callback(value)) return value;
+      }
+      return undefined;
+    };
+    let arr = [1, 2, 3, 2, 1];
+    let res = arr.findValue(function (item) {
+      return item % 2 === 0;
+    });
+    console.log(res); // 2
+  </script>
+</body>
+
+</html>

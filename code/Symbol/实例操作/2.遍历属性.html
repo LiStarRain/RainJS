@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let symbol = Symbol('myName');
+    // let obj = {
+    //   name: 'lsr',
+    //   [symbol]: 'haha',
+    // };
+    // for (const key in obj) {
+    //   console.log(key); // name
+    // }
+    // for (const key of Object.keys(obj)) {
+    //   console.log(key); // name
+    // }
+    // for (const value of Object.values(obj)) {
+    //   console.log(value); // lsr
+    // }
+
+    // let ame = {
+    //   [Symbol('姓名')]: 'ame',
+    //   age: Symbol('22')
+    // };
+
+    // for (const key of Object.getOwnPropertySymbols(ame)) {
+    //   console.log(key); // Symbol(姓名)
+    // }
+    // console.log(ame);
+
+    // for (const key of Reflect.ownKeys(ame)) {
+    //   console.log(key); // age Symbol(姓名)
+    // }
+
+    // 如果对象属性不想被遍历，可以使用`Symbol`将它保护起来
+    const site = Symbol('网站名称');
+    class User {
+      constructor(name) {
+        this[site] = 'ame';
+        this.name = name;
+      }
+      getName() {
+        return `${this[site]}----${this.name}`;
+      }
+    }
+    const user1 = new User('丘丘人');
+    console.log(user1.getName());
+    for (const key in user1) {
+      console.log(key); // name
+    }
+  </script>
+</body>
+
+</html>

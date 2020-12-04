@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = ['ame', 'rain'];
+    console.log(arr.push('lsr')); // 3
+    console.log(arr); //  ["ame", "rain", "lsr"]
+
+    let users = ['ame', 'lsr'];
+    let newUsers = ['rain', 'lxy'];
+    console.log(users.push(...newUsers)); // 4
+    console.log(users); // ["ame", "lsr", "rain", "lxy"]
+
+    // 根据区间创建新数组
+    function rangeArray(begin, end) {
+      const array = [];
+      for (let i = begin; i <= end; i++) {
+        array.push(i);
+      }
+      return array;
+    }
+    console.log(rangeArray(2, 5)); // [2,3,4,5]
+  </script>
+</body>
+
+</html>

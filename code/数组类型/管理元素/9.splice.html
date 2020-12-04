@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let arr = [1, 2, 3, 4, 5];
+    // console.log(arr.splice(1, 2)); // [2,3]
+    // console.log(arr); // [1,4,5]
+
+    // 通过修改 length 属性删除最后一个元素
+    // const users = ['ame', 'lsr'];
+    // users.length--;
+    // console.log(users); // ["ame"]
+
+    // 删除元素的同时在该位置添加元素
+    // const foods = ['咖喱鸡', '豆花米线', '拉面'];
+    // console.log(foods.splice(0, 2, '炸薯条', '关东煮')); // ["咖喱鸡", "豆花米线"]
+    // console.log(foods); //["炸薯条", "关东煮", "拉面"]
+
+    // let arr = [1, 2, 3];
+    // console.log(arr.splice(arr.length, 0, 4)); // []
+    // console.log(arr); // [1,2,3,4]
+
+    // let arr = [2, 3, 4, 5];
+    // console.log(arr.splice(0, 0, 0, 1)); // []
+    // console.log(arr); // [0,1,2,3,4,5]
+
+    // 数组位置调整函数
+    function move(arr, before, to) {
+      if (before < 0 || to >= arr.length) {
+        throw new Error("指定位置错误");
+      }
+      const newArray = [...arr];
+      const elm = newArray.splice(before, 1);
+      newArray.splice(to, 1, ...elm);
+      return newArray;
+    }
+    console.log(move([1, 2, 3], 1, 2)); // [1,3,2]
+  </script>
+</body>
+
+</html>

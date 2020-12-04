@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 使用Array构造函数创建数组
+    // console.log(new Array(1, 'ame', true)); // [1, "ame", true]
+    // 字面量形式创建数组
+    // const users = ['ame', [1, 2, 3], true];
+    // console.log(users); // ["ame", Array(3), true]
+    // 多维数组
+    // const array = [
+    //   [1, 2],
+    //   [3, 4]
+    // ];
+    // console.log(array[1][0]); // 3
+
+    // 数组操作
+    // const lessons = ['吃饭', '睡觉', '摸鱼'];
+    // lessons[4] = '没想到吧';
+    // console.log(lessons); // ["吃饭", "睡觉", "摸鱼", undefined, "没想到吧"]
+
+    // const nums = [1, 2, 3, 1, , 31];
+    // console.log(nums.length); // 6
+
+    let users = ['史莱姆', ];
+    console.log(users); // ["史莱姆"]
+    users[1] = '丘丘人';
+    console.log(users); // ["史莱姆", "丘丘人"]
+
+    const foods = ['麦当劳'];
+    foods[3] = '油煸腿';
+    console.log(foods); // ["麦当劳", empty × 2, "油煸腿"]
+    console.log(foods.length); // 4
+
+    // 声明多个空元素的数组
+    let test = new Array(3);
+    console.log(test); // [empty × 3]
+  </script>
+</body>
+
+</html>

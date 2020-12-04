@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const users = [{
+        name: 'ame',
+        age: 22
+      },
+      {
+        name: 'rain',
+        age: 21
+      },
+      {
+        name: 'lsr',
+        age: 100
+      }
+    ];
+    let find = users.find(function (item, index, array) {
+      console.log(item); // {name: "ame", age: 22}
+      console.log(index); // 0
+      console.log(array); // users数组
+      return item.name === 'ame';
+    });
+    console.log(find); // {name: "ame", age: 22}
+  </script>
+</body>
+
+</html>

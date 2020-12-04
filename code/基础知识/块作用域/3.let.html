@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let有块作用域特性
+    // if (true) {
+    //   let web = 'haha',
+    //     name = 'gaga';
+    //   console.log(web); // haha
+    //   console.log(name); // gaga
+    // }
+    // console.log(web); // web is not defined
+
+    // 块作用域的内部可以访问到上层作用域的变量
+    // if (true) {
+    //   let user = 'lsr';
+    //   (function () {
+    //     if (true) {
+    //       console.log(`这是块内访问：${user}`);
+    //     }
+    //   })();
+    // }
+    // console.log(user); // user is not defined
+
+    // 里层作用域可以声明外层作用域的同名变量
+    function run() {
+      let name = 'lsr';
+      if (true) {
+        let name = 'haha';
+        console.log(name); // haha
+      }
+      console.log(name); //lsr
+    }
+    run();
+  </script>
+</body>
+
+</html>

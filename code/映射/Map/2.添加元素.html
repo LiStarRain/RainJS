@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let map = new Map();
+    // let obj = {
+    //   name: 'ame'
+    // };
+    // map.set(obj, 'rain').set('name', 'lsr');
+    // console.log(map); // Map(2) {{…} => "rain", "name" => "lsr"}
+
+    // 使用构造函数 new Map() 创建的原理如下
+    // const map = new Map();
+    // const arr = [
+    //   ['rain', 'ame'],
+    //   ['lsr', 'lxy']
+    // ];
+    // // 解构赋值
+    // arr.forEach(([key, value]) => {
+    //   map.set(key, value);
+    // });
+    // console.log(map); // Map(2) {"rain" => "ame", "lsr" => "lxy"}
+
+    // 对于键是对象的Map。键保存的是内存地址，值相同但内存地址不同的视为两个键
+    let arr = ['rain'];
+    const map = new Map();
+    map.set(arr, 'ame');
+    console.log(map.get(arr)); // 'ame'
+    console.log(map.get(['rain'])); // undefined
+  </script>
+</body>
+
+</html>

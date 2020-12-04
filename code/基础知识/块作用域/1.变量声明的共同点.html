@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 1.全局作用域中定义的变量，可以在函数中使用 （这里相当于产生了个闭包）
+    // var hd = 'hdcms';
+    // function show() {
+    //   return hd;
+    // }
+    // console.log(show());
+
+    // 2.函数中声明的变量，只能在当前函数及其子函数中使用
+    // function test() {
+    //   var web = 'hahaha';
+    //   function show() {
+    //     console.log(web);
+    //   }
+    //   show(); // hahaha
+    //   console.log(web); // hahaha
+    // }
+    // test();
+    // console.log(web); // 全局访问：web is not defined
+
+    // 3.函数中声明的变量就像声明了自己的私有领地，在函数外部是无法访问的
+    var web = 'hahaha';
+
+    function test() {
+      var web = 'web';
+      console.log(web); // web
+    }
+    test();
+    console.log(web); // hahaha
+  </script>
+</body>
+
+</html>

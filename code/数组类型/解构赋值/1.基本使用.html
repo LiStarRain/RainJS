@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 数组使用
+    // let [name, age] = ['ame', 22];
+    // console.log(name, age); // ame 22
+    // function run() {
+    //   return [1, 2];
+    // }
+    // let [a, b] = run();
+    // console.log(a, b); // 1 2
+
+    // let [a, ...b] = [1, 2, 3, 4, 5];
+    // console.log(a); // 1
+    // console.log(b); // [2,3,4,5]
+
+    // 对象使用
+    let {
+      name: myName,
+      age: myAge
+    } = {
+      name: 'ame',
+      age: 22
+    };
+    console.log(myName, myAge); // ame 22
+
+    // let {foods:foods,price:price} = {foods: 'tea',price:18};
+    // 简写为
+    let {
+      foods,
+      price
+    } = {
+      foods: 'tea',
+      price: 18
+    };
+    console.log(foods, price); // tea 18
+
+    // "use strict";
+    // const [...a] = 'ame';
+    // console.log(a); // ['a','m','e']
+
+    // "use strict";
+    // [name, age] = ['ame', 2];
+    // console.log(name, age); //age is not defined
+  </script>
+</body>
+
+</html>

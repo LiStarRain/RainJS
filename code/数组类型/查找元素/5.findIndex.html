@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let arr = [1, 2, 12, 3];
+    // 从前向后查找第一个出现的偶数，返回它的索引值
+    let index = arr.findIndex(value => value % 2 === 0);
+    console.log(`索引：${index}----元素值：${arr[index]}`); // 索引：1----元素值：2
+  </script>
+</body>
+
+</html>

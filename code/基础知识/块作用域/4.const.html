@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 常量不允许赋全新的值
+    // try {
+    //   const URL = 'hahaha.com';
+    //   URL = 'xixixi.com'; // 出错
+    // } catch (error) {
+    //   throw new Error("出错了");
+    // }
+
+    // 改变引用类型的常量的属性值
+    // const INFO = {
+    //   url: 'wasser.net.cn',
+    //   port: '8080'
+    // };
+    // INFO.port = '3000';
+    // console.log(INFO);
+
+    // 在不同作用域中可以重名定义常量
+    const NAME = 'lsr';
+
+    function show() {
+      const NAME = 'hahaha';
+      return NAME;
+    }
+    console.log(show());
+    console.log(NAME);
+  </script>
+</body>
+
+</html>

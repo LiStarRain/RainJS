@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 去除字符串重复
+    console.log([...new Set("amea")].join('')); // ame
+
+    // 数组去重
+    const arr = [1, 2, 3, 2, 1];
+    console.log(...new Set(arr)); // 1,2,3
+  </script>
+</body>
+
+</html>
