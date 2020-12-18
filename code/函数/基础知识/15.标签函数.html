@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function ame(str, ...values) {
+      console.log(str); // ["姓名：", "年龄：", "", raw: Array(3)]
+      console.log(values); // ["rain", 22]
+    }
+    let name = 'rain',
+      age = 22;
+    ame `姓名：${name}年龄：${age}`;
+  </script>
+</body>
+
+</html>

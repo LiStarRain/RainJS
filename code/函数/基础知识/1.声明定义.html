@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // // 函数也是第一类对象
+    // let sum = new Function('num1', 'num2', 'return num1 + num2');
+    // console.log(sum(1, 2)); // 3
+
+    // 函数声明
+    // function sum(num1, num2) {
+    //   return num1 + num2;
+    // }
+    // console.log(sum(1, 2)); // 3
+
+    // 作为对象方法调用
+    // let obj = {
+    //   name: 'ame',
+    //   getName() {
+    //     return this.name;
+    //   }
+    // }
+    // console.log(obj.getName()); // ame
+
+    // 全局函数
+    // console.log(window.screenX); // 2946
+    // function screenX() {
+    //   return '哈哈';
+    // }
+    // console.log(window.screenX()); // 哈哈
+
+    // 函数表达式
+    let screenX = function () {
+      return '哈哈';
+    };
+    console.log(screenX()); // 哈哈
+    console.log(window.screenX); // 2946
+  </script>
+</body>
+
+</html>

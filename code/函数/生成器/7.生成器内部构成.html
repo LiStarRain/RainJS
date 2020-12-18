@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function* FoodGenerator() {
+      yield '炸鸡';
+      yield '薯条';
+    }
+    const foodIterator = FoodGenerator();
+    const result1 = foodIterator.next();
+    console.log(result1); // {value: "炸鸡", done: false}
+    const result2 = foodIterator.next();
+    console.log(result2); // {value: "薯条", done: false}
+    const result3 = foodIterator.next();
+    console.log(result3); // {value: undefined, done: true}
+  </script>
+</body>
+
+</html>

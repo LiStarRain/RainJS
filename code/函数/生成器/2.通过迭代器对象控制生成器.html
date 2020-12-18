@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 定义一个生成器，它能生成一个包含两个武器数据的序列
+    function* FoodGenerator() {
+      yield '可乐';
+      yield '炸鸡';
+    }
+    // 调用生成器得到一个迭代器，从而我们能够控制生成器的执行
+    const foodIterator = FoodGenerator();
+    // 结果为一个对象，其中饱含着一个返回值以及一个指示器告诉我们生成器是否完成了值的生成
+    const result1 = foodIterator.next();
+    console.log(result1); // {value: "可乐", done: false}
+    // 再次调用 next() 方法从生成器中获取一个新的值
+    const result2 = foodIterator.next();
+    console.log(result2.value); // 炸鸡
+    // 当没有可生成的新的值时，生成器的返回值为undefined，done为true，表示完成了值的生成
+    const result3 = foodIterator.next();
+    console.log(result3); // {value: undefined, done: true}
+  </script>
+</body>
+
+</html>

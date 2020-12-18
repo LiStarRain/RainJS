@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="subTree">
+    <form>
+      <input type="text" />
+    </form>
+    <p>Paragraphy</p>
+    <span>Span</span>
+  </div>
+  <script>
+    // function traverseDOM(element, callback) {
+    //   // 用回调函数处理当前节点
+    //   callback(element);
+    //   element = element.firstElementChild;
+    //   while (element) {
+    //     // 遍历每个子树，深度优先
+    //     traverseDOM(element, callback);
+    //     element = element.nextElementSibling;
+    //   }
+    // }
+    // const subTree = document.querySelector('.subTree');
+    // traverseDOM(subTree, function (element) {
+    //   console.log(element.nodeName); // DIV FORM INPUT P SPAN
+    // });
+
+    // 使用生成器遍历DOM树
+    function* DomTraversal(element) {
+      yield element;
+      element = element.firstElementChild;
+      while (element) {
+        yield* DomTraversal(element);
+        element = element.nextElementSibling;
+      }
+    }
+    const subTree = document.getElementsByClassName('subTree')[0];
+    for (let element of DomTraversal(subTree)) {
+      console.log(element.nodeName); // DIV FORM INPUT P SPAN
+    }
+  </script>
+</body>
+
+</html>

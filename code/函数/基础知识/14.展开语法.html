@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let ame = [1, 2, 3];
+    // let [a, b, c] = [...ame];
+    // console.log(a, b, c); // 1 2 3
+    // [...ame] = [4, 5, 6];
+    // console.log(ame); // [4,5,6]
+
+    // 接收任意数量的参数
+    // function test(...args) {
+    //   console.log(args); // [1,2,3]
+    // }
+    // test(1, 2, 3);
+
+    // 接收部分参数
+    // function test(site, ...args) {
+    //   console.log(site, args);
+    // }
+    // test('rain', 1, 2, 3); // rain [1,2,3]
+
+    // 利用点语法进行求和计算
+    // function sum(...params) {
+    //   console.log(params);
+    //   return params.reduce((total, cur) => {
+    //     return total += cur;
+    //   }, 0);
+    // }
+    // console.log(sum(1, 2, 3)); // 6
+
+    // 计算购物车商品折扣
+    function sum(discount = 0, ...prices) {
+      let total = prices.reduce((total, cur) => {
+        return total += cur;
+      }, 0);
+      return total * (1 - discount);
+    }
+    console.log(sum(0.1, 100, 200, 199)); // 440.1
+  </script>
+</body>
+
+</html>

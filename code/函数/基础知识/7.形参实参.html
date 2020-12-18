@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // n1,n2 为形式参数
+    // function sum(n1, n2) {
+    //   return n1 + n2;
+    // }
+    // 参数 1,2 为实际参数
+    // console.log(sum(1, 2)); // 3
+
+    // 形参数量大于实参时，没有传参的形参值为 undefined
+    // function sum(n1, n2) {
+    //   return n1 + n2;
+    // }
+    // console.log(sum(1)); // NaN
+
+    // 实参数量大于形参时，多余的实参将忽略并不会报错
+    function sum(n1, n2) {
+      return n1 + n2;
+    }
+    console.log(sum(1, 2, 3)); // 3
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const store = {
+      nextId: 1,
+      cache: {},
+      add: function (fn) {
+        // 判断函数唯一性
+        if (!fn.id) {
+          // 给函数添加标识符
+          fn.id = this.nextId++;
+          this.cache[fn.id] = fn;
+          return true;
+        }
+        return false;
+      }
+    };
+
+    function show() {
+      console.log('haha');
+    }
+    console.log(store.add(show)); // true
+    console.log(store.add(show)); // false
+  </script>
+</body>
+
+</html>

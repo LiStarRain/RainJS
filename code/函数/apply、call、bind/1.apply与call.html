@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button message="炸鸡腿">button</button>
+  <button message="冰可乐">button</button>
+
+  <script>
+    // function show(title) {
+    //   console.log(`${title + this.name}`);
+    // }
+    // let ame = {
+    //   name: 'ame'
+    // };
+    // let rain = {
+    //   name: 'rain'
+    // };
+    // show.apply(ame, ['嘻嘻']); // 嘻嘻ame
+    // show.call(rain, '哈哈'); // 哈哈ame
+
+    // 使用 call() 方法设置函数上下文
+    // function show() {
+    //   console.log(this.getAttribute('message'));
+    // }
+    // const btns = document.querySelectorAll('button');
+    // for (let i = 0; i < btns.length; i++) {
+    //   btns[i].addEventListener('click', () => show.call(btns[i]));
+    // }
+
+    // 找到数组中的最大值
+    let arr = [1, 2, 3, 4, 5];
+    console.log(Math.max(arr)); // NaN
+    console.log(Math.max(...arr)); // 5
+    console.log(Math.max.apply(Math, arr)); // 5
+  </script>
+</body>
+
+</html>

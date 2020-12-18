@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 函数作为函数调用和作为方法调用的异同点
+    // function whatsMyContext() {
+    //   return this;
+    // }
+    // // console.log(whatsMyContext()); // window
+    // let getMyThis = whatsMyContext;
+    // console.log(getMyThis()); // window 
+    // let ame = {
+    //   name: 'ame',
+    //   getMyThis: whatsMyContext
+    // };
+    // console.log(ame.getMyThis()); // ame对象
+
+    // 方法调用与回调函数结合使用
+    let foods = {
+      brand: '星星超市',
+      goods: ['薯条', '炸鸡腿', '可乐'],
+      show() {
+        // 绑定外层作用域
+        const self = this;
+        return this.goods.map(function (food) {
+          // 该回调函数属于函数调用方式，因此this为window
+          return `${self.brand}-${food}`;
+        });
+      }
+    };
+    console.log(foods.show()); // ["星星超市-薯条", "星星超市-炸鸡腿", "星星超市-可乐"]
+  </script>
+</body>
+
+</html>

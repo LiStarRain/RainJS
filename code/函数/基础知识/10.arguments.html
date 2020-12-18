@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 获得传入实参的确切个数
+    // function test() {
+    //   console.log(arguments.length);
+    // }
+    // test(1, 2, 3); // 3
+
+    // function test(n1, n2) {
+    //   console.log(n1, n2); // 1 2
+    //   console.log(arguments[2]); // 3
+    //   arguments[0] = 100;
+    //   console.log(n1, n2); // 100 2
+    // }
+    // test(1, 2, 3);
+
+    // function test(n1) {
+    //   console.log(n1); // 1
+    //   console.log(arguments[0]); // 1
+    //   n1 = 100;
+    //   console.log(arguments[0]); // 100
+    // }
+    // test(1);
+
+    // function test(n1) {
+    //   console.log('HAHA');
+    //   console.log(arguments.callee.arguments[0]); // 1
+    // }
+    // test(1);
+
+    // function test() {
+    //   console.log('test');
+    //   run();
+    // }
+    // function run() {
+    //   console.log('run');
+    //   console.log(arguments.callee.caller.arguments[0]); // 1
+    // }
+    // test(1, 2, 3);
+
+    // function test(n1) {
+    //   'use strict';
+    //   console.log(n1, arguments[0]); // 1 1
+    //   arguments[0] = 100;
+    //   // 第一个形参的值没有改变
+    //   console.log(n1, arguments[0]); // 1 100
+    // }
+    // test(1);
+
+    function test(...args) {
+      console.log(args); // [1,2,3,4,5]
+    }
+    test(1, 2, 3, 4, 5);
+  </script>
+</body>
+
+</html>

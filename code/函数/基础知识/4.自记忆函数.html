@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function isPrime(num) {
+      // 创建缓存
+      if (!isPrime.answers) {
+        isPrime.answers = {};
+      }
+      if (isPrime.answers[num]) {
+        return isPrime.answers[num];
+      }
+      // 1 不是质数
+      let prime = num != 0 && num != 1;
+      const temp = Math.ceil(num / 2); // 缩小区间
+      // 判断是否是质数（公因式法）
+      for (let i = 2; i <= temp; i++) {
+        if (num % i === 0) {
+          prime = false;
+          break;
+        }
+      }
+      return isPrime.answers[num] = prime;
+    }
+    console.log(isPrime(3));
+    console.log(isPrime(4));
+    console.dir(isPrime);
+  </script>
+</body>
+
+</html>

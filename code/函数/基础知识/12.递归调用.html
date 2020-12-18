@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 阶乘
+    // function factorial(num = 3) {
+    //   return num == 1 ? 1 : num * factorial(num - 1);
+    // }
+    // console.log(factorial()); // 6
+
+    // 累加计算方法
+    // function sum(...nums) {
+    //   return nums.length == 0 ? 0 : nums.pop() + sum(...nums);
+    // }
+    // console.log(sum(1, 2)); // 3
+
+    // 递归打印倒三角
+    // function star(row = 5) {
+    //   if (row == 0) return '';
+    //   document.write('*'.repeat(row) + '<br/>');
+    //   star(--row);
+    // }
+    // star();
+
+    // 使用递归修改课程点击数
+    let lessons = [{
+        title: '高等数学',
+        click: 100
+      },
+      {
+        title: '大学物理',
+        click: 120
+      },
+      {
+        title: '离散数学',
+        click: 39
+      }
+    ];
+
+    function change(lessons, num, i = 0) {
+      if (i === lessons.length) return lessons;
+      lessons[i].click += num;
+      return change(lessonbs, num, ++i);
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    dl {
+      width: 400px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    dt {
+      height: 50px;
+      width: 100%;
+      background-color: #ff7979;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      font-size: 1.5em;
+      color: #fff;
+      border-bottom: 2px solid #333;
+    }
+
+    dd {
+      height: 200px;
+      width: 100%;
+      background-color: #e056fd;
+      height: 200px;
+      text-align: center;
+      font-size: 5em;
+      color: #fff;
+      line-height: 200px;
+    }
+  </style>
+</head>
+
+<body>
+  <dl>
+    <dt>Rain</dt>
+    <dd>1</dd>
+    <dt>ame</dt>
+    <dd hidden="hidden">2</dd>
+  </dl>
+
+  <script>
+    function panel(i) {
+      const dds = document.querySelectorAll('dd');
+      dds.forEach(item => {
+        // 先全部隐藏
+        item.setAttribute('hidden', 'hidden');
+      });
+      // 再显示对应项
+      dds[i].removeAttribute('hidden');
+    }
+    document.querySelectorAll('dt').forEach((dt, i) => {
+      dt.addEventListener('click', () => panel.call(null, i));
+    });
+  </script>
+</body>
+
+</html>

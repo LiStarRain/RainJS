@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function* FoodGenerator() {
+      yield '可乐';
+      yield '炸鸡';
+      yield '薯条';
+    }
+    // 使用 for-of 来循环遍历
+    for (const value of FoodGenerator()) {
+      console.log(value); // 可乐 炸鸡 薯条
+    }
+  </script>
+</body>
+
+</html>

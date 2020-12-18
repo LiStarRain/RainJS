@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button desc="哈哈">click me</button>
+
+  <script>
+    // var name = 'lsr';
+    // let obj = {
+    //   name: 'ame',
+    //   getName() {
+    //     return function () {
+    //       return this.name;
+    //     }
+    //   }
+    // };
+    // console.log(obj.getName()()); // lsr
+
+    // var name = 'lsr';
+    // let obj = {
+    //   name: 'ame',
+    //   getName() {
+    //     return () => {
+    //       return this.name;
+    //     }
+    //   }
+    // };
+    // console.log(obj.getName()()); // ame
+
+    // 事件处理
+    // let dom = {
+    //   name: 'rain',
+    //   bind() {
+    //     const btn = document.querySelector('button');
+    //     btn.addEventListener('click', function () {
+    //       alert(this.getAttribute('desc'));
+    //     });
+    //   }
+    // }
+    // dom.bind(); // 哈哈
+
+    // let dom = {
+    //   name: 'rain',
+    //   bind() {
+    //     const btn = document.querySelector('button');
+    //     btn.addEventListener('click', event => {
+    //       alert(this.name + event.target.getAttribute('desc'));
+    //     });
+    //   }
+    // }
+    // dom.bind(); //rain哈哈
+    let dom = {
+      name: 'rain',
+      handleEvent: function (event) {
+        console.log(this);
+      },
+      bind() {
+        const btn = document.querySelector('button');
+        // 会默认将对象中的 handleEvent 属性作为事件处理函数
+        btn.addEventListener('click', this);
+      }
+    };
+    dom.bind(); // {name: "rain", handleEvent: ƒ, bind: ƒ}
+  </script>
+</body>
+
+</html>

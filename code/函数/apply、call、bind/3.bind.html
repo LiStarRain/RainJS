@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>click me</button>
+
+  <script>
+    // let a = function () {};
+    // let b = a;
+    // console.log(a === b); // true
+    // bind会返回新生成的函数
+    // let c = a.bind();
+    // console.log(a === c); //false
+
+    // 绑定参数注意事项
+    // function test(a, b) {
+    //   return this.f + a + b;
+    // }
+    // // 生成新函数，并将2赋值给形参a
+    // let newFunc = test.bind({
+    //   f: 1
+    // }, 2);
+    // // 1+2+3 3赋值给了b
+    // console.log(newFunc(3)); // 6
+
+    // 在事件中使用 bind() 方法
+    document.querySelector('button').addEventListener('click', function (e) {
+      console.log(e.target.innerHTML + this.msg);
+    }.bind({
+      msg: '哈哈'
+    }));
+  </script>
+</body>
+
+</html>

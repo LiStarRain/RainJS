@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let sum = function (num1, num2) {
+    //   return num1 + num2;
+    // };
+    // console.log(sum instanceof Object); // true
+    // let test = sum;
+    // console.log(test(1, 2)); // 3
+
+    // 函数提升
+    // console.log(show()); // 哈哈
+    // function show() {
+    //   return '哈哈';
+    // }
+
+    console.log(show()); // Cannot access 'show' before initialization
+    let show = function () {
+      return "haha";
+    };
+  </script>
+</body>
+
+</html>

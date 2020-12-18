@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function* FoodGenerator() {
+      yield '炸鸡';
+      yield* DrinkGenerator();
+      yield '薯条';
+    }
+
+    function* DrinkGenerator() {
+      yield '可乐';
+      yield '橙汁';
+    }
+
+    for (const value of FoodGenerator()) {
+      console.log(value); // 炸鸡 可乐 橙汁 薯条
+    }
+
+    const foodIterator = FoodGenerator();
+    let item;
+    while (!(item = foodIterator.next()).done) {
+      console.log(item.value); // 炸鸡 可乐 橙汁 薯条
+    }
+  </script>
+</body>
+
+</html>

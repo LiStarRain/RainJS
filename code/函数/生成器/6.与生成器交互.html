@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function* FoodGenerator(price) {
+    //   // 传递回的值将成为 yield 表达式的返回值，因此 imposter 的值是100
+    //   const imposter = yield(`苹果${price}元一个`);
+    //   yield(`西瓜${imposter}元一个`);
+    // }
+    // // 普通的参数传递
+    // const foodIterator = FoodGenerator(5);
+    // const result1 = foodIterator.next();
+    // console.log(result1.value); // 苹果5元一个
+    // // 将数据作为 next() 方法的参数传递给生成器
+    // const result2 = foodIterator.next(100); // 西瓜100元一个
+    // console.log(result2.value);
+
+    // 利用抛出异常传值
+    function* FoodGenerator() {
+      try {
+        yield '炸鸡';
+        throw new Error('此处的错误将不会发生');
+      } catch (error) {
+        console.log(error); // 调用了迭代器对象的throw方法
+      }
+    }
+    const foodIterator = FoodGenerator();
+    // 从生成器中获取一个值
+    const result1 = foodIterator.next();
+    console.log(result1.value); // 炸鸡
+    // 向生成器抛出一个异常
+    foodIterator.throw('调用了迭代器对象的throw方法');
+  </script>
+</body>
+
+</html>

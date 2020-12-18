@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 通过计算年平均销售额来体验以往默认参数的处理方式
+    // function average(total, year) {
+    //   year = year || 1;
+    //   return Math.round(total / year);
+    // }
+    // console.log(average(2000, 3)); // 667
+
+    // 使用新版本默认参数的方式
+    // function avg(total, year = 1) {
+    //   return Math.round(total / year);
+    // }
+    // console.log(avg(3000, 3)); // 1000
+
+    // 数组排序
+    function sortArray(arr, type = 'asc') {
+      return arr.sort((a, b) => type === 'asc' ? a - b : b - a);
+    }
+    console.log(sortArray([2, 3, 1, 4, 5])); // [1,2,3,4,5]
+    console.log(sortArray([2, 3, 1, 4, 5], type = 'desc')); // [5,4,3,2,1]
+  </script>
+</body>
+
+</html>

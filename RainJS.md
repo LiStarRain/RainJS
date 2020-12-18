@@ -4,7 +4,7 @@
 
 ### 命名规则
 
-1. JavaScript中的变量是弱类型的，它可以保存所有类型的数据，即变量没有类型而值有类型。
+1. JavaScript中的变量是弱类型的解释型语言，它可以保存所有类型的数据，即变量没有类型而值有类型。
 2. 变量名可以以字母、$、下划线开始，后跟字母、数字、下划线
 
 下面都是合法的命名
@@ -72,19 +72,19 @@ console.log(typeof web); // object
 
 #### 注册标识符的过程
 
-JavaScript引擎对代码的处理包括解析和执行两个步骤。在解析过程中会创建与代码结构相关联的词法环境（通俗的来讲就是作用域），并且JavaScript引擎会注册词法环境中所声明的变量和函数。
+JavaScript是解释型语言。JavaScript引擎对代码的处理包括解析和执行两个步骤。在解析过程中会创建与代码结构相关联的词法环境（通俗的来讲就是作用域），并且JavaScript引擎会注册词法环境中所声明的变量和函数，具体步骤如下。
 
-注意：词法环境是解析时创建的，是相应函数或变量创建时候的环境，并不是代码执行时候的环境，执行时仅仅是由于产生了新的执行上下文导致生成了相应的词法环境而已。（相当于解析的时候创建了词法环境的蓝图，执行时按照蓝图盖起了房子）
+注意：词法环境是解析时创建的，是函数或者变量在声明时候的环境，词法环境可以在相应代码执行过程中进行完善或修改。
 
 1. 如果是创建一个函数环境，那么创建形参和函数参数的默认值。如果是非函数环境，则跳过此步骤。
 2. 如果是创建全局或函数环境，就扫描当前代码进行函数声明（不会扫描其他函数的函数体），但是不会扫描函数表达式或者箭头函数。对于所找到的函数声明，将创建函数，并绑定到当前词法环境与函数名相同的标识符上。若该标识符已经存在，那么该标识符的值将被重写。如果是块级作用域，则跳过此步骤。
-3. 扫描当前的代码进行变量声明。在函数或全局环境中，找到所有在当前环境之内、其他函数之外通过<code>var</code>声明的变量，并找到所有在其他函数或代码块之外通过<code>let</code>或者<code>const</code>定义的变量。在块级环境中，仅查找当前代码块中通过<code>let</code>和<code>const</code>定义的变量，若该标识符不存在，进行注册并将其初始化为<code>undefined</code>。若该标识符已经存在，则保留其原来的值。
+3. 扫描当前的代码进行变量声明。在函数或全局环境中，找到所有在当前环境之内、其他函数之外通过<code>var</code>声明的变量，并找到所有在其他函数和代码块之外通过<code>let</code>或者<code>const</code>定义的变量。在块级环境中，仅查找当前代码块中通过<code>let</code>和<code>const</code>定义的变量，若该标识符不存在，进行注册并将其初始化为<code>undefined</code>。若该标识符已经存在，则保留其原来的值。
 
 <img src="./images/注册标识符的过程取决于环境的类型.png" alt="注册标识符的过程取决于环境的类型" style="zoom:75%;" />
 
 <center>注册标识符的过程取决于环境的类型</center>
 
-==注意：==由于用<code>let</code>和<code>const</code>关键字定义的变量存在临时性死区（TDZ），要求用<code>let</code>和<code>const</code>声明的变量必须在人为显式声明后才能使用，因此在声明语句之前是无法读取到用<code>let</code>和<code>const</code>声明的变量的值的。这也就是使用<code>var</code>关键字声明的变量具有提升效果的原因。
+注意：由于用<code>let</code>和<code>const</code>关键字定义的变量存在临时性死区（TDZ），要求用<code>let</code>和<code>const</code>声明的变量必须在人为显式声明后才能使用，因此在声明语句之前是无法读取到用<code>let</code>和<code>const</code>声明的变量的值的。这也就是使用<code>var</code>关键字声明的变量具有提升效果的原因。
 
 下面的代码在解析过程中发现<code>class</code>不能作为变量名，因此没有到执行环节就出错了。
 
@@ -697,13 +697,14 @@ console.log({} % 100); // NaN
 - 如果是+0加+0，则结果是+0
 - 如果是-0加-0，则结果是-0
 - 如果是+0加-0，则结果是+0
+- 如果一个操作数为数值，另一个为对象，则调用对象的`valueOf()`方法并用返回值进行计算，若另一个操作数为布尔值、`null`或`undefined`，则先用`Number()`函数将其转换为数值，然后再进行计算
 
 不过如果有一个操作数为字符串，就要应用如下规则：
 
 - 如果两个操作数都是字符串，则将第二个字符串和第一个连接起来
 - 如果只有一个操作数是字符串，则将另一个操作数转化为字符串，然后再将两个字符串连接起来
 
-如果有一个操作数是对象、数值或布尔值，则调用他们的<code>toString()</code>方法取得相应的字符串值，然后再应用关于前面的字符串规则。对于<code>undefined</code>和<code>null</code>，则分别调用<code>String()</code>函数并取得字符串<code>"undefined"</code>和<code>"null"</code>。
+- 如果另一个操作数是对象、数值或布尔值，则调用他们的<code>toString()</code>方法取得相应的字符串值，然后再应用关于前面的字符串规则。对于<code>undefined</code>和<code>null</code>，则分别调用<code>String()</code>函数并取得字符串<code>"undefined"</code>和<code>"null"</code>。
 
 ```javascript
 console.log(NaN + 100); // NaN
@@ -2848,7 +2849,7 @@ console.log(Array.from(users)); // ["ame", "lsr"]
 
 ### 数组合并
 
-使用展开语法来合并数组相比使用`cancat()`方法来说要更简便，使用`...`可将数组展开为多个值
+使用展开语法来合并数组相比使用`cancat()`方法来说要更简便，使用`...`可将数组中的多个值展开
 
 ```javascript
 let a = ['汉堡', '可乐'];
@@ -3727,7 +3728,7 @@ console.log(arrayMax([2, 31, 4, 1, 2, 1])); // 31
 
 ### for / of 原理
 
-实际上`for/of`只不过是语法糖，其底层原理是通过检测迭代器返回的值中的`done`属性来判断生成器是否完成了值的生成，若没有完成，返回`false`；反之，返回`true`。
+实际上`for/of`只不过是语法糖，其底层原理是通过检测生成器返回的值中的`done`属性来判断生成器是否完成了值的生成，若没有完成，返回`false`；反之，返回`true`。
 
 关于生成器与迭代器在函数章节再做详解。
 
@@ -3942,7 +3943,7 @@ console.log(data);
 
 使用`reduce()`与`reduceRight()`方法可以迭代数组的所有元素,`reduce()`从前开始往后迭代，`reduceRight()`从后往前开始迭代，返回最后迭代完成的结果。
 
-该方法的第一个参数为回调函数，第二个参数为初始值。传入第二个参数时将从传入的初始值开始迭代，不传入第二个参数时将从数组的第一项开始迭代。`reduce()`方法接收初始值，对数组的每个元素执行回调函数，回调函数接收上一次回调结果、当前数组元素、当前数组元素索引以及操作数组作为参数。
+该方法的第一个参数为回调函数，第二个参数为初始值。传入第二个参数时将从数组的第一个元素开始迭代，不传入第二个参数时将从数组的第二项开始迭代。`reduce()`方法接收初始值，对数组的每个元素执行回调函数，回调函数接收上一次回调结果、当前数组元素、当前数组元素索引以及操作数组作为参数。
 
 回调函数的参数说明如下：
 
@@ -5324,3 +5325,1409 @@ setTimeout(() => {
 ```
 
 ![WeakMap实例操作](images/WeakMap实例操作.gif)
+
+# 函数
+
+## 基础知识
+
+函数是将复用的代码块封装起来的模块，在JavaScript中函数还有其他语言所不具有的特性，接下来我们将一起来探讨一下函数的使用技巧。
+
+### 声明定义
+
+在JS中函数也是第一类对象，因为它也是`Function`类创建的实例，因此我们可以把函数当作一个普通对象使用，给它添加属性和方法。
+
+通过`Function`构造函数创建函数对象，`Function`构造函数可以接收任意数量的参数，但最后一个参数始终都被认为是函数体，而前面的参数则被看作新函数的形参。下面的例子方便理解函数也是对象。
+
+```javascript
+// 函数也是第一类对象
+let sum = new Function('num1', 'num2', 'return num1 + num2');
+console.log(sum(1, 2)); // 3
+```
+
+标准语法是使用函数声明来定义函数，函数名作为函数对象的唯一标识符
+
+```javascript
+// 函数声明
+function sum(num1, num2) {
+    return num1 + num2;
+}
+console.log(sum(1, 2)); // 3
+```
+
+除此之外，函数有以下几种调用方式：
+
+- 作为函数直接被调用，如果一个函数没有作为方法、构造函数或者通过`apply()`和`call()`方法调用的话，我们就称之为作为函数被直接调用。通过可以计算得到函数的表达式加上`()`运算符调用一个函数，且被执行的函数表达式不是作为一个对象的属性时，就属于这种调用类型。
+- 作为方法被调用。当一个函数被赋值给一个对象的属性，并且通过对象属性引用的方式调用函数时，函数就会作为对象的方法被调用。
+- 作为构造函数调用。通过在函数调用之前使用关键字`new`可以将函数作为构造函数调用。（构造函数到对象的时候再详细讨论）。
+- 使用`apply()`和`call()`方法调用，可以给函数传入指定的函数上下文。
+
+作为对象的方法调用
+
+```javascript
+// 作为对象方法调用
+let obj = {
+    name: 'ame',
+    getName() {
+        return this.name;
+    }
+}
+console.log(obj.getName()); // ame
+```
+
+全局函数声明时会默认添加到全局`window`对象中作为对象的方法，这并不太好，这有可能会覆盖原生`window`对象中的同名属性，我们以后可以使用模块化来处理
+
+```javascript
+console.log(window.screenX); // 2946
+```
+
+当我们定义了`screenX()`函数后就会覆盖原始的`screenX`属性
+
+```javascript
+function screenX() {
+    return '哈哈';
+}
+console.log(window.screenX()); // 哈哈
+```
+
+可以使用函数表达式来声明函数，函数表达式就是将函数声明作为整个表达式的一部分，使用函数表达式时不会有提升效果（前面讲过），且使用`let/const`赋值的变量不会将其添加到全局对象`window`中
+
+```javascript
+// 函数表达式
+let screenX = function () {
+    return '哈哈';
+};
+console.log(screenX()); // 哈哈
+console.log(window.screenX); // 2946
+```
+
+### 匿名函数
+
+因为函数也是一种特殊类型的对象，所以可以通过赋值来获取指向函数对象的指针，当然指针也可以传递给其他变量，本质上就是将函数声明作为了赋值表达式的一部分，因此语句后也应该以`;`结尾。
+
+下面使用函数表达式匿名函数赋值给变量。
+
+```javascript
+let sum = function (num1, num2) {
+    return num1 + num2;
+};
+console.log(sum instanceof Object); // true
+let test = sum;
+console.log(test(1, 2)); // 3
+```
+
+标准的函数声明具有函数提升效果（原理在这儿：[注册标识符的过程](#注册标识符的过程)）
+
+```javascript
+console.log(show()); // 哈哈
+function show() {
+    return '哈哈';
+}
+```
+
+而使用函数表达式声明的函数没有函数提升效果
+
+```javascript
+console.log(show()); // Cannot access 'show' before initialization
+let show = function () {
+    return "haha";
+};
+```
+
+### 存储函数
+
+存储函数是将函数作为对象灵活使用的一个应用例子。我们可以将函数存储到一个容器中，通过给函数添加一个唯一的标识符属性，我们就可以判断函数是否已经存储过了，这样就能避免重复存储相同的函数。比如我们在管理一个事件发生后需要调用的回调函数的集合，我们在存储这些回调函数时，需要判断哪个函数对于这个集合来说是一个新的函数，哪个函数是已经存在于集合中的；一般来说，我们并不希望存在重复函数，否则一个事件会导致同一个回调函数触发多次。
+
+```javascript
+const store = {
+    nextId: 1,
+    cache: {},
+    add: function (fn) {
+        // 判断函数唯一性
+        if (!fn.id) {
+            // 给函数添加标识符
+            fn.id = this.nextId++;
+            this.cache[fn.id] = fn;
+            return true;
+        }
+        return false;
+    }
+};
+
+function show() {
+    console.log('haha');
+}
+console.log(store.add(show)); // true
+console.log(store.add(show)); // false
+```
+
+### 自记忆函数
+
+顾名思义，自记忆函数能够记住上次计算的结果，当函数计算出结果时就将该结果保存起来，如果之后调用这个函数又传入相同的参数时，自记忆函数将直接返回上次存储的结果，不在重新进行计算。这样当函数计算比较复杂时在一定程度上可以提高函数的性能。
+
+下例是判断一个数是否是质数的自记忆函数
+
+```javascript
+function isPrime(num) {
+    // 创建缓存
+    if (!isPrime.answers) {
+        isPrime.answers = {};
+    }
+    if (isPrime.answers[num]) {
+        return isPrime.answers[num];
+    }
+    // 1 不是质数
+    let prime = num != 0 && num != 1;
+    const temp = Math.ceil(num / 2); // 缩小区间
+    // 判断是否是质数（公因式法）
+    for (let i = 2; i <= temp; i++) {
+        if (num % i === 0) {
+            prime = false;
+            break;
+        }
+    }
+    return isPrime.answers[num] = prime;
+}
+console.log(isPrime(3));
+console.log(isPrime(4));
+console.dir(isPrime);
+```
+
+### 立即执行函数
+
+当想进行函数调用时，我们需要使用一个能够计算得到函数的表达式，其后跟着一对函数调用括号，括号内包含函数的参数。再最基本的函数调用中，我们把求值得到函数的标识符作为左值（如`test()`）。不过用于被`()`调用的表达式不必只是一个简单的标识符，它可以是任何能够求值得到函数的表达式。比如我们首先创建一个函数，然后立即调用这个新创建的函数，这种函数就叫作立即调用函数表达式（IIFE），或者简写为立即函数。
+
+立即函数可以用来定义私有作用域以防止对全局作用域的污染
+
+```javascript
+(function () {
+    function show() {
+        console.log('haha');
+    }
+})();
+show(); // show is not defined
+```
+
+由于函数在执行完毕后会销毁自己的作用域，因此可以发现立即执行函数和块级作用域有一些相似
+
+```javascript
+{
+    let name = 'ame';
+}
+console.log(ame); // ame is not defined
+```
+
+### 函数提升
+
+使用函数声明的方式声明的函数有函数提升效果，再解析过程中，由于它是在注册标识符过程的第二步就已经将函数绑定到词法环境中与函数名相同的标识符上了，如果接下来再声明同名变量的话，则会保留函数声明时绑定的值。因此，函数声明的提升优先级高于使用`var`关键字声明的变量（因为他要到执行赋值语句时才会重新覆盖在词法作用域中的绑定值）。
+
+```javascript
+console.log(ame()); // haha
+var ame = 'rain';
+function ame() {
+    return 'haha';
+}
+console.log(ame); // rain
+```
+
+### 形参实参
+
+形参是在函数声明时设置的参数，实参指在调用函数时传递的参数。
+
+- 形参数量大于实参时，没有传参的形参值为`undefined`
+- 实参数量大于形参时，多余的实参将忽略并不会报错
+
+```javascript
+// n1,n2 为形式参数
+function sum(n1, n2) {
+    return n1 + n2;
+}
+// 参数 1,2 为实际参数
+console.log(sum(1, 2)); // 3
+```
+
+形参数量大于实参时，没有传参的形参值为`undefined`
+
+```javascript
+// 形参数量大于实参时，没有传参的形参值为 undefined
+function sum(n1, n2) {
+    return n1 + n2;
+}
+console.log(sum(1)); // NaN
+```
+
+实参数量大于形参时，多余的实参将忽略并不会报错
+
+```javascript
+// 实参数量大于形参时，多余的实参将忽略并不会报错
+function sum(n1, n2) {
+    return n1 + n2;
+}
+console.log(sum(1, 2, 3)); // 3
+```
+
+### 默认参数
+
+当我们不给形参传值时形参会采用默认值，这样的参数就叫默认参数。
+
+下面通过计算年平均销售额来体验以往默认参数的处理方式
+
+```javascript
+// 通过计算年平均销售额来体验以往默认参数的处理方式
+function average(total, year) {
+    year = year || 1;
+    return Math.round(total / year);
+}
+console.log(average(2000, 3)); // 667
+```
+
+使用新版本的默认参数方式如下
+
+```javascript
+function avg(total, year = 1) {
+    return Math.round(total / year);
+}
+console.log(avg(3000, 3)); // 1000
+```
+
+下面通过排序来体验新版默认参数的处理方式，下例中当不传递`type`参数时使用默认值`asc`
+
+```javascript
+// 数组排序
+function sortArray(arr, type = 'asc') {
+    return arr.sort((a, b) => type === 'asc' ? a - b : b - a);
+}
+console.log(sortArray([2, 3, 1, 4, 5])); // [1,2,3,4,5]
+console.log(sortArray([2, 3, 1, 4, 5], type = 'desc')); // [5,4,3,2,1]
+```
+
+### 函数参数
+
+JS中的函数同时也是`Function`类型的实例对象，因此可以将函数作为参数传递，这也是大多数语言支持的语法规则
+
+```html
+<button>click me</button>
+
+<script>
+    document.querySelector('button').addEventListener('click', function () {
+        alert('哈哈哈哈哈哈');
+    });
+</script>
+```
+
+![函数参数](images/函数参数.gif)
+
+函数可以作为参数传递
+
+```javascript
+// 函数可以作为参数传递
+function filterFun(item) {
+    return item <= 3;
+}
+console.log([1, 3, 5, 7, 9].filter(filterFun)); // [1,3]
+```
+
+### arguments
+
+`arguments`参数是隐式传递给函数的所有参数集合。无论是否有明确定义对应的形参，通过它我们都可以访问到函数的所有参数。注意`arguments`虽然有`length`属性，但他并不是数组，而只是一个类数组对象。
+
+`arguments`对象的`length`属性可以获得传入实参的确切个数。
+
+```javascript
+function test() {
+    console.log(arguments.length);
+}
+test(1, 2, 3); // 3
+```
+
+`arguments`参数可以作为函数参数的别名，例如，如果为`arguments[0]`赋一个新值，那么，同时也会改变第一个形参的值
+
+```javascript
+function test(n1, n2) {
+    console.log(n1, n2); // 1 2
+    console.log(arguments[2]); // 3
+    arguments[0] = 100;
+    console.log(n1, n2); // 100 2
+}
+test(1, 2, 3);
+```
+
+反之亦然。如果我们更改了某个参数的值，会同时影响参数和`arguments`对象
+
+```javascript
+function test(n1) {
+    console.log(n1); // 1
+    console.log(arguments[0]); // 1
+    n1 = 100;
+    console.log(arguments[0]); // 100
+}
+test(1);
+```
+
+`arguments`对象的`callee`属性指向拥有本`arguments`对象的函数
+
+```javascript
+function test(n1) {
+    console.log('HAHA');
+    console.log(arguments.callee.arguments[0]); // 1
+}
+test(1);
+```
+
+函数对象的`caller`属性指向调用此函数的函数
+
+```javascript
+function test() {
+    console.log('test');
+    run();
+}
+function run() {
+    console.log('run');
+    console.log(arguments.callee.caller.arguments[0]); // 1
+}
+test(1, 2, 3);
+```
+
+在非严格模式下使用`arguments`对象可以减少耦合性，但是我们并不推荐使用`arguments`对象，因为将`arguments`对象作为函数参数别名使用时会影响代码的可读性，因此在严格模式下将无法使用`arguments`对象。
+
+```javascript
+function test(n1) {
+    'use strict'
+    console.log(n1, arguments[0]); // 1 1
+    arguments[0] = 100;
+    // 第一个形参的值没有改变
+    console.log(n1, arguments[0]); // 1 100
+}
+test(1);
+```
+
+我们更建议使用收集参数，因为收集参数会把参数收集成一个数组，使用起开会更方便
+
+```javascript
+function test(...args) {
+    console.log(args); // [1,2,3,4,5]
+}
+test(1, 2, 3, 4, 5);
+```
+
+### 箭头函数
+
+箭头函数是函数表达式的简化版，在使用递归调用、构造函数、事件处理器时不建议使用箭头函数。箭头函数没有`this`（函数上下文）。
+
+没有参数时参数列表使用空括号即可
+
+```javascript
+// 无参数
+let sum = () => {
+    return 1 + 2;
+};
+console.log(sum()); // 3
+```
+
+函数体为单一表达式时不需要`return`关键字返回处理结果，它会自动返回表达式的计算结果
+
+```javascript
+let sum = () => 1 + 2;
+console.log(sum()); // 3
+```
+
+多参数传递时参数列表中的参数使用`,`分隔开
+
+```javascript
+let sum = (n1, n2) => n1 + n2;
+console.log(sum(1, 2)); // 3
+```
+
+只有一个参数时可以省略括号
+
+```javascript
+// 只有一个参数
+let items = [1, 2, 3, 4, 5].filter(item => item < 3);
+console.log(items); // [1,2]
+```
+
+有关箭头函数的作用域问题咱们后面再讲
+
+### 递归调用
+
+递归指函数内部调用自身的方式
+
+- 主要用于数量不确定的循环操作
+- 要有退出时机否则会陷入死循环
+
+下面通过阶乘来体验递归调用（这里是归的时候处理）
+
+```javascript
+function factorial(num = 3) {
+    return num == 1 ? 1 : num * factorial(num - 1);
+}
+console.log(factorial()); // 6
+```
+
+累加计算方法
+
+```javascript
+// 累加计算方法
+function sum(...nums) {
+    return nums.length == 0 ? 0 : nums.pop() + sum(...nums);
+}
+console.log(sum(1, 2)); // 3
+```
+
+递归打印倒三角
+
+```javascript
+function star(row = 5) {
+    if (row == 0) return '';
+    document.write('*'.repeat(row) + '<br/>');
+    star(--row);
+}
+star();
+
+*****
+****
+***
+**
+*
+```
+
+使用递归修改课程点击数（这里是递的时候处理）
+
+```javascript
+let lessons = [
+    {
+        title: '高等数学',
+        click: 100
+    },
+    {
+        title: '大学物理',
+        click: 120
+    },
+    {
+        title: '离散数学',
+        click: 39
+    }
+];
+
+function change(lessons, num, i = 0) {
+    if (i === lessons.length) return lessons;
+    lessons[i].click += num;
+    return change(lessonbs, num, ++i);
+}
+```
+
+### 回调函数
+
+在某个时刻被其他函数调用的函数称为回调函数，比如处理键盘、鼠标事件的函数
+
+```javascript
+document.querySelector('button').addEventListener('click', function () {
+    alert('hi');
+});
+```
+
+使用回调函数递增计算
+
+```javascript
+// 使用回调函数递增计算
+let ame = [1, 2, 3].map(item => item + 10);
+console.log(ame); // [11,12,13]
+```
+
+### 展开语法
+
+展开语法（点语法）体现的就是`收/放`特性。作为值时就是`放`，会把容器内的值全部拿出来；作为接收变量就是`收`，会把变量收集到一个新的数组中
+
+```javascript
+let ame = [1, 2, 3];
+let [a, b, c] = [...ame];
+console.log(a, b, c); // 1 2 3
+[...ame] = [4, 5, 6];
+console.log(ame); // [4,5,6]
+```
+
+使用展开语法可以替代`arguments`对象来接收任意数量的参数
+
+```javascript
+function test(...args) {
+    console.log(args); // [1,2,3]
+}
+test(1, 2, 3);
+```
+
+也可以用于接收部分参数
+
+```javascript
+function test(site, ...args) {
+    console.log(site, args);
+}
+test('rain', 1, 2, 3); // rain [1,2,3]
+```
+
+使用`...`可以将传入的多个参数收集到一个数组中，下面是使用点语法进行求和计算
+
+```javascript
+function sum(...params) {
+    console.log(params);
+    return params.reduce((total, cur) => {
+        return total += cur;
+    }, 0);
+}
+console.log(sum(1, 2, 3)); // 6
+```
+
+使用收集参数时手机参数必须放在函数参数列表的最后面，下面计算购物车商品折扣
+
+```javascript
+function sum(discount = 0, ...prices) {
+    let total = prices.reduce((total, cur) => {
+        return total += cur;
+    }, 0);
+    return total * (1 - discount);
+}
+console.log(sum(0.1, 100, 200, 199)); // 440.1
+```
+
+### 标签函数
+
+标签函数可以用来解析标签字符串，第一个参数是字符串值得数组，其余得参数是标签变量。
+
+```javascript
+function ame(str, ...values) {
+    console.log(str); // ["姓名：", "年龄：", "", raw: Array(3)]
+    console.log(values); // ["rain", 22]
+}
+let name = 'rain',age = 22;
+ame `姓名：${name}年龄：${age}`;
+```
+
+## 函数上下文（this）
+
+当调用函数时，会向函数传递两个隐式参数，一个是`arguments`对象，而另一个是函数上下文（`this`），`this`指向与函数调用相关联的对象。注意`this`参数的指向不仅是由定义函数的方式和位置决定的，同时它还严重受到函数调用的影响。
+
+### 作为函数调用
+
+通过可以计算得到函数的表达式加上`()`运算符调用一个函数，且被执行的函数表达式不是作为一个对象的属性时，就属于这种调用类型。
+
+非严格模式下，作为函数被调用时，`this`指向全局`window`对象
+
+```javascript
+console.log(this === window); // true
+```
+
+严格模式下，作为函数被调用时，`this`为`undefined`，这正是我们想要的，因为函数作为函数被调用时并没有指定函数被调用的对象。
+
+```javascript
+function test() {
+    'use strict';
+    console.log(this);
+}
+test(); // undefined
+```
+
+会被立即调用的函数表达式（立即执行函数），作为函数被调用，由于在非严格模式下，因此这里返回`window`对象
+
+```javascript
+let ame = {
+    IIFEContext: (function () {
+        return this;
+    })()
+};
+console.log(ame.IIFEContext); // window
+```
+
+
+
+### 作为方法调用
+
+当一个函数被赋值给一个对象的属性，并且通过对象属性引用的方式调用函数时，函数会作为对象的方法被调用。
+
+函数作为某个对象的方法被调用时，该对象会成为函数的上下文，并且在函数内部可以通过隐式参数`this`访问到。
+
+我们通过下面的例子来体验函数作为函数调用和作为方法调用的异同点：
+
+当直接通过函数名调用，也就是将函数作为函数调用时，因为是在非严格模式下执行，因此这里返回`window`对象
+
+```javascript
+function whatsMyContext() {
+    return this;
+}
+console.log(whatsMyContext()); // window
+```
+
+将该函数赋值给另一个变量，由于函数是第一类对象，因此相当于创建了`whatsMyContext`函数的一个引用，然后通过函数名直接调用，结果返回全局对象`window`
+
+```javascript
+let getMyThis = whatsMyContext;
+console.log(getMyThis()); // window 
+```
+
+将`whatsMyContext`函数赋值给对象的`getMyThis`属性，并且通过方法引用调用该函数时，它的函数上下文会返回与函数调用相关联的`ame`对象。不要认为`whatsMyContext`函数成为了`ame`对象的一个方法，`whatsMyContext`是一个独立的函数，它可以有多种调用方式，它只不过是将函数的引用（地址）赋值给了对象属性。
+
+```javascript
+let ame = {
+    name: 'ame',
+    getMyThis: whatsMyContext
+};
+console.log(ame.getMyThis()); // ame对象
+```
+
+除此之外，我们经常会遇到方法调用与函数调用相结合的情况（如使用回调函数），这时候我们可以通过绑定作用域的方式来解决`this`指向不一的问题
+
+```javascript
+let foods = {
+    brand: '星星超市',
+    goods: ['薯条', '炸鸡腿', '可乐'],
+    show() {
+        // 绑定外层作用域
+        const self = this;
+        return this.goods.map(function (food) {
+            // 该回调函数属于函数调用方式，因此this为window
+            return `${self.brand}-${food}`;
+        });
+    }
+};
+console.log(foods.show()); // ["星星超市-薯条", "星星超市-炸鸡腿", "星星超市-可乐"]
+```
+
+
+
+### 作为构造函数调用
+
+若要通过构造函数的方式调用，需要在函数调用之前使用关键字`new`。
+
+注意不要把这些函数的构造器与构造函数混为一谈，通过函数构造器我们可以将动态创建的字符串创建为函数，而构造函数是我们通常用来创建和初始化对象实例的函数。
+
+一般来讲，当调用构造函数时会发生一系列特殊的操作：
+
+1. 创建一个新的空对象
+2. 将该对象最为`this`参数传递给构造函数，从而成为构造函数的函数上下文。
+3. 执行函数中的代码。
+4. 将新构造出的对象作为函数的返回值（默认情况）
+
+```javascript
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+}
+console.log(new User('rain', 22)); // User {name: "rain", age: 22}
+```
+
+我们知道构造函数默认会返回新生成的对象，但我们也可以人为地给构造函数设置一个返回值，构造函数返回值遵循以下规则：
+
+- 如果构造函数返回一个对象，则该对象将作为整个表达式的值返回，而传入的构造函数的`this`将被丢弃。
+- 如果构造函数返回的是非引用类型的值，则忽略自己设置的返回值，返回新生城的对象（`this`）。
+
+返回值为引用类型
+
+```javascript
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+    return {
+        name,
+        age,
+        getName() {
+            return this.name;
+        }
+    };
+}
+const user1 = new User('ame', 21);
+console.log(user1.getName()); // ame
+```
+
+返回值为非引用类型
+
+```javascript
+function User(name, age) {
+    this.name = name;
+    this.age = age;
+    return `我的名字是${this.name}，今年${this.age}岁`;
+}
+console.log(new User('ame', 22)); // User {name: "ame", age: 22}
+```
+
+### 箭头函数
+
+箭头函数没有单独的`this`值，箭头函数与声明时所在的上下文的`this`相同。由于箭头函数没有`this`，因此它会沿着作用域链一直往上寻找，直到找到`this`值。
+
+下列匿名函数是作为函数被调用的，因此`this`指向`window`对象
+
+```javascript
+var name = 'lsr';
+let obj = {
+    name: 'ame',
+    getName() {
+        return function () {
+            return this.name;
+        }
+    }
+};
+console.log(obj.getName()()); // lsr
+```
+
+使用箭头函数后`this`为定义该函数时的上下文，也可以理解为定义时父作用域中的`this`。这里通过对象调用`getName()`方法时箭头函数的父级作用域中的`this`指向与函数调用相关联的对象`obj`。
+
+```javascript
+var name = 'lsr';
+let obj = {
+    name: 'ame',
+    getName() {
+        return () => {
+            return this.name;
+        }
+    }
+};
+console.log(obj.getName()()); // ame
+```
+
+在进行事件处理时，我们可以合理使用箭头函数
+
+- 绑定事件处理函数时可以理解为为DOM节点对象的相应属性（如`onclick`）设置值，所以使用`function`声明的函数作为事件处理函数时，事件处理函数中的`this`默认指向注册该事件处理函数的DOM节点对象。
+- 而使用箭头函数作为事件处理函数时，由于箭头函数没有`this`，因此它会沿着作用域链向父级寻找，直到找到`this`值（可以理解函数声明时所在的上下文的`this`）。
+
+下面是使用普通方法声明的函数作为事件处理函数的例子，普通函数的`this`指向注册事件处理函数的DOM元素对象
+
+```html
+<button desc="哈哈">click me</button>
+
+<script>
+    let dom = {
+        name: 'rain',
+        bind() {
+            const btn = document.querySelector('button');
+            btn.addEventListener('click', function () {
+                alert(this.getAttribute('desc'));
+            });
+        }
+    }
+    dom.bind(); // 哈哈
+</script>
+```
+
+下面是使用箭头函数作为事件处理函数的例子，箭头函数的`this`为创建箭头函数时所在上下文的`this`
+
+```javascript
+let dom = {
+    name: 'rain',
+    bind() {
+        const btn = document.querySelector('button');
+        btn.addEventListener('click', event => {
+            alert(this.name + event.target.getAttribute('desc'));
+        });
+    }
+}
+dom.bind(); //rain哈哈
+```
+
+利用对象的`handleEvent`属性绑定事件处理函数时，`this`指向当前对象而不是DOM元素对象
+
+```javascript
+
+let dom = {
+    name: 'rain',
+    handleEvent: function (event) {
+        console.log(this);
+    },
+    bind() {
+        const btn = document.querySelector('button');
+        // 会默认将对象中的 handleEvent 属性作为事件处理函数
+        btn.addEventListener('click', this);
+    }
+};
+dom.bind(); // {name: "rain", handleEvent: ƒ, bind: ƒ}
+```
+
+## apply / call / bind
+
+使用以上三种方法我们都能够显示地设置函数的函数上下文（`this`）
+
+### apply / call
+
+JavaScript为我们提供了一种调用函数的方式，从而可以显示地指定任何对象作为函数的上下文。我们可以使用每个函数上都存在的这两种方法（函数是由内置的`Function`构造函数所创建的实例对象）来完成：`apply()`和`call()`。
+
+这两个方法的作用一样都是将函数的函数上下文（`this`）设置为指定对象，并执行函数中的代码，只是两个方法在传递参数上有所不同。
+
+- `apply()`方法第一个参数为作为函数上下文的对象，第二个参数为作为函数调用所需参数的一个数组
+- `call()`方法第一个参数同样也是作为函数上下文的指定对象，而第二个参数则是作为函数调用所需参数的一个参数列表
+
+当把函数上下文设置为`null`或`undefined`时，非严格模式下`this`默认指向全局对象`window`。
+
+基本语法
+
+```javascript
+function show(title) {
+    console.log(`${title + this.name}`);
+}
+let ame = {
+    name: 'ame'
+};
+let rain = {
+    name: 'rain'
+};
+show.apply(ame, ['嘻嘻']); // 嘻嘻ame
+show.call(rain, '哈哈'); // 哈哈ame
+```
+
+使用方法`call()`设置函数上下文
+
+```html
+<button message="炸鸡腿">button</button>
+<button message="冰可乐">button</button>
+
+<script>
+    function show() {
+        console.log(this.getAttribute('message'));
+    }
+    const btns = document.querySelectorAll('button');
+    for (let i = 0; i < btns.length; i++) {
+        btns[i].addEventListener('click', () => show.call(btns[i]));
+    }
+</script>
+```
+
+找数组中的数值最大值
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+console.log(Math.max(arr)); // NaN
+console.log(Math.max(...arr)); // 5
+console.log(Math.max.apply(Math, arr)); // 5
+```
+
+### 隐藏/显示面板
+
+```html
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    dl {
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+    dt {
+        height: 50px;
+        width: 100%;
+        background-color: #ff7979;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 1.5em;
+        color: #fff;
+        border-bottom: 2px solid #333;
+    }
+
+    dd {
+        height: 200px;
+        width: 100%;
+        background-color: #e056fd;
+        height: 200px;
+        text-align: center;
+        font-size: 5em;
+        color: #fff;
+        line-height: 200px;
+    }
+</style>  
+
+<dl>
+    <dt>Rain</dt>
+    <dd>1</dd>
+    <dt>ame</dt>
+    <dd hidden="hidden">2</dd>
+</dl>
+
+<script>
+    function panel(i) {
+        const dds = document.querySelectorAll('dd');
+        dds.forEach(item => {
+            // 先全部隐藏
+            item.setAttribute('hidden', 'hidden');
+        });
+        // 再显示对应项
+        dds[i].removeAttribute('hidden');
+    }
+    document.querySelectorAll('dt').forEach((dt, i) => {
+        dt.addEventListener('click', () => panel.call(null, i));
+    });
+</script>
+```
+
+![显示隐藏面板](images/显示隐藏面板.gif)
+
+### bind
+
+`bind()`方法可以将函数的上下文设置为某个指定对象，并返回绑定后这个新生成的函数，这个方法绑定完函数上下文后不会立即就执行。
+
+- 与`call()/apply()`方法不同`bind()`方法不会立即执行
+- `bind()`不会更改原始函数，而是绑定完成后返回新生成的函数
+
+`bind()`方法是复制函数行为
+
+```javascript
+let a = function () {};
+let b = a;
+console.log(a === b); // true
+// bind会返回新生成的函数
+let c = a.bind();
+console.log(a === c); //false
+```
+
+绑定参数注意事项
+
+```javascript
+// 绑定参数注意事项
+function test(a, b) {
+    return this.f + a + b;
+}
+// 生成新函数，并将2赋值给形参a
+let newFunc = test.bind({
+    f: 1
+}, 2);
+// 1+2+3 3赋值给了b
+console.log(newFunc(3)); // 6
+```
+
+在事件中使用`bind()`方法
+
+```html
+<button>click me</button>
+
+<script>    
+    document.querySelector('button').addEventListener('click', function (e) {
+        console.log(e.target.innerHTML + this.msg);
+    }.bind({
+        msg: '哈哈'
+    }));
+</script>
+```
+
+### 我变色了
+
+动态改变元素背景颜色
+
+```html
+<style>
+    * {
+        padding: 0;
+        margin: 0;
+    }
+
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    div {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 3em;
+        color: #ecf0f1;
+        transition: .4s;
+        background-color: #9b59b6;
+    }
+</style>
+
+<div>RainJS</div>
+
+<script>
+    function Color(el) {
+        this.el = el;
+        this.colors = ['#16a085', '#27ae60', '#2980b9'];
+    }
+    Color.prototype.run = function () {
+        setInterval(function () {
+            let pos = Math.floor(Math.random() * this.colors.length);
+            this.el.style.backgroundColor = this.colors[pos];
+        }.bind(this), 500);
+    };
+    new Color(document.querySelector('div')).run();
+</script>
+```
+
+![变色](images/变色.gif)
+
+## 生成器函数
+
+生成器是一种特殊类型的函数。当从头到尾执行标准函数时，它最多只生成一个值。然而生成器函数会在几次运行请求中暂停（挂起），因此每次运行都可能会生成一个值，它常用来生成一系列值中的一个值。
+
+### 声明定义
+
+使用函数声明声明函数时，通过在`function`关键字后面增加一个`*`号可以定义生成器函数，在生成器函数中可以使用`yield`关键字来生成独立的值。
+
+生成器函数能生成一组值的序列，但每个值的生成是基于每次请求的，并不同于标准函数那样生成。我们必须显示地向生成器请求一个新的值，随后生成器要么响应一个新生成的值，要么就告诉我们它之后都不会再生成新的值。最有特点的是，每当生成器生成了一个值，他都不会像普通函数一样停止执行，而是它会在上一次返回值的地方挂起等待，随后，当对另一个值的请求到来后，生成器就会从上次离开的地方恢复执行。
+
+使用生成器函数生成一系列食物
+
+```javascript
+function* FoodGenerator() {
+    yield '可乐';
+    yield '炸鸡';
+    yield '薯条';
+}
+// 使用 for-of 来循环遍历
+for (const value of FoodGenerator()) {
+    console.log(value); // 可乐 炸鸡 薯条
+}
+```
+
+我们把执行生成器得到的结果放在`for/of`循环的右边，如果按正常标准函数理解，由于函数体中没有`return`语句，因此函数的最终结果应该为`undefined`，但是事实却不是这样，这是为什么呢？
+
+这是因为生成器函数和标准函数非常不同。调用生成器函数并不会执行生成器函数，相反，它会创建一个叫作迭代器的（iterator)对象。
+
+### 通过迭代器对象控制生成器
+
+调用生成器函数不会执行生成器的函数体，而是会创建一个迭代器对象，通过我们创建的迭代器对象，可以实现与生成器通信。
+
+通过迭代器对象的`next()`方法可以向生成器请求一个新的值；生成器会返回一个对象，其中包含着一个返回值以及一个指示器告诉我们生成器是否完成了值的生成。
+
+例如，可以通过迭代器对象请求满足条件的值
+
+```javascript
+// 定义一个生成器，它能生成一个包含两个武器数据的序列
+function* FoodGenerator() {
+    yield '可乐';
+    yield '炸鸡';
+}
+// 调用生成器得到一个迭代器，从而我们能够控制生成器的执行
+const foodIterator = FoodGenerator();
+
+// 结果为一个对象，其中饱含着一个返回值以及一个指示器告诉我们生成器是否完成了值的生成
+const result1 = foodIterator.next();
+console.log(result1); // {value: "可乐", done: false}
+
+// 再次调用 next() 方法从生成器中获取一个新的值
+const result2 = foodIterator.next();
+console.log(result2.value); // 炸鸡
+
+// 当没有可生成的新的值时，生成器的返回值为undefined，done为true，表示完成了值的生成
+const result3 = foodIterator.next();
+console.log(result3); // {value: undefined, done: true}
+```
+
+当调用了迭代器对象的`next()`方法后，生成器就开始执行代码，当代码执行到`yield`关键字时，就会生成一个中间结果（生成值序列中的一项），然后返回一个新对象，其中封装了结果值和一个指示完成的指示器。
+
+每当生成一个当前值后，生成器就会非阻塞地挂起执行，随后耐心等待下一次请求的到达。
+
+在本例中，第一次调用生成器的`next()`方法让生成器代码执行到第一个`yield`表达式的位置，然后返回了一个对象。该对象的属性`value`的值为`可乐`，属性`done`的值为`false`，表明之后还可能会生成新的值；随后，再次调用迭代器的`next()`方法将生成器从挂起状态唤起，中断执行的生成器从上次离开的位置继续执行代码，直到再次遇到另一个中间值：`yield '炸鸡'`，随即生成了一个包含着值`炸鸡`的对象，然后进入挂起状态；最后，当第三次调用`next()`方法，生成器再次恢复执行，但这一次，没有更多可供它执行的代码了，所以生成器返回一个结果对象，属性`value`被设置为`undefined`，属性`done`被置为`true`，表明生成器的工作已经完成了。
+
+### 对迭代器进行迭代
+
+我们通过调用生成器所暴露出的`next()`方法，可以获得一个携带者返回值的对象和一个指示器，通过检测指示器的值，我们可以判断生成器是否完成了值的生成。
+
+我们可以利用这一原理，使用普通的`while`循环来迭代生成器生成的序列值
+
+```javascript
+function* FoodGenerator() {
+    yield '可乐';
+    yield '炸鸡';
+}
+const foodIterator = FoodGenerator();
+let item;
+while (!(item = foodIterator.next()).done) {
+    console.log(item.value); // 可乐 炸鸡
+}
+```
+
+以上也就是`for/of`循环的原理，`for/of`循环不过是对迭代器进行迭代的语法糖。
+
+```javascript
+for (const value of FoodGenerator()) {
+    console.log(value); // 可乐 炸鸡
+}
+```
+
+不同于手动一直调用迭代器的`next()`方法，`for/of`循环同时还要查看生成器是否完成了值得生成，它在后台自动做了完全相同的工作。
+
+### 把执行权交给下一个生成器
+
+正如在标准函数中调用另一个标准函数，我们需要把生成器的执行委托给另一个生成器。
+
+如下例，生成器不仅生成了“食物”，也生成了“饮料”
+
+```javascript
+function* FoodGenerator() {
+    yield '炸鸡';
+    yield* DrinkGenerator();
+    yield '薯条';
+}
+
+function* DrinkGenerator() {
+    yield '可乐';
+    yield '橙汁';
+}
+
+for (const value of FoodGenerator()) {
+    console.log(value); // 炸鸡 可乐 橙汁 薯条
+}
+
+const foodIterator = FoodGenerator();
+let item;
+while (!(item = foodIterator.next()).done) {
+    console.log(item.value); // 炸鸡 可乐 橙汁 薯条
+}
+```
+
+在迭代器上使用`yield`操作符，程序会跳转到另外一个生成器上执行。本例中，程序从`FoodGenerator`跳转到一个新的`DrinkGenerator`生成器上，每次调用`FoodGenerator`返回迭代器的`next()`方法，都会使执行重新寻址到`DrinkGenerator`上。该生成器会一直持有执行权直到无工作可做。所以我们本例中生成`炸鸡`之后紧接的是`可乐`和`橙汁`。仅当`DrinkGenerator`的工作完成后，调用原来的迭代器才会继续返回值`薯条`。注意，对于最初调用的迭代器代码来说，这一切都是透明的。`for/of`循环不会关心`FoodGenertor`委托到另一个迭代器上，它只关心在`done`为`true`之前一直调用迭代器的`next()`方法。
+
+### 使用生成器遍历DOM树
+
+我们遍历DOM树的一个比较简单的方法就是通过递归函数
+
+```html
+<div class="subTree">
+    <form>
+        <input type="text" />
+    </form>
+    <p>Paragraphy</p>
+    <span>Span</span>
+</div>
+
+<script>
+    function traverseDOM(element, callback) {
+        // 用回调函数处理当前节点
+        callback(element);
+        element = element.firstElementChild;
+        while (element) {
+            // 遍历每个子树，深度优先
+            traverseDOM(element, callback);
+            element = element.nextElementSibling;
+        }
+    }
+    const subTree = document.querySelector('.subTree');
+    traverseDOM(subTree, function (element) {
+        console.log(element.nodeName); // DIV FORM INPUT P SPAN
+    });
+</script>
+```
+
+我们现在可以利用我们所学的生成器来遍历DOM树
+
+```html
+<div class="subTree">
+    <form>
+        <input type="text" />
+    </form>
+    <p>Paragraphy</p>
+    <span>Span</span>
+</div>
+
+<script>
+    // 使用生成器遍历DOM树
+    function* DomTraversal(element) {
+        yield element;
+        element = element.firstElementChild;
+        while (element) {
+            yield* DomTraversal(element);
+            element = element.nextElementSibling;
+        }
+    }
+    const subTree = document.getElementsByClassName('subTree')[0];
+    for (let element of DomTraversal(subTree)) {
+        console.log(element.nodeName); // DIV FORM INPUT P SPAN
+    }
+</script>
+```
+
+### 与生成器交互
+
+我们前面讲了如何通过使用`yield`表达式从生成器中返回多个值。除此之外，我们还能向生成器发送值，从而实现双向通信。
+
+#### 作为生成器函数参数发送值
+
+第一种向生成器发送值得方法我们之前已经用过许多次了，就是调用函数并传入实参
+
+```javascript
+function* FoodGenerator(price) {
+    yield(`苹果${price}元一个`);
+}
+// 普通的参数传递
+const foodIterator = FoodGenerator(5);
+const result1 = foodIterator.next();
+console.log(result1.value); // 苹果5元一个
+```
+
+#### 使用next方法向生成器发送值
+
+除了在第一次调用生成器的时候向生成器提供数据，我们还能通过迭代器对象的`next()`方法向生成器传入参数。在这个过程中，我们把生成器函数从挂起状态恢复到了执行状态。生成器把这个传入的值作为整个`yield`表达式（生成器当前挂起的表达式）的返回值。
+
+我们康康下面这个例子
+
+```javascript
+function* FoodGenerator(price) {
+    // 传递回的值将成为 yield 表达式的返回值，因此 imposter 的值是100
+    const imposter = yield(`苹果${price}元一个`);
+    yield(`西瓜${imposter}元一个`);
+}
+// 普通的参数传递
+const foodIterator = FoodGenerator(5);
+const result1 = foodIterator.next();
+console.log(result1.value); // 苹果5元一个
+// 将数据作为 next() 方法的参数传递给生成器
+const result2 = foodIterator.next(100); // 西瓜100元一个
+console.log(result2.value);
+```
+
+首次调用`foodIterator.next()`向生成器请求了一个新值，在第一个`yield`表达式的位置返回的位置返回了`苹果5元一个`，并进入挂起状态。第二次调用`foodIterator.next(100)`又向生成器请求了一个新的值，生成器从上次挂起的地方重新进入执行状态，但它同时还向生成器发送了实参`100`，这个值会作为整个`yield`表达式的返回值，因此`imposter`的值为`100`。
+
+注意：迭代器对象的`next()`方法为等待中的`yield`表达式提供了值，所以，如果没有等待中的`yield`表达式，也就没有什么值能够应用的。基于这个原因，我们无法通过第一次调用`next()`方法来向生成器提供该值。但记住，如果你需要为生成器提供一个初始值，你可以调用生成器自身，如`FoodGenerator(6)`。
+
+#### 抛出异常
+
+还有一种稍微不那么正统的方式将值应用到生成器上：通过抛出一个异常。每个迭代器除了有一个`next()`方法，还有一个`throw()`方法，让我们来看下面这个例子
+
+```javascript
+// 利用抛出异常传值
+function* FoodGenerator() {
+    try {
+        yield '炸鸡';
+        throw new Error('此处的错误将不会发生');
+    } catch (error) {
+        console.log(error); // 调用了迭代器对象的throw方法
+    }
+}
+const foodIterator = FoodGenerator();
+// 从生成器中获取一个值
+const result1 = foodIterator.next();
+console.log(result1.value); // 炸鸡
+// 向生成器抛出一个异常
+foodIterator.throw('调用了迭代器对象的throw方法');
+```
+
+### 生成器的内部构成
+
+我们已经知道调用一个生成器不会实际执行它。相反，它创建了一个新的迭代器，通过迭代器我们才能从生成器中请求值。在生成器生成（或让渡）了一个值后，生成器会挂起执行并等待下一个请求的到来。从某种方面来说，生成器的工作更像是一个小程序，一个在状态中运动的状态机。
+
+- 挂起开始——创建了一个生成器对应的迭代器后，生成器最先以这种状态开始。其中的任何代码都未执行。
+- 执行——生成器中的代码的执行状态。执行要么是刚开始，要么是从上次挂起的地方继续的。当生成器对应的迭代器调用了`next()`方法，并且当前存在可执行的代码时，生成器会转移到这个状态。
+- 挂起让渡——当生成器在执行过程中遇到了一个`yield`表达式，它会创建一个包含着返回值的新对象，随后再挂起执行。生成器在这个状态暂停并等待继续执行。
+- 完成——在生成器执行期间，如果代码执行到`return`语句或者全部代码执行完毕，生成器就进入该状态。
+
+下图是在执行过程中，生成器在相对应的迭代器调用`next()`方法之间移动状态的图解
+
+![生成器状态](images/生成器状态.png)
+
+让我们跟随下面这个简单的例子，并结合生成器的状态机制，来进一步巩固所学知识
+
+首先，定义一个生成器函数
+
+```javascript
+function* FoodGenerator() {
+    yield '炸鸡';
+    yield '薯条';
+}
+```
+
+创建迭代器对象，此时生成器处于挂起开始状态
+
+```javascript
+const foodIterator = FoodGenerator();
+```
+
+激活生成器，从挂起开始状态转为执行状态。执行到`yield '炸鸡'`语句中止，进而转为挂起让渡状态，返回新对象`{value: '炸鸡', done: 'false'}`
+
+```javascript
+const result1 = foodIterator.next();
+console.log(result1); // {value: "炸鸡", done: false}
+```
+
+重新激活生成器，从挂起让渡状态转为执行状态，执行直到`yield '薯条'`语句中止进而转为挂起让渡状态，返回新对象`{value: "薯条", done: false}`
+
+```javascript
+const result2 = foodIterator.next();
+console.log(result2); // {value: "薯条", done: false}
+```
+
+重新激活生成器，从挂起让渡状态转为执行状态，由于没有代码可以执行了，进而转为完成状态，返回新对象`{value: undefined, done: true}`
+
+```javascript
+const result3 = foodIterator.next();
+console.log(result3); // {value: undefined, done: true}
+```
+
+### 通过执行上下文跟踪生成器函数
+
+执行环境上下文是一个用于跟踪代码执行的JavaScript内部机制（后面再探讨）。尽管有些特别，但生成器依然是一种函数，所以接下来让我们仔细康康它们和执行环境上下文之间的关系吧。首先先从一个简单的代码片段开始：
+
+```javascript
+function* FoodGenerator(price) {
+    yield `炸鸡${price}元`;
+    return `薯条${price}元`;
+}
+const foodIterator = FoodGenerator(16);
+const result1 = foodIterator.next();
+console.log(result1.value); // 炸鸡16元
+const result = foodIterator.next();
+console.log(result); // {value: "薯条16元", done: true}
+```
+
+接下来，让我们一起探索一下应用的状态，看一看在应用执行过程中不同位置上的执行上下文栈。下图展示了应用执行中两个位置的状态快照。第一个快照显示了应用在调用`FoodGenerator`函数之前的应用执行状态。由于正在执行的是全局代码，故执行上下文栈仅仅包含全局执行上下文，该上下文引用了当前标识符所在的全局环境。此时`FoodGenerator`仅仅引用了一个函数，而其他标识符为`undefined`（[参见注册标识符过程](#注册标识符的过程)）
+
+<img src="images/调用FoodGenerator函数之前应用程序的状态.png" alt="调用FoodGenerator函数之前应用程序的状态" style="zoom:67%;" />
+
+当我们调用了`FoodGenerator`函数：
+
+```javascript
+const foodIterator = FoodGenerator(16);
+```
+
+<img src="images/调用FoodGenerator函数之后应用程序的状态.png" alt="调用FoodGenerator函数之后应用程序的状态" style="zoom: 67%;" />
+
+此时控制流进入了生成器，正如进入了其他任何函数一样，当前将会创建一个新的函数环境上下文`FoodGenerator`（也就是相对应的词法环境），并将该上下文入栈。而生成器比较特殊，它不会执行任何函数代码。取而代之则生成一个新的迭代器再从中返回，并将它的引用赋值给了`foodIterator`，然后生成器进入挂起开始状态。由于迭代器是用来控制生成器的执行的，故而迭代器中保存着一个在它创建位置处的执行上下文。
+
+如下图所示，当调用生成器函数执行完毕后，发生了一个有趣的现象。一般情况下，当程序从一个标准函数返回后，对应的执行环境上下文会从栈出弹出，并被完整地销毁，但在生成器中不是这样。
+
+<img src="images/从调用FoodGenerator中返回后程序的状态.png" alt="从调用FoodGenerator中返回后程序的状态.png" style="zoom:67%;" />
+
+相对应的`FoodGenerator`会从栈中弹出，但由于`foodIterator`还保存着对它的引用，所以它不会被销毁。你可以把它看作一种类似于闭包的事物。在闭包中，为了在闭包创建的时候保证变量都可用，所以函数会对创建它的环境持有一个引用。以这种方式，我们能保证只要函数还存在，环境及变量就存在着。生成器，从另一个角度看，还必须恢复执行。由于所有函数的执行都被执行上下文所控制，故而迭代器保持了一个对当前执行环境的引用，保证只要迭代器还需要它的时候它都存在。
+
+当调用迭代器的`next()`方法时发生了另一件有趣的事：
+
+```javascript
+const result1 = foodIterator.next();
+console.log(result1.value); // 炸鸡16元
+```
+
+如果这只是一个普通的函数调用，这个语句会创建一个新的`next()`方法的执行上下文并放入栈中。但是生成器不一样，它会重新激活对应的执行上下文，使得生成器进入执行状态。在这个例子中，是`FoodGenerator`上下文，并把该上下文放到栈顶，从它上次离开的地方继续执行。
+
+<img src="images/调用next方法重新激活上下文.png" alt="调用next方法重新激活上下文" style="zoom:67%;" />
+
+由此我们可以总结出标准函数仅仅会被重复调用，每次调用都会创建一个新的执行环境上下文。相比之下，生成器的执行环境上下文则会暂时挂起并在将来恢复。
+
+在我们的例子中，由于是第一次调用`next()`方法，而生成器之前并没有执行过，所以生成器开始执行并进入执行状态。当生成器函数运行到这个位置的时候，又会发生这样一件事：
+
+```javascript
+yield `炸鸡${price}元`;
+```
+
+生成器函数运行得到的表达式结果为`炸鸡16元`，然后执行中又遇到了`yield`关键字。这种情况表明了`炸鸡16元`是该生成器的第一个中间值，所以需要返回该值并挂起生成器的执行。从应用状态的角度看，发生了一件类似前面的事情：`FoodGenerator`上下文离开了调用栈，但由于`foodIterator`还持有着对它的引用，故而它并未被销毁，现在生成器挂起了，又在非阻塞的情况下移动到了挂起让渡状态。程序在全局代码中恢复执行，并将生成出的值存入`result1`。
+
+<img src="images/生成中间值.png" alt="生成中间值" style="zoom:67%;" />
+
+当遇到另一个迭代器调用时，代码继续运行：
+
+```javascript
+const result = foodIterator.next();
+console.log(result); // {value: "薯条16元", done: true}
+```
+
+在这个位置，我们又把整个流程走了一遍：首先通过`foodIterator`激活`FoodGenerator`的上下文引用，将其入栈，在上次离开的地方继续执行。本例中，生成器计算表达式`薯条${price}元`。但这一次没有再遇到`yield`表达式，而是遇到了一个`return`语句。这个语句会返回值`薯条16元`并结束生成器的执行，随之生成器进入结束状态。
+
+总之抓住一个关键点就是：当我们从生成器中取得控制权后，生成器的执行环境上下文是一直保存的，而不是像标准函数一样退出后销毁。

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 构造函数
+    // function User(name, age) {
+    //   this.name = name;
+    //   this.age = age;
+    // }
+    // console.log(new User('rain', 22)); // User {name: "rain", age: 22}
+
+    // function User(name, age) {
+    //   this.name = name;
+    //   this.age = age;
+    //   return {
+    //     name,
+    //     age,
+    //     getName() {
+    //       return this.name;
+    //     }
+    //   };
+    // }
+    // const user1 = new User('ame', 21);
+    // console.log(user1.getName()); // ame
+
+    function User(name, age) {
+      this.name = name;
+      this.age = age;
+      return `我的名字是${this.name}，今年${this.age}岁`;
+    }
+    console.log(new User('ame', 22)); // User {name: "ame", age: 22}
+  </script>
+</body>
+
+</html>
