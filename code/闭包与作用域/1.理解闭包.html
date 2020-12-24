@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+
+<body>
+  <script>
+    let outerValue = 'outerValue';
+    // 声明一个空的变量，稍后在后面的代码中使用
+    let later;
+
+    function outerFunction() {
+      // 在函数内部声明一个变量，该变量作用域局限于函数内部，在函数外部无法访问
+      let innerValue = 'innerValue';
+      // 声明一个内部函数
+      function innerFunction() {
+        // 内部函数访问了自己函数外的变量
+        console.log(outerValue);
+        console.log(innerValue);
+      }
+      // 将内部函数 innerFunction 的引用存储到变量later上，因为later在全局作用域内，所以我们可以调用它
+      later = innerFunction;
+    }
+    outerFunction();
+    // 通过 later 调用内部函数，我们不能直接调用内部函数，因为它的作用域在 outerFunction 之内
+    later(); // outerValue innerValue
+  </script>
+</body>
+
+</html>

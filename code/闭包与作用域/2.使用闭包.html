@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 私有变量
+    // function Ame() {
+    //   // 私有变量
+    //   let privateVariable = 100;
+    //   // 私有函数
+    //   function privateFunction() {
+    //     return privateVariable;
+    //   }
+    //   // 公有方法
+    //   this.publicMethod = function () {
+    //     privateVariable++;
+    //     return privateFunction();
+    //   }
+    // }
+    // const ame = new Ame();
+    // console.log(ame.publicMethod()); // 101
+
+    // 静态私有变量
+    // let User;
+    // (function () {
+    //   let name = '默认值';
+    //   User = function () {};
+    //   User.prototype.getName = function () {
+    //     return name;
+    //   };
+    //   User.prototype.setName = function (value) {
+    //     name = value;
+    //   }
+    // })();
+    // const user1 = new User();
+    // console.log(user1.getName()); // 默认值
+    // user1.setName('rain');
+    // const user2 = new User();
+    // console.log(user2.getName()); // rain
+
+    // 函数防抖
+    // function debounce(callback, delay, scope) {
+    //   let timer = null;
+    //   return function () {
+    //     // 设置函数作用域以及参数
+    //     const context = scope || this;
+    //     // 清除计时器
+    //     clearTimeout(timer);
+    //     timer = setTimeout(() => {
+    //       callback.apply(context);
+    //     }, delay);
+    //   };
+    // }
+
+    // 函数节流
+    // 1.时间戳实现
+    // function throttle(callback, threshold, scope) {
+    //   // 函数执行前的事件的毫秒数
+    //   let prev = Date.now();
+    //   return function () {
+    //     // 设置函数的作用域
+    //     const context = scope || this;
+    //     let now = Date.now();
+    //     if (now - prev >= threshold) {
+    //       prev = now;
+    //       callback.apply(context);
+    //     }
+    //   };
+    // }
+
+    // 2.计时器实现
+    let a = 100;
+
+    function throttle(callback, threshold, scope) {
+      let timer = null;
+      return function () {
+        const context = scope || this;
+        if (!timer) {
+          timer = setTimeout(() => {
+            callback.call(context);
+          }, threshold);
+        }
+      }
+    }
+
+    throttle(function () {
+      console.log(a);
+    }, 1000)();
+  </script>
+</body>
+
+</html>
