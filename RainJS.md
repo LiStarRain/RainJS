@@ -74,9 +74,9 @@ console.log(typeof web); // object
 
 JavaScript是解释型语言。JavaScript引擎对代码的处理包括解析和执行两个步骤。在解析过程中会创建与代码结构相关联的词法环境（通俗的来讲就是作用域），并且JavaScript引擎会注册词法环境中所声明的变量和函数，具体步骤如下。
 
-注意：词法环境是解析时创建的，是函数或者变量在声明时候的环境，词法环境可以在相应代码执行过程中进行完善或修改。
+注意：词法环境是解析时创建的，是函数或者变量在创建时候的环境，词法环境可以在相应代码执行过程中进行完善或修改。
 
-1. 如果是创建一个函数环境，那么创建形参和函数参数的默认值。如果是非函数环境，则跳过此步骤。
+1. 如果是创建一个函数环境，那么创建`arguments`对象以及函数形参并将其初始化为`undefined`。如果是非函数环境，则跳过此步骤。
 2. 如果是创建全局或函数环境，就扫描当前代码进行函数声明（不会扫描其他函数的函数体），但是不会扫描函数表达式或者箭头函数。对于所找到的函数声明，将创建函数，并绑定到当前词法环境与函数名相同的标识符上。若该标识符已经存在，那么该标识符的值将被重写。如果是块级作用域，则跳过此步骤。
 3. 扫描当前的代码进行变量声明。在函数或全局环境中，找到所有在当前环境之内、其他函数之外通过<code>var</code>声明的变量，并找到所有在其他函数和代码块之外通过<code>let</code>或者<code>const</code>定义的变量。在块级环境中，仅查找当前代码块中通过<code>let</code>和<code>const</code>定义的变量，若该标识符不存在，进行注册并将其初始化为<code>undefined</code>。若该标识符已经存在，则保留其原来的值。
 
@@ -704,7 +704,9 @@ console.log({} % 100); // NaN
 - 如果两个操作数都是字符串，则将第二个字符串和第一个连接起来
 - 如果只有一个操作数是字符串，则将另一个操作数转化为字符串，然后再将两个字符串连接起来
 
-- 如果另一个操作数是对象、数值或布尔值，则调用他们的<code>toString()</code>方法取得相应的字符串值，然后再应用关于前面的字符串规则。对于<code>undefined</code>和<code>null</code>，则分别调用<code>String()</code>函数并取得字符串<code>"undefined"</code>和<code>"null"</code>。
+如果有一个操作数是对象、数值或布尔值，则调用他们的<code>toString()</code>方法取得相应的字符串值，然后再应用关于前面的字符串规则。对于<code>undefined</code>和<code>null</code>，则分别调用<code>String()</code>函数并取得字符串<code>"undefined"</code>和<code>"null"</code>。
+
+注意：默认会先调用`valueOf()`方法。
 
 ```javascript
 console.log(NaN + 100); // NaN
@@ -3755,7 +3757,7 @@ while (!(result = iterator.next()).done) {
 
 ### keys
 
-使用`keys()`方法可以通过迭代对象获取数组的索引值
+使用`keys()`方法可以通过迭代器对象获取数组的索引值
 
 ```javascript
 const users = ['ame', 'rain', 'lsr'];
@@ -3943,7 +3945,7 @@ console.log(data);
 
 使用`reduce()`与`reduceRight()`方法可以迭代数组的所有元素,`reduce()`从前开始往后迭代，`reduceRight()`从后往前开始迭代，返回最后迭代完成的结果。
 
-该方法的第一个参数为回调函数，第二个参数为初始值。传入第二个参数时将从数组的第一个元素开始迭代，不传入第二个参数时将从数组的第二项开始迭代。`reduce()`方法接收初始值，对数组的每个元素执行回调函数，回调函数接收上一次回调结果、当前数组元素、当前数组元素索引以及操作数组作为参数。
+该方法的第一个参数为回调函数，第二个参数为初始值。传入第二个参数时将从数组的第一个元素开始迭代，不传入第二个参数时将从数组的第二项开始迭代。`reduce()`方法接收初始值，对数组的每个元素执行回调函数，回调函数接收上一次回调结果、当前数组元素、当前数组元素索引以及操作数组作为参数。该方法不会改变原始数组。
 
 回调函数的参数说明如下：
 
@@ -6731,3 +6733,3013 @@ console.log(result); // {value: "薯条16元", done: true}
 在这个位置，我们又把整个流程走了一遍：首先通过`foodIterator`激活`FoodGenerator`的上下文引用，将其入栈，在上次离开的地方继续执行。本例中，生成器计算表达式`薯条${price}元`。但这一次没有再遇到`yield`表达式，而是遇到了一个`return`语句。这个语句会返回值`薯条16元`并结束生成器的执行，随之生成器进入结束状态。
 
 总之抓住一个关键点就是：当我们从生成器中取得控制权后，生成器的执行环境上下文是一直保存的，而不是像标准函数一样退出后销毁。
+
+# 闭包与作用域
+
+## 理解闭包
+
+简单来说，闭包允许函数访问并操作函数外部的变量。
+
+其实我们之前已经写过很多次闭包了，我们再来看下面这一个简单例子
+
+```javascript
+let outerValue = 'outerValue';
+// 声明一个空的变量，稍后在后面的代码中使用
+let later;
+
+function outerFunction() {
+    // 在函数内部声明一个变量，该变量作用域局限于函数内部，在函数外部无法访问
+    let innerValue = 'innerValue';
+    // 声明一个内部函数
+    function innerFunction() {
+        // 内部函数访问了自己函数外的变量
+        console.log(outerValue);
+        console.log(innerValue);
+    }
+    // 将内部函数 innerFunction 的引用存储到变量later上，因为later在全局作用域内，所以我们可以调用它
+    later = innerFunction;
+}
+outerFunction();
+// 通过 later 调用内部函数，我们不能直接调用内部函数，因为它的作用域在 outerFunction 之内
+later(); // outerValue innerValue
+```
+
+我们之前讲过JavaScript注册标识符与生成词法环境的流程，当我们运行代码时，先会对全局环境中的代码进行解析，将函数`outerFunction`绑定到全局词法环境中与函数名相同的标识符上，紧接着注册变量`outerValue`、`later`并将其初始化为`undefined`；接着全局代码进入执行阶段，将变量`outerValue`赋值为`outerValue`，然后调用了函数`outerFunction`，此时会生成一个函数执行上下文推入执行上下文栈，并开始处理函数中的代码；首先创建了`outerFunction`函数的词法环境并将函数`innerFunction`绑定到了词法环境中与函数名相同的标识符上，接着注册变量`innerValue`并初始化为`undefined`，最后执行函数中的代码，将变量`innerValue`赋值，并将内部函数`innerFunctuon`的引用复制给了外部词法环境中的变量`later`，此时，函数`outerFunction`执行完毕，弹出执行上下文栈，但由于此时`innerFunction`中的代码读取了外部函数`outerFunction`中的`innerValue`，因此这时候的`outerFunction`的词法环境中并不会被销毁（暂时先这么理解），以便于我们通过变量`later`调用函数时能够访问得到外部函数的变量。
+
+通过上面的分析大家可以发现内部作用域可以访问外部作用域中的值，而外部的作用域却不可以访问内部作用域的值，所以，我们可以得到每一个通过闭包能够访问变量的函都有一个单向作用域链，作用域链中包含了闭包的全部信息。
+
+## 使用闭包
+
+### 私有变量
+
+使用闭包封装私有变量。由于函数作用域的限制，函数中的参数、局部变量和在函数内部定义的其它函数都属于私有变量，在函数外部无法访问，但我们可以使用闭包的方式访问它们。
+
+```javascript
+function Ame() {
+    // 私有变量
+    let privateVariable = 100;
+    // 私有函数
+    function privateFunction() {
+        return privateVariable;
+    }
+    // 公有方法
+    this.publicMethod = function () {
+        privateVariable++;
+        return privateFunction();
+    }
+}
+const ame = new Ame();
+console.log(ame.publicMethod()); // 101
+```
+
+此时，作用域结构如图所示
+
+![私有变量作用域分析](images/私有变量作用域分析.png)
+
+### 静态私有变量
+
+通过在私有作用域中定义私有变量或函数可以实现定义静态私有变量的功能。静态私有变量只能在函数内部才能访问，并且只会初始化一次，不会像私有变量那样每调用一次函数都要重新初始化一次变量。
+
+```javascript
+// 静态私有变量
+let User;
+(function () {
+    let name = '默认值';
+    User = function () {};
+    User.prototype.getName = function () {
+        return name;
+    };
+    User.prototype.setName = function (value) {
+        name = value;
+    }
+})();
+const user1 = new User();
+console.log(user1.getName()); // 默认值
+user1.setName('rain');
+const user2 = new User();
+console.log(user2.getName()); // rain
+```
+
+### 函数防抖
+
+当我们处理事件时，如果一个事件在短时间内被频繁触发多次，我们可以使得事件处理函数只执行最后被触发的那一次，函数防抖可以把多个顺序调用合并成一次。避免因多次触发事件而引起重复调用事件处理函数导致的异常。
+
+```javascript
+// 函数防抖
+function debounce(callback, delay, scope) {
+    let timer = null;
+    return function () {
+        // 设置函数作用域
+        const context = scope || this;
+        // 清除计时器
+        clearTimeout(timer);
+        timer = setTimeout(() => {
+            callback.apply(context);
+        }, delay);
+    };
+}
+```
+
+### 函数节流
+
+处理事件时，如果一个事件在短时间内被频繁触发多次，函数节流可以保证一定时间内只调用一次事件处理函数（一般指最开始触发的那次）。
+
+函数节流与函数防抖的区别在于函数防抖执行的是最后一次触发事件的处理函数，而函数节流则是执行第一次触发事件时调用的事件处理函数。
+
+第一种方法是利用时间戳来实现
+
+```javascript
+function throttle(callback, threshold, scope) {
+    // 函数执行前的事件的毫秒数
+    let prev = Date.now();
+    return function () {
+        // 设置函数的作用域
+        const context = scope || this;
+        let now = Date.now();
+        if (now - prev >= threshold) {
+            prev = now;
+            callback.apply(context);
+        }
+    };
+}
+```
+
+第二个方法是利用计时器来实现
+
+```javascript
+function throttle(callback, threshold, scope) {
+    let timer = null;
+    return function() {
+        const context = scope || this;
+        if (!timer) {
+            timer = setTimeout(() => {
+                callback.apply(context);
+            }, threshold);
+        }
+    };
+}
+```
+
+## 执行上下文
+
+在JavaScript中，代码执行的基础单元是函数。当完成函数调用时，程序会回到函数调用的位置。而JavaScript就是通过执行上下文来跟踪函数的执行的。
+
+JavaScript代码有两种类型：一种是全局代码，在所有函数外部定义；一种是函数代码，位于函数内部。JavaScript引擎执行代码时，每一条语句都处于特定的执行上下文中。
+
+既然具有两种类型的代码，那么就有两种执行上下文：全局执行上下文和函数执行上下文。二者最重要的差别是：全局执行上下文只有一个，当JavaScript程序开始执行时就已经创建了全局上下文；而函数执行上下文则是在每次调用函数时，就会创建一个新的。
+
+注意：我们之前讲过函数的函数执行上下文（隐式参数`this`），它指向与函数调用相关联的对象；虽然它也是上下文，但完全是不一样的概念，执行上下文是内部的JavaScript概念，JavaScript引擎使用执行上下文来跟踪函数的执行。
+
+由于JavaScript是基于单线程的执行模型：在某个特定的时刻只能执行特定的代码。一旦发生函数调用，当前的执行上下文必须停止执行，并创建新的函数执行上下文来执行函数。当函数执行完成后，将函数执行还是那个下文销毁，并重新回到发生调用时的执行上下文中。所以需要跟踪执行上下文——正在执行的上下文以及正在等待的上下文。最简单的跟踪方法是使用执行上下文栈（或称调用栈）。
+
+我们通过下面这个简单例子来理解执行上下文
+
+```javascript
+function run() {
+    show('哈哈');
+}
+
+function show(message) {
+    console.log(message);
+}
+run();
+```
+
+当执行上述代码时，执行上下文的行为如下：
+
+<img src="images/调用栈.png" alt="执行上下文行为" style="zoom:80%;" />
+
+1. 每个JavaScript程序只创建一个全局执行上下文，并从全局执行上下文开始执行（在单页面应用中每个页面只有一个全局执行上下文）。当执行全局代码时，全局执行上下文处于活跃状态。
+2. 首先在全局代码中定义两个函数：`run`和`show`，然后调用`run()`。由于在一个特定时刻只能执行特定代码，所以JavaScript引擎停止执行全局代码，开始执行`run`函数。创建新的函数执行上下文，并置入执行上下文栈的顶部。
+3. `run`函数进而调用`show`函数。又一次因为在同一个特定时刻只能执行特定的代码，所以，暂停执行`run`执行上下文，创新的带有参数`哈哈`的`show`函数的执行上下文，并置入执行上下文栈的顶部。
+4. `show`函数执行完成后，代码又回到了`run`函数。`show`执行上下文从从执行上下文栈顶部弹出，`run`函数执行上下文重新激活，`run`函数继续执行。
+5. `run`函数执行完成后也发生了类似的事情：`run`函数执行上下文从栈顶部弹出，重新激活一直在等待的全局执行上下文并恢复执行。
+
+## 代码嵌套与词法环境
+
+我们在前面已经详细讲过词法环境的基础知识了，当我们执行代码时，会根据相应的代码结构创建对应的词法环境。而我们在写代码时肯定会有结构嵌套的情况发生，因此除了跟踪局部变量、函数声明、函数的参数和词法环境外，还有必要跟踪外部（父级）词法环境。因为我们需要访问外部代码结构中的变量，如果在当前环境中无法找到某一标识符，就会对外部环境进行查找。一旦找到匹配的变量，或是一直到全局环境都仍然无法查找到对应变量而返回错误，就会停止查找，这也是闭包的核心原理。
+
+每个执行上下文都有一个与之相关联的词法环境，词法环境中包含了在上下文中定义的标识符的映射表，并且内部的词法环境会保存着父级词法环境的引用。
+
+无论何时调用函数，都会创建一个与之相关联的词法环境，并将创建该函数时的词法环境存储在名为`[[Environment]]`的内部属性上（也就是说无法直接访问或操作），也就是说，函数会将父级词法环境的引用保存在`[[Environment]]`内部属性上。
+
+使用`let/const`声明的变量是具有块级作用域的，JavaScript引擎会根据对应的代码块生成相应的词法环境，同时它也保存着对父级词法环境（作用域）的引用。
+
+就这样，词法环境（作用域）环环相扣，就形成了我们熟知的作用域链。我们通过下面这个简单例子来加深理解
+
+```javascript
+let global = 'global';
+function run() {
+    let outer = 'outer';
+    function show() {
+        let inner = 'inner';
+        console.log(inner, outer, global); // inner outer global
+    }
+    show();
+}
+run();
+```
+
+<img src="images/JS引擎查找变量值.png" alt="JS引擎如何查找变量值" style="zoom:67%;" />
+
+无论何时调用函数，都会创建一个新的执行环境，被推入执行上下文栈。此外，还会创建一个与之相关联的词法环境。外部环境与新建的词法环境，JavaScript将调用函数的内置`[[Environment]]`属性与**创建**函数（解析过程的第二步或执行到相关函数表达式语句）时的环境进行关联。
+
+本例中代码执行经历了以下过程：
+
+1. 程序开始执行，创建全局执行上下文并入栈。首先进入解析过程，创建词法环境，创建使用函数声明声明的函数并将其绑定到词法环境中与函数名相同的标识符`run`上，注册了使用`let`声明的变量`global`并初始化为`undefined`；然后全局代码进入执行阶段，它执行到赋值语句因此将词法环境中`global`的值覆写为`'global'`，接着调用了`run`函数。
+2. 调用了`run`函数后，全局执行上下文暂停执行，生成新的`run`函数执行上下文并推入执行上下文栈，开始对函数中的代码进行处理。首先进入解析阶段，创建词法环境并将创建该函数时的词法环境的引用赋值函数内置属性`[[Environment]]`，创建函数`show`并将其绑定到词法作用域中与函数名相同的标识符`show`上，注册变量`outer`到词法环境中并初始化为`undefined`；接着代码进入执行阶段，执行到语句`outer = 'outer'`时将词法作用域中`outer`的值覆写为`'outer'`，接着调用函数`show`。
+3. 调用了`show`函数之后，`run`函数执行上下文暂停执行，生成`show`函数执行上下文推入执行上下文栈中，开始处理相关代码。首先进行解析，创建词法环境并将创建该函数时的词法环境的引用赋值函数内置属性`[[Environment]]`，注册标识符`inner`并初始化为`undefined`；接着进入执行阶段，执行到赋值语句将词法环境中`inner`的值覆写为`'inner'`，接着读取变量`inner`、`outer`、`global`的值，变量`inner`就在函数自己的词法环境中找到，查找变量`outer`时，它先从自己的词法环境开始查找，自己环境中没有该变量，它通过`[[Environment]]`内置属性攀升到它的父级词法环境（`run`函数的词法环境）中查找，找到后停止继续查找，同理，变量`global`当攀升到它父级词法环境中发现还是没有找到，它就通过父级词法环境的`[[Environment]]`继续向上攀升，最后在全局词法环境中找到该变量。此时，执行完输出语句后`show`函数执行完成。
+4. `show`函数执行完成，`show`函数的执行上下文出栈并销毁；`run`函数恢复执行，执行完毕后`run`函数执行上下文同样出栈并销毁；最后，全局上下文恢复执行。
+
+# 对象
+
+对象是包括属性与方法的数据类型，JavaScript中大部分的数据类型都是对象类型的，如`String`、`Number`、`Math`、`RegExp`、`Date`等等。
+
+## 面向对象（OOP）
+
+- 对象是属性和方法的集合（即封装）
+- 将多个特定类型的实例所共有的属性或方法提取出来。将复杂功能隐藏在内部，只开放给外部少量方法，更改对象内部的复杂逻辑不会对外部调用造成影响，即抽象
+- 继承是通过代码复用减少冗余代码
+- 根据传入的参数可以实例化同一种类型的多种不同表现的对象，即多态
+
+### 基本声明
+
+使用字面量声明对象是最简单的方法
+
+```javascript
+// 字面量声明
+let obj = {
+    name: 'ame',
+    get: function () {
+        return this.name;
+    }
+};
+console.log(obj.get()); // ame
+```
+
+属性与方法简写
+
+```javascript
+let name = 'rain';
+let rain = {
+    name,
+    get() {
+        return this.name;
+    }
+}
+console.log(rain.get()); // rain
+```
+
+其实字面量形式在系统内部也是通过调用构造函数`new Object()`创建的，后面会详细介绍构造函数
+
+```javascript
+let ame = {};
+let lsr = new Object();
+console.log(ame, lsr);
+console.log(ame.constructor);
+console.log(lsr.constructor);
+console.log(ame.constructor === lsr.constructor); // true
+```
+
+### 操作属性
+
+使用点语法操作
+
+```javascript
+let user = {
+    name: 'lsr'
+};
+console.log(user.name); // lsr
+```
+
+使用`[]`获取
+
+```javascript
+console.log(user['name']); // lsr
+```
+
+可以看出使用`.`操作属性更简洁，`[]`主要用于通过变量操作属性的场景
+
+```javascript
+let user = {
+    name: 'lsr'
+};    
+let property = 'name';
+console.log(user[property]); // lsr
+```
+
+如果属性名不是合法变量名就必须使用括号的形式了
+
+```javascript
+let user = {};
+user['my-age'] = 22;
+console.log(user['my-age']); // 22
+```
+
+对象和方法的属性可以动态地添加或删除
+
+```javascript
+const user1 = {
+    name: 'ame'
+};
+user1.age = 22;
+user1.show = function () {
+    return `${this.name}已经${this.age}岁了`;
+};
+console.log(user1.show()); // ame已经22岁了
+console.log(user1); // {name: "ame", age: 22, show: ƒ}
+delete user1.show;
+delete user1.age;
+console.log(user1); // {mame: "ame"}
+console.log(user1.age); // undefined
+```
+
+### 对象方法
+
+当函数作为对象属性时我们可以称它为对象的方法。下面定义了学生对象，并提供了计算平均成绩的方法
+
+```javascript
+const ame = {
+    name: '妙蛙种子',
+    age: 22,
+    grade: {
+        math: 99,
+        english: 67
+    },
+    // 平均成绩
+    avgGrade: function () {
+        let total = 0;
+        for (const key in this.grade) {
+            total += this.grade[key];
+        }
+        return total / this.propertyCount('grade');
+    },
+    // 获取属性数量
+    propertyCount: function (property) {
+        let count = 0;
+        for (const key in this[property]) count++;
+        return count;
+    }
+};
+console.log(ame.avgGrade()); // 83
+```
+
+一个学生需要手动创建一个对象，这显然是不实际的，利用后面的构造函数就可以解决这个问题。
+
+### 引用特性
+
+对象和函数、数组一样是引用类型，即进行复制时只会复制引用地址。
+
+```javascript
+let obj1 = {
+    name: 'rain'
+};
+let obj2 = obj1;
+obj2.name = 'lsr';
+console.log(obj1.name); // lsr
+```
+
+当把对象作为函数参数使用时传递的也是对象的地址
+
+```javascript
+// 对象作为函数参数传递时
+let user = {
+    name: 'ame'
+};
+function test(user) {
+    user.name += '哈哈';
+}
+test(user);
+console.log(user.name); // ame哈哈
+```
+
+当我们比较对象时最多的是比较两个对象的内存地址，所以使用`==`和`===`效果都是一样的
+
+```javascript
+// 对象比较
+let obj1 = {};
+let obj2 = obj1;
+let obj3 = {};
+console.log(obj1 == obj2); // true
+console.log(obj1 === obj2); // true
+console.log(obj1 === obj3); //false
+```
+
+### 展开语法
+
+使用`...`展开语法可以展开对象内部的属性，下面是实现对象合并的例子
+
+```javascript
+// 对象属性合并
+let obj1 = {
+    name: 'ame',
+    age: 22
+};
+let obj2 = {
+    ...obj1,
+    food: 'cola'
+}
+console.log(obj2); // {name: "ame", age: 22, food: "cola"}
+```
+
+下面是函数参数合并的示例
+
+```javascript
+// 函数参数合并
+function upload(params) {
+    let config = {
+        type: '*.jpeg,*.png',
+        size: 10000
+    };
+    params = {...config,...params};
+    return params;
+}
+console.log(upload({size:999})); // {type: "*.jpeg,*.png", size: 999}
+```
+
+## 对象转换
+
+### 基础知识
+
+当对象直接参与计算时，JavaScript引擎会根据计算的场景自动进行类型转换。
+
+- 如果应用的场景需要将对象转为字符串类型，则调用对象内部方法的顺序为`toString() > valueOf()`
+- 如果场景需要将对象转为数值类型，则调用顺序为`valueOf() > toString()`
+
+下面的对象会在数学运算时调用`valueOf()`方法自动转换为数值
+
+```javascript
+let ame = {
+    toString() {
+        return 'ame';
+    },
+    valueOf() {
+        return 99;
+    }
+};
+console.log(ame + 1); // 100
+```
+
+当需要转换为字符串类型时调用`toString()`方法
+
+```javascript
+let ame = {
+    toString() {
+        return 'ame';
+    },
+    valueOf() {
+        return 99;
+    }
+};
+console.log(String(ame)); // ame
+```
+
+### Symbol.toPrimitive
+
+内部自定义`Symbol.toPrimitive`方法可以用来处理所有的转换场景
+
+```javascript
+let ame = {
+    num: 99,
+    [Symbol.toPrimitive]: function () {
+        return this.num;
+    }
+};
+console.log(ame + 1); // 100
+console.log(ame + '1'); // 991
+console.log(String(ame)); // 99
+```
+
+### valueOf /  toString
+
+可以自定义对象的`valueOf()`和`toString()`方法用来定制转换行为。
+
+```javascript
+let ame = {
+    name: 'ame',
+    num: 99,
+    valueOf() {
+        return this.num;
+    },
+    toString() {
+        return this.name;
+    }
+};
+console.log(ame + 3); // 102
+console.log(`${ame}饿了`); // ame 饿了
+```
+
+## 解构赋值
+
+解构是一种更简洁的赋值特性，可以理解为分解一个数据的结构，把值赋值给另一个相同数据结构的对应位置上，在前面的数组章节已经介绍过了。
+
+- 使用解构赋值时建议使用`var/let/const`声明
+
+### 基本使用
+
+下面是使用解构赋值的基本语法
+
+```javascript
+// 对象使用
+let info = {
+    name: 'ame',
+    age: 22
+};
+let {name:n, age:a} = info;
+console.log(n,a); // ame 22
+
+// 如果属性名与变量名相同可以省略属性名定义
+let {good,price} = {good: 'apple', price: 100};
+console.log(good, price); // apple 100
+```
+
+函数的返回值直接解构到变量
+
+```javascript
+// 函数返回值直接解构到变量
+function test() {
+    return {
+        name: 'ame',
+        age: 22
+    };
+}
+let {age: a} = test();
+console.log(a); // 22
+```
+
+函数传参
+
+```javascript
+// 函数传参
+"use strict";
+function test({name,age}) {
+    console.log(name, age);
+}
+test({name: 'ame', age: 22}); // ame 22
+```
+
+### 简洁定义
+
+如果属性名与赋值的变量名相同时可以写得更简洁一些
+
+```javascript
+let user = {
+    name: 'ame',
+    age: 22
+};
+let { name, age } = user;
+console.log(name, age); // ame 22
+```
+
+只赋值部分变量
+
+```javascript
+// 只赋值部分变量
+let [, age] = ['ame', 22];
+console.log(age); // 22
+let {name} = {name:'ame',age: 22};
+console.log(name); // ame
+```
+
+可以直接使用变量赋值对象属性
+
+```javascript
+// 直接使用变量赋值对象属性
+let name = 'ame', age = 22;
+// 标准写法如下
+let user = { name: name, age: age};
+console.log(user); // {name: "ame", age: 22}
+// 如果属性和值变量同名可以写成以下简写形式
+let info = {name, age};
+console.log(info); // {name: "ame", age: 22}
+```
+
+### 嵌套解构
+
+可以操作多层复杂数据结构
+
+```javascript
+// 可以操作多层复杂得数据结构
+const user = {
+    name: 'ame',
+    grade: {
+        math: 120,
+        english: 100
+    }
+};
+const {name, grade: {math}} = user;
+console.log(name, math); // ame 120
+```
+
+### 默认值
+
+为变量设置默认值
+
+```javascript
+let [name, age = 22] = ['ame'];
+console.log(name, age); // ame 22
+let {food, price = 100} = {food: 'cola', price: 6};
+console.log(food,price); // cola 6
+```
+
+使用默认值特性方便对函数参数进行预设
+
+```javascript
+// 使用默认值特性可以方便对函数参数进行预设
+function createElement(options) {
+    let {
+        width = '200px',
+        height = '100px',
+        backgroundColor = 'red'
+    } = options;
+
+    const div = document.createElement('div');
+    div.style.width = width;
+    div.style.height = height;
+    div.style.backgroundColor = backgroundColor;
+    document.body.append(div);
+}
+createElement({
+    backgroundColor: 'green'
+});
+```
+
+### 函数参数
+
+数组参数的使用
+
+```javascript
+// 数组参数的使用
+function test([a, b]) {
+    console.log(a, b);
+}
+test([1, 2]); // 1 2
+```
+
+对象参数的使用方法
+
+```javascript
+// 对象参数的使用
+function test({name, age = 22}) {
+    console.log(name, age);
+}
+test({ name: 'ame' }); // ame 22
+```
+
+对象解构传参
+
+```javascript
+// 对象解构传参
+function user(name, {sex, age}) {
+    console.log(name, sex, age);
+}
+user('ame', {sex: 'male', age: 22}); // ame male 22
+```
+
+## 属性管理
+
+### 添加属性
+
+可以为对象动态添加属性
+
+```javascript
+let obj = {
+    name: 'ame'
+};
+obj.age = 22;
+console.log(obj); // {name: "ame", age: 22}
+```
+
+### 删除属性
+
+使用`delete`关键字可以删除对象的属性
+
+```javascript
+let obj = {
+    name: 'ame',
+    age: 22
+};
+delete obj.age;
+console.log(obj); // {name: "ame"}
+```
+
+### 检测属性
+
+用`hasOwnProperty`方法检测对象自身是否包含指定的属性，使用这个方法不会检测原型链上的属性
+
+```javascript
+let obj = {
+    name: 'ame'
+};
+console.log(obj.hasOwnProperty('name')); // true
+```
+
+下面检测数组对象中的属性
+
+```javascript
+let arr = [1, 2, 3, 4, 5];
+console.log(arr);
+console.log(arr.hasOwnProperty('length')); // true
+console.log(arr.hasOwnProperty('map')); // false
+```
+
+使用`in`操作符可以检测指定对象及其原型链中是否有指定属性
+
+```javascript
+// in 操作符检测属性
+    name: 'ame'
+};
+let obj = {
+    age: 22
+};
+// 设置 obj 为 user 的新原型
+Object.setPrototypeOf(user, obj);
+console.log(user);
+console.log(user.hasOwnProperty('age')); // false
+console.log('age' in user); // true
+```
+
+### 获取属性名
+
+使用`Object.getOwnPropertyNames()`方法可以获取由对象属性名作为元素组成的数组
+
+```javascript
+// 使用 Object.getOwnPropertyNames() 获取属性名
+let user = {
+    name: 'ame',
+    age: 22
+};
+console.log(Object.getOwnPropertyNames(user)); // ["name", "age"]
+```
+
+### Object.assign
+
+使用`Object.assign()`静态方法可以将一个或多个对象的属性复制到另一个对象中，第一个参数传入目标对象，后面的参数为需要被复制属性的对象。
+
+```javascript
+let user = {
+    name: 'ame'
+};
+Object.assign(user, { age: 22 }, { sex: 'male' });
+console.log(user); // {name: "ame", age: 22, sex: "male"}
+```
+
+当然，由于JavaScript赋值是值传递的，因此这个方法只能实现对象属性的浅拷贝
+
+```javascript
+let user = {
+    name: 'ame',
+    age: 22
+};
+let grade = {
+    lessons: {
+        math: 99
+    }
+};
+Object.assign(user, grade);
+console.log(user.lessons.math); // 99
+grade.lessons.math = 250;
+console.log(user.lessons.math); // 250
+```
+
+### 计算属性
+
+对象的属性名可以通过表达式来计算定义，这在动态设置属性或调用方法时很便利。
+
+```javascript
+let id = 0;
+const user = {
+    [`id-${++id}`]: id,
+    [`id-${++id}`]: id,
+    [`id-${++id}`]: id
+};
+console.log(user); // id-1: 1, id-2: 2, id-3: 3}
+```
+
+使用计算属性为文章定义键名
+
+```javascript
+// 为文章定义键名
+const lessons = [
+    {
+        title: '科学养猪',
+        category: '生活'
+    },
+    {
+        title: '朋克养生',
+        category: '生活'
+    },
+    {
+        title: '小汉堡的100种做法',
+        category: '美食'
+    }
+];
+let lessonsObj = lessons.reduce((obj, cur, index) => {
+    obj[`${cur['category']}-${index}`] = cur.title;
+    return obj;
+}, {});
+console.log(lessonsObj); // {生活-0: "科学养猪", 生活-1: "朋克养生", 美食-2: "小汉堡的100种做法"}
+```
+
+### 赋值操作
+
+由于对象是引用类型，因此对象赋值时传递的是对象的地址
+
+```javascript
+let user1 = {
+    name: 'ame'
+};
+let user2 = user1;
+user1.name = 'rain';
+console.log(user2.name); // rain
+```
+
+## 遍历对象
+
+### Object.keys
+
+使用`Object.keys()`静态方法返回一个由对象属性名组成的新数组
+
+```javascript
+const user = {
+    name: 'ame',
+    age: 22,
+    getName() {
+        return this.name;
+    }
+};
+console.log(Object.keys(user)); // ["name", "age", "getName"]
+```
+
+### Object.values
+
+使用`Object.values()`静态方法返回一个由对象属性值组成的新数组
+
+```javascript
+const user = {
+    name: 'ame',
+    getName() {
+        return this.name;
+    }
+};
+console.log(Object.values(user)); // ["ame", ƒ]
+```
+
+### Object.entries
+
+使用`Object.entries()`静态方法返回一个由对象的键和值组成的新数组
+
+```javascript
+const user = {
+    name: 'ame',
+    age: 22,
+    getName() {
+        return this.name;
+    }
+};
+// [["name","ame"],["age",22],['getNme',f]]
+console.log(Object.entries(user));
+```
+
+### for / in
+
+使用`for/in`语法按对象的键来遍历对象
+
+```javascript
+const user = {
+    name: 'ame',
+    age: 22
+};
+for (const key in user) {
+    console.log(key); // name age
+}
+```
+
+### for / of
+
+使用`for/of`语法糖可以用来遍历迭代对象，因此不能直接用它来操作对象。但使用`Oject.keys()`、`Object.values()`以及`Object.entries()`这三个方法可以获得与对象相关的数组，而对数组使用`for/of`语法糖时，默认会先在后台调用数组对象的`values()`方法获得相关的迭代器对象，再通过该迭代器对象获取元素值。
+
+使用`for/of`语法糖按键名遍历对象属性值
+
+```javascript
+const user = {
+    name: 'ame',
+    age: 22
+};
+for (const key of Object.keys(user)) {
+    console.log(key, user[key]); // name ame age 22
+}
+```
+
+上述代码的原理如下
+
+```javascript
+// 原理
+const user = {
+    name: 'ame',
+    age: 22
+};
+const keysArray = Object.keys(user);
+console.log(keysArray instanceof Array); // true
+const iterator = keysArray.values();
+let result;
+while (!(result = iterator.next()).done) {
+    // name ame age 22
+    console.log(result.value, user[result.value]);
+}
+```
+
+获取对象的所有属性
+
+```javascript
+const user = {
+    name: 'user',
+    age: 22
+};
+for (const value of Object.values(user)) {
+    console.log(value); // user 22
+}
+```
+
+同样上述代码的原理如下
+
+```javascript
+const user = {
+    name: 'user',
+    age: 22
+};
+// 原理
+const valuesArray = Object.values(user);
+console.log(valuesArray instanceof Array); // true
+const iterator = valuesArray.values();
+let result;
+while (!(result = iterator.next()).done) {
+    console.log(result.value); // user 22
+}
+```
+
+结合解构语法同时获取对象的键名与属性值
+
+```javascript
+const user = {
+    name: 'ame',
+    age: 22
+};
+for (const [key, value] of Object.entries(user)) {
+    console.log(key, value); // name ame age 22
+}
+```
+
+上面代码的原理如下
+
+```javascript
+const user = {
+    name: 'ame',
+    age: 22
+};
+const array = Object.entries(user);
+console.log(array instanceof Array); // true
+const iterator = array.values();
+let result;
+while (!(result = iterator.next()).done) {
+    const [key, value] = result.value;
+    console.log(key, value); // name ame age 22
+}
+```
+
+添加DOM元素练习
+
+```javascript
+// 添加DOM元素练习
+const lessons = [
+    {
+        name: 'ame',
+        age: 22
+    },
+    {
+        name: 'rain',
+        age: 32
+    }
+];
+const ul = document.createElement('ul');
+for (const value of lessons) {
+    const li = document.createElement('li');
+    li.innerHTML = `课程：${value.name}，年龄：${value.age}`;
+    ul.append(li);
+}
+document.body.append(ul);
+```
+
+## 对象拷贝
+
+### 浅拷贝
+
+浅拷贝指复制引用类型的变量时只复制变量的地址
+
+```javascript
+// 使用 for-in 来进行对象拷贝
+let obj = {
+    name: 'ame',
+    grade: {
+        math: 99
+    }
+};
+let ame = {};
+for (const key in obj) {
+    ame[key] = obj[key];
+}
+obj.name = 'rain';
+obj.grade.math = 100;
+console.log(obj.name, obj.grade); // rain {math: 100}
+console.log(ame.name, obj.grade); // ame {math: 100}
+```
+
+我们前面讲过的`Object.assign()`静态方法可以实现简单的浅拷贝，他可以将一个或多个对象的属性复制到另一个对象中，同名的属性会被覆盖
+
+```javascript
+// Object.assign()
+let user = {
+    name: 'ame',
+};
+let obj = {
+    grade: {
+        math: 99
+    }
+};
+Object.assign(user, obj);
+console.log(user.grade.math); // 99
+obj.grade.math = 111;
+console.log(user.grade.math); // 111
+```
+
+使用展开语法也可以实现对象的浅拷贝
+
+```javascript
+// 展开语法实现浅拷贝
+let obj = {
+    name: 'ame'
+};
+let user = {
+    ...obj
+};
+obj.name = 'rain';
+console.log(obj); // {name: "rain"}
+console.log(user); // {name: "ame"}
+```
+
+### 深拷贝
+
+浅拷贝不会将深层的数据复制，而深拷贝可以完全地复制生成一个新对象，并且新对象和老对象之间是完全独立的。
+
+下面是我们使用递归来进行对象的深拷贝
+
+```javascript
+let obj = {
+    name: 'ame',
+    grade: {
+        math: 99,
+        english: 100
+    },
+    hobbies: ['food', 'music']
+};
+
+function copy(object) {
+    // 判断是不是数组类型的
+    let obj = object instanceof Array ? [] : {};
+    for (const [key, value] of Object.entries(object)) {
+        // 判断是不是引用类型的值
+        obj[key] = typeof value === 'object' ? copy(value) : value;
+    }
+    return obj;
+}
+let newObj = copy(obj);
+obj.grade.math = 20;
+console.log(obj.grade.math); // 20
+console.log(newObj.grade.math); // 99
+```
+
+## 构造函数
+
+对象可以通过内置或自定义的构造函数创建
+
+### 工厂函数
+
+在函数中返回对象的函数称为工厂函数，工厂函数有以下优点
+
+- 减少重复创建相同类型对象的代码
+- 修改工厂函数的方法可以影响生成的所有同类对象
+
+使用字面量创建多个对象时需要重复定义对象的属性和方法
+
+```javascript
+const user1 = {
+  name: 'ame',
+  show() {
+    console.log(this.name);
+  }
+};
+const user2 = {
+  name: 'rain',
+  show() {
+    console.log(this.name);
+  }
+};
+user1.show(); // ame
+user2.show(); // rain
+```
+
+使用工厂函数可以简化这个过程
+
+```javascript
+function createUser(name) {
+  return {
+    name,
+    show() {
+      console.log(this.name);
+    }
+  };
+}
+const user1 = createUser('ame');
+user1.show(); // ame
+const user2 = createUser('rain');
+user2.show(); // rain
+```
+
+### 构造函数
+
+和工厂函数相似，构造函数也用于创建新的对象，构造函数的函数上下文（`this`）为新生成的实例对象。
+
+在前面的[作为构造函数调用](#作为构造函数调用)章节，我们已经分析过构造函数的运行原理了，下面是使用时的注意点：
+
+- 构造函数的函数名每个单词的首字母都要大写，即`Pascal`命名规范
+- `this`指向当前新生成的对象
+- 当不设置函数的返回值时JavaScript引擎会自动返回新生成的对象（`this`指向的对象）
+- 当函数作为构造函数调用时，需要在调用前加上`new`关键字
+
+```javascript
+function User(name) {
+  this.name = name;
+  this.show = function () {
+    console.log(this.name);
+  };
+}
+const user1 = new User('ame');
+user1.show();
+const user2 = new User('rain');
+user2.show(); // rain
+```
+
+如果手动为构造函数设置一个返回值并且该返回值是引用类型的，那么调用构造函数后返回的对象就是自己设置的对象
+
+```javascript
+// 设置返回值
+function User(name) {
+  this.name = name;
+  return {
+    name,
+    show() {
+      console.log(this.name);
+    }
+  };
+}
+const user1 = new User('ame');
+console.log(user1); // {name: "ame", show: ƒ}
+```
+
+如果构造函数的返回值为非引用类型，则调用构造函数时会忽略自定义设置的返回值
+
+```javascript
+// 当返回值为非引用类型时
+function User(name) {
+  this.name = name;
+  return '会忽略自定义返回值';
+}
+const user1 = new User('ame');
+console.log(user1); // User {name: "ame"}
+```
+
+## 抽象特性
+
+将事物的共有属性和方法提取出来，并且将复杂功能隐藏在内部，只开放给外部少量方法，更改对象内部得复杂逻辑不会对外部调用造成影响。
+
+### 问题分析
+
+下例将对象属性封装到构造函数的内部
+
+```javascript
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+  this.info = function () {
+    return this.age > 50 ? '中年' : '年轻';
+  };
+  this.about = function () {
+    return `${this.name}是${this.info()}人`;
+  };
+}
+const user1 = new User('ame', 22);
+console.log(user1.about()); // ame是年轻人
+```
+
+### 抽象封装
+
+上例中实例对象中的方法和属性仍然可以在外部访问到，比如`info`方法只是在内部使用，不需要在外部访问，以防止破坏了程序的逻辑。
+
+下例使用闭包特性将对象进行抽象处理
+
+```javascript
+function User(name, age) {
+  let data = {
+    name,
+    age
+  };
+  let info = function () {
+    return data.age > 50 ? '中年人' : '恶魔人';
+  };
+  this.message = function () {
+    return `${data.name}是${info()}`;
+  };
+}
+const user = new User('ame', 22);
+console.log(user.message()); //ame是恶魔人
+```
+
+## 属性特征
+
+JavaScript中可以对对象属性的属性特性进行控制。
+
+### 查看特征
+
+使用`Object.getOwnPropertyDescriptor()`静态方法可以查看对象指定属性的描述。第一个参数为要查看的对象，第二个参数为要查看属性描述的属性名
+
+```javascript
+const user = {
+  name: 'ame'
+};
+let desc = Object.getOwnPropertyDescriptor(user, 'name');
+console.log(JSON.stringify(desc, null, 2));
+```
+
+使用`Object.getOwnPropertyDescriptors()`静态方法可以查看指定对象所有属性的描述特征，传入指定对象作为参数
+
+```javascript
+// 查看对象所有属性的特征
+const user = {
+  name: 'ame',
+  age: 22
+};
+let desc = Object.getOwnPropertyDescriptors(user);
+console.log(JSON.stringify(desc, null, 2));
+```
+
+对象的属性包括以下四种特性
+
+| 特性         | 说明                                                         | 默认值    |
+| ------------ | ------------------------------------------------------------ | --------- |
+| configurable | 能否使用`delete`删除属性，能否修改属性特性或能否修改访问器特性 | true      |
+| enumerable   | 对象的属性能否进行遍历。也就是是否可以通过`for/in`循环或`Object.keys()`获取属性名 | true      |
+| writable     | 对象属性的值是否能被修改                                     | true      |
+| value        | 对象属性的默认值                                             | undefined |
+
+### 设置特征
+
+使用`Object.defineProperty()`静态方法可以修改对象指定属性的特性。第一个参数为属性所在对象，第二个参数为要设置属性特征的属性名，第三个传入一个配置对象。
+
+下面的例子通过设置属性`name`的特性，它将不能够被遍历、删除、修改
+
+```javascript
+const user = {
+  name: 'ame',
+  age: 22
+};
+console.log(Object.keys(user)); // ["name", "age"]
+Object.defineProperty(user, 'name', {
+  value: 'rain',
+  writable: false,
+  enumerable: false,
+  configurable: false
+});
+// 不能被遍历
+console.log(Object.keys(user)); // ["age"]
+// 不允许修改属性
+user.name = 'haha';
+console.log(user.name); // rain
+// 不允许删除属性
+delete user.name;
+console.log(user.name); // rain
+// 不允许重定义属性特性
+Object.defineProperty(user, 'name', {
+  value: 'haha'
+}); //Cannot redefine property: name
+```
+
+使用`Object.defineProperties()`静态方法可以一次性为指定对象的多个属性设置属性特征，第一个参数为指定的对象，第二个参数为属性及属性特征的配置选项
+
+```javascript
+"use strict";
+const user = {
+  name: 'ame',
+  age: 22
+};
+// 同时设置多个属性特征
+    Object.defineProperties(user, {
+      name: {
+        value: 'rain',
+        writable: false
+      },
+      age: {
+        enumerable: false
+      }
+    });
+    user.name = "haha"; // Cannot assign to read only property 'name' of object '#<Object>'
+```
+
+### 禁止添加属性
+
+使用`Object.preventExtensions()`静态方法可以禁止向对象中添加属性
+
+```javascript
+"use strict";
+const user = {
+  name: 'ame'
+};
+Object.preventExtensions(user);
+user.age = 22; // Cannot add property age, object is not extensible
+```
+
+`Object.isExtensible()`静态方法可以判断能否向对象中添加属性
+
+```javascript
+console.log(Object.isExtensible(user)); // false
+```
+
+### 封闭对象
+
+使用`Object.seal()`静态方法可以封闭一个对象，禁止向对象添加新属性并且将所有的对象属性的特性中的`configurable`设置为`false`，这就意味之不能删除属性和不能重定义属性特性，但我们还是可以修改属性值。
+
+```javascript
+"use strict";
+const user = {
+  name: 'ame',
+  age: 22
+};
+Object.seal(user);
+console.log(JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2));
+user.age = 100;
+console.log(user.age); // 100
+delete user.name; // Error
+```
+
+使用`Object.isSealed()`静态方法可以判断对象是否被密封了
+
+```javascript
+console.log(Object.isSealed(user)); // true
+```
+
+### 冻结对象
+
+使用`Object.freeze()`静态方法可以冻结一个对象，被冻结后的对象不允许添加、删除、修改属性，不能够重定义属性特性。也就是说属性的`writable`、`configurable`都被置为`false`
+
+```javascript
+"use strict";
+const user = {
+  name: 'ame'
+};
+Object.freeze(user);
+console.log(JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2));
+user.name = 'rain'; // Error
+```
+
+利用`Object.isFrozen()`静态方法可以判断一个对象是否被冻结
+
+```javascript
+console.log(Object.isFrozen(user)); // true
+```
+
+## 属性访问器
+
+getter方法用于获取属性值，setter方法用于设置属性值，这是JavaScript提供的存储器特性即使用函数来管理属性
+
+- 用于避免错误的赋值
+- 需要动态监测值的改变 
+- 属性只能在访问器和普通属性中任选其一，不能共同存在
+
+### getter / setter
+
+我们可以通过对象字面量的形式定义setter和getter，通过在属性名前添加`set`或`get`关键字可以定义属性的访问器，setter访问器接收你要设置的值作为唯一的参数。
+
+向用户的年龄数据使用访问器监控控制
+
+```javascript
+"use strict";
+const user = {
+  data: {
+    name: 'ame',
+    age: null
+  },
+  set age(value) {
+    if (typeof value != 'number' || value > 100 || value < 10) {
+      throw new Error('年龄格式错误');
+    }
+    this.data.age = value;
+  },
+  get age() {
+    return `年龄是：${this.data.age}岁`;
+  }
+};
+user.age = 99;
+console.log(user.age); // 年龄是：99岁
+```
+
+下面是使用getter设置只读课程的总价
+
+```javascript
+let lessons = {
+  lists: [
+    {
+      name: 'js',
+      price: 100
+    },
+    {
+      name: 'css',
+      price: 99
+    },
+    {
+      name: 'html',
+      price: 22
+    }
+  ],
+  get total() {
+    return this.lists.reduce((total, cur) => {
+      return total += cur.price;
+    }, 0);
+  }
+}
+console.log(lessons.total); // 221
+// 访问器属性和普通属性同时存在时，会忽略普通属性，优先执行访问器属性
+lessons.total = 99999; // 无效
+console.log(lessons);
+console.log(lessons.total); // 221
+```
+
+下面通过设置网站名称与网址体验getter和setter批量设置属性的使用
+
+```javascript
+const web = {
+  name: 'ame',
+  url: 'wasser.net.cn',
+  get site() {
+    return `${this.name}：${this.url}`;
+  },
+  set site(value) {
+    [this.name, this.url] = value.split(',');
+  }
+};
+web.site = 'rain,listarrain.io';
+console.log(web.site); // rain：listarrain.io
+```
+
+下面是设置token存储的示例，将业务逻辑使用getter和setter处理更方便，也方便其他业务的复用
+
+```javascript
+let Request = {
+  get token() {
+    let con = localStorage.getItem('token');
+    if (!con) {
+      alert('请登陆后获取token');
+    } else {
+      return con;
+    }
+  },
+  set token(con) {
+    localStorage.setItem('token', con)
+  }
+};
+Request.token = 'ame';
+console.log(Request.token); // ame
+```
+
+定义内部私有属性
+
+```javascript
+"use strict";
+const user = {
+  get name() {
+    return this._name;
+  },
+  set name(value) {
+    if (value.length <= 3) {
+      throw new Error('用户名不能小于3位');
+    }
+    this._name = value;
+  }
+};
+user.name = 'rain';
+console.log(user.name);
+console.log(user); // {_name: "rain"}
+```
+
+### 访问器描述符
+
+使用`Object.defineProperty()`和`Object.defineProperties()`静态方法也可以为属性定义访问器属性。
+
+模拟定义私有属性，从而使用面向对象的抽象特性
+
+```javascript
+// 模拟定义私有属性
+function User(name, age) {
+  let data = {
+    name,
+    age
+  };
+  Object.defineProperties(this, {
+    name: {
+      get() {
+        return data.name;
+      },
+      set(value) {
+        if (value.trim() = '') throw new Error('无效用户名');
+        data.name = value;
+      }
+    },
+    age: {
+      get() {
+        return data.age;
+      },
+      set(value) {
+        if (typeof value !== 'number') throw new Error('格式错误');
+        data.age = value;
+      }
+    }
+  });
+}
+let user1 = new User('ame', 22);
+console.log(user1.name);
+user1.age = '1'; // Error
+```
+
+上面的代码也可以用`calss`语法糖来实现
+
+```javascript
+"use strict";
+let DATA = Symbol();
+class User {
+  constructor(name, age) {
+    this[DATA] = {
+      name,
+      age
+    };
+  }
+  get name() {
+    return this[DATA].name;
+  }
+  set name(value) {
+    if (value.trim() == '') throw new Error('无效用户名');
+    this[DATA].name = value;
+  }
+  get age() {
+    return this[DATA].age;
+  }
+  set age(value) {
+    if (typeof value !== 'number') throw new Error('格式错误');
+    this[DATA].age = value;
+  }
+}
+const user1 = new User('ame', 22);
+console.log(user1.name); // ame
+user1.name = 'rain';
+console.log(user1.name); // rain
+```
+
+### 闭包访问器
+
+下面结合闭包特性对属性进行访问控制
+
+- 下例中访问器定义在函数中，并接收参数`value`
+- 在`get()`中通过闭包返回`value`
+- 在`set()`中修改了`value`，这会影响`get()`访问到的闭包数据`value`
+
+```javascript
+let data = {
+  name: 'ame'
+};
+for (const [key, value] of Object.entries(data)) {
+  observe(data, key, value);
+}
+
+function observe(data, key, value) {
+  Object.defineProperty(data, key, {
+    get() {
+      return value;
+    },
+    set(newValue) {
+      value = newValue;
+    }
+  });
+}
+data.name = 'rain';
+console.log(data.name); // rain
+```
+
+## 代理拦截
+
+代理（拦截器）是对象的访问控制，`setter/getter`是对单个对象属性的控制。而代理是对整个对象的控制。
+
+- 读写属性时代码更简洁
+- 对象的多个属性控制统一交给代理完成
+- 严格模式下`setter`必须返回布尔值
+
+### 声明定义
+
+调用`Proxy()`构造函数可以实例化一个代理对象，第一个参数为需要代理的原始对象，第二个参数为`getter/setter`配置对象
+
+```javascript
+"use strict";
+const user = {
+  name: 'ame'
+};
+const proxy = new Proxy(user, {
+  get(obj, property) {
+    return obj[property];
+  },
+  set(obj, property, value) {
+    obj[property] = value;
+    return true;
+  }
+});
+proxy.age = 10;
+console.log(user); // {name: "ame", age: 10}
+```
+
+### 代理函数
+
+如果代理以函数方式执行时，会调用代理对象中的`apply()`方法
+
+`apply()`方法接收需要代理的函数对象，函数上下文，函数参数作为参数
+
+下面用来计算函数执行时间
+
+```javascript
+function factorial(num) {
+  return num === 1 ? 1 : num * factorial(num - 1);
+}
+const proxy = new Proxy(factorial, {
+  apply(target, context, args) {
+    console.time('run');
+    console.log(target.apply(context, args));
+    console.timeEnd('run');
+  }
+});
+proxy(3);
+```
+
+### 截取字符
+
+下例对数组对象进行代理，用于截取标题操作
+
+```javascript
+const stringDot = {
+  get(target, key) {
+    const title = target[key].title;
+    const len = 5;
+    return title.length > len ? title.substr(0, len) + '.'.repeat(3) : title;
+  }
+};
+const lessons = [
+  {
+    title: '鲱鱼罐头的100中吃法',
+    price: 99
+  },
+  {
+    title: '说话的艺术',
+    price: 100
+  }
+];
+const stringDotProxy = new Proxy(lessons, stringDot);
+console.log(stringDotProxy[0]); // 鲱鱼罐头的...
+```
+
+### 双向绑定
+
+下面通过代理实现`Vue`等前端框架的数据与视图双向绑定的特性
+
+```javascript
+function View() {
+  // 设置代理拦截
+  let proxy = new Proxy({}, {
+    get(target, property) {
+      return target[property];
+    },
+    set(target, property, value) {
+      target[property] = value;
+      const nodes = document.querySelectorAll(`[v-model="${property}"],[v-bind="${property}"]`);
+      nodes.forEach(el => {
+        el.innerHTML = value;
+        el.value = value;
+      });
+    }
+  });
+  // 初始化绑定元素事件
+  this.run = function () {
+    const els = document.querySelectorAll(`[v-model]`);
+    els.forEach(el => {
+      el.addEventListener('keyup', function () {
+        proxy[this.getAttribute('v-model')] = this.value;
+      });
+    });
+  };
+}
+const view = new View().run();
+```
+
+![双向绑定](images/双向绑定.gif)
+
+### 表单验证
+
+```html
+<style>
+  body {
+    padding: 0;
+    margin: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #34495e;
+  }
+
+  input {
+    border: 10px solid #ddd;
+    height: 30px;
+  }
+
+  .error {
+    border: 10px solid red;
+  }
+</style>
+
+<body>
+  <input type="text" validate rule="max:12,min:3">
+  <input type="text" validate rule="max:12,isNumber">
+
+  <script>
+    "use strict";
+    // 验证处理类
+    class Validate {
+      max(value, len) {
+        return value.length <= len;
+      }
+      min(value, len) {
+        return value.length >= len;
+      }
+      isNumber(value) {
+        return /^\d+$/.test(value);
+      }
+    }
+
+    // 代理工厂
+    function makeProxy(target) {
+      return new Proxy(target, {
+        get(target, key) {
+          return target[key];
+        },
+        set(target, key, el) {
+          const rules = el.getAttribute('rule');
+          const validate = new Validate();
+          let state = rules.split(',').every(rule => {
+            const info = rule.split(':');
+            return validate[info[0]](el.value, info[1]);
+          });
+          el.classList[state ? 'remove' : 'add']('error');
+          return true;
+        }
+      });
+    }
+
+    const nodes = makeProxy(document.querySelectorAll('[validate]'));
+    nodes.forEach((item, i) => {
+      item.addEventListener('keyup', function () {
+        nodes[i] = this;
+      })
+    });
+  </script>
+```
+
+![表单验证](images/代理表单验证.gif)
+
+## JSON
+
+`JSON`又叫JavaScript对象表示法。
+
+- `json`是一种轻量级的数据交换结构，易于人们阅读和编写
+- 使用`json`数据格式是替换`xml`的最佳方式，主流的语言都能够很好地支持`json`数据结构。所以`json`也是前后台进行数据交换的主要格式。
+- `json`标准中要求使用双引号包裹属性名，虽然有些语言并不强制要求，但为了减少不确定错误的发生，我们还是应遵循标准来编写代码。
+
+### 声明定义
+
+`JSON`语法可以表示以下三种类型的值：
+
+- 简单值：使用与JavaScript相同的语法，可以在`json`中表示字符串、数值、布尔值和`null`。但`json`不支持JavaScript中的特殊值`undefined`
+- 对象：对象作为一种复杂数据类型，表示的是一组无序的键值对。而每个键值对中的值可以是简单值，也可以是复杂数据类型的值。
+- 数组：数组也是一种复杂数据类型，表示一种有序的值的列表，可以通过数值索引来访问其中的值。数组的值也可以是任意类型——简单值、对象或数组。
+
+`JSON`不支持变量、函数或对象实例，它就是一种表示结构化数据的格式。
+
+基本结构
+
+```javascript
+let user = {
+  "name": "ame",
+  "age": 22
+};
+console.log(user.name); // ame
+```
+
+数组结构
+
+```javascript
+// 数组结构
+let lessons = [
+  {
+    "title": "JS",
+    "price": 100
+  },
+  {
+    "title": "css",
+    "price": 100
+  }
+];
+console.log(lessons[0].title); // JS
+```
+
+### 序列化
+
+使用`JSON.stringify()`静态方法可以将一个JavaScript对象序列化为可传输的`JSON`字符串
+
+```javascript
+let user = {
+  "name": "ame",
+  "age": 22,
+  "grade": {
+    "math": 99
+  }
+};
+// {"name":"ame","age":22,"grade":{"math":99}}
+console.log(JSON.stringify(user));
+```
+
+第二个参数可以指定需要保留的属性
+
+```javascript
+// {"name":"ame","age":22}
+console.log(JSON.stringify(user, ["name", "age"]));
+```
+
+第三个参数可以用来控制`TAB`数量，如果是字符串则可以控制前导字符
+
+```javascript
+/*{
+	"name": "ame",
+   "age": 22,
+   "grade": {
+      "math": 99
+    }
+ }*/
+console.log(JSON.stringify(user, null, 2));
+```
+
+可以为对象添加`toJSON()`方法来自定义序列化时返回的数据格式
+
+```javascript
+// toJSON
+let user = {
+  "name": "ame",
+  "age": 22,
+  "grade": {
+    "math": 99
+  },
+  toJSON() {
+    return {
+      "name": "ame",
+      "age": 22
+    };
+  }
+};
+console.log(JSON.stringify(user)); // {"name":"ame","age":22}
+```
+
+### 解析
+
+使用`JSON.parse()`方法可以将`JSON`字符串解析为JavaScript对象
+
+```javascript
+let user = {
+  "name": "ame",
+  "age": 22
+};
+let jsonStr = JSON.stringify(user);
+console.log(JSON.parse(jsonStr).name); //ame
+```
+
+第二个参数可以传入一个回调函数，该回调函数接收对象的键和值作为参数，我们利用该回调函数可以对解析后的数据进行二次处理
+
+```javascript
+let user = {
+  "name": "ame",
+  "age": 22
+};
+let jsonStr = JSON.stringify(user);
+console.log(JSON.parse(jsonStr).name); //ame
+console.log(JSON.parse(jsonStr, (key, value) => {
+  if (key == 'name') {
+    return `[天才]${value}`;
+  }
+  return value;
+})); // {name: "[天才]ame", age: 22}
+```
+
+# 原型和继承
+
+## 原型基础
+
+### 原型对象
+
+我们创建的每个函数都有一个`prototype`（原型）属性，这个属性是一个指针，指向一个对象，而这个对象的用途是包含可以由特定类型的所有实例共享的属性和方法。如果按照字面意思来理解，那么`prototype`就是通过调用构造函数而创建的那个对象实例的原型对象。
+
+- 原型对象中的属性和方法可以由所有实例对象共享。
+- 所有函数的默认原型默认是`Object`的实例。
+- 当查找属性时，如果对象本身不存在该属性，则会在该对象的原型对象上查找，直到找到此属性才停止查找。以此类推，就形成了原型链。
+- 使用原型对象可以有效解决通过构造函数创建对象时复制多个函数造成的内存占用问题
+- 原型对象中的`constructor`属性指向构造函数
+- 实例对象中的`__proto__`属性指向该对象所属类所对应构造函数的原型对象
+
+下例我们使用的就是数组原型对象的`concat`方法完成的连接操作
+
+```javascript
+let arr = [1, 2];
+console.log(arr.hasOwnProperty('concat')); // false
+console.log(arr.__proto__.hasOwnProperty('concat')); // true
+console.log(arr.concat(3)); // [1,2,3]
+```
+
+默认情况下创建的对象都有原型，因为它们都是通过`Object`构造函数生成的
+
+```javascript
+let obj = {
+  name: 'ame'
+};
+console.log(obj);
+```
+
+![对象默认都有原型](images/对象默认都有原型.png)
+
+使用`Object.create()`静态方法我们可以创建一个原型为指定对象的对象。该方法第一个参数为作为新创建对象的原型对象的对象，第二个参数为可选参数，为新生成对象的属性描述符的配置对象。
+
+利用这个方法，我们可以创建一个极简对象（纯数据字典对象），没有原型（原型为`null`）
+
+```javascript
+let user = Object.create(null, {
+  name: {
+    value: 'ame',
+    enumerable: true
+  },
+  age: {
+    get() {
+      return 22;
+    }
+  }
+});
+console.log(user.age); // 22
+console.log(user);
+console.log(Object.keys(user)); // ["name"]
+```
+
+![没有原型的极简对象](images/极简对象.png)
+
+我们前面讲过，函数其实也是调用`Function`构造函数得到的实例化对象，因此函数对象也有自己的原型，通过`__proto__`属性可以访问函数对象的原型对象，通过`prototype`属性可以得到通过调用该构造函数生成的实例对象的原型对象。
+
+```javascript
+function User() {}
+User.__proto__.show = function () {
+  console.log('User function show method');
+};
+console.log(User.__proto__ === Function.prototype); // true
+User.show(); // User function show method
+User.prototype.show = function () {
+  console.log('User prototype show method');
+};
+let user = new User();
+console.log(user.__proto__ === User.prototype); // true
+user.show(); // User prototype show method
+```
+
+下图是上述代码的原型关系分析
+
+<img src="images/原型图解.png" alt="原型图解" style="zoom:67%;" />
+
+下面是使用构造函数创建对象的原型体现
+
+- 构造函数同样拥有原型对象
+- 调用构造函数创建实例化对象时会把构造函数的原型赋予对象
+
+```javascript
+// 通过构造函数创建对象
+function User() {}
+const user1 = new User();
+console.log(User.prototype === user1.__proto__); // true
+```
+
+<img src="images/构造函数创建对象.png" alt="构造函数创建对象" style="zoom:67%;" />
+
+使用`Object.getPrototypeOf()`静态方法可以获取对象的原型对象
+
+```javascript
+// 获取原型对象
+function User() {}
+User.prototype.show = function () {
+  console.log('User prototype show method');
+};
+const user = new User();
+console.log(Object.getPrototypeOf(user).show()); // User prototype show method
+```
+
+使用`Object.setPrototypeOf()`静态方法可以为指定对象设置原型对象，第一个参数为目标对象，第二个参数为原型对象
+
+```javascript
+// 给对象设置指定原型
+let user = {
+  name: 'ame'
+};
+let obj = {
+  show() {
+    console.log(this.name);
+  }
+};
+// 将 obj 设置为 user对象 的原型对象
+Object.setPrototypeOf(user, obj);
+user.show(); // ame
+console.log(user);
+```
+
+原型对象`prototype`中的`constructor`属性指向拥有该原型对象的构造函数
+
+```javascript
+// constructor 属性
+function User() {
+  this.show = function () {
+    return `show method`;
+  };
+}
+const user1 = new User();
+console.log(user1 instanceof User); // true
+// user1 没有该属性，查找其原型对象，最终在原型对象上查找到了该属性
+const user2 = new user1.constructor();
+console.log(user2 instanceof User); // true
+```
+
+### 原型链
+
+通过将一个类原型的引用复制给另一个类原型对象的原型，可以实现通过原型继承父类原型的属性和方法，这也是继承的原理。以此类推，就形成了原型链。
+
+下面是最简单情况下的原型链：
+
+<img src="images/简单原型链.png" alt="简单原型链" style="zoom:80%;" />
+
+使用`Object.setPrototypeOf()`静态方法可以设置对象的原型，使用`Object.getPrototypeOf()`静态方法可以获取一个对象的原型。
+
+下例中的继承关系为`admin`继承于`user`继承于`Object`
+
+```javascript
+let user = {
+  name: 'ame',
+  age: 22
+}
+let admin = {
+  role: 'root'
+};
+// 设置原型
+Object.setPrototypeOf(admin, user);
+console.log(admin.name); // ame
+console.log(Object.getPrototypeOf(admin) === user) // true;
+console.log(Object.getPrototypeOf(admin).__proto__ === Object.prototype); // true
+```
+
+### 原型检测
+
+使用`instanceof`操作符可以检测操作符右边的对象的`prototype`属性所指的原型对象是否在操作符左边对象的原型链上
+
+```javascript
+function A() {}
+function B() {}
+function C() {}
+
+const c = new C();
+B.prototype = c;
+const b = new B();
+A.prototype = b;
+const a = new A();
+
+console.log(a instanceof A); // true
+console.log(a instanceof B); // true
+console.log(a instanceof C); // true
+console.log(b instanceof C); // true
+console.log(c instanceof B); // false
+```
+
+使用对象的`isPrototypeOf()`方法可以检测一个对象是否在另一个对象的原型链中
+
+```javascript
+// 检测一个对象是否在另一个对象的原型链中 
+const a = {};
+const b = {};
+const c = {};
+Object.setPrototypeOf(a, b);
+Object.setPrototypeOf(b, c);
+console.log(b.isPrototypeOf(a)); // true
+console.log(c.isPrototypeOf(a)); // true
+console.log(c.isPrototypeOf(b)); // true
+```
+
+### 属性遍历
+
+使用`in`操作符可以遍历对象自身及其原型链上的所有可遍历属性
+
+```javascript
+// in 操作符
+const a = {
+  name: 'ame',
+  age: 22
+};
+let b = {
+  show() {
+    console.log(this.name, this.age);
+  }
+};
+Object.setPrototypeOf(a, b);
+console.log("show" in a); // true
+console.log(a.hasOwnProperty('name')); // true
+console.log(a.hasOwnProperty('show')); // false
+```
+
+使用`for/in`循环遍历对象属性时会同时遍历对象原型链上可遍历的属性
+
+```javascript
+const user = {
+  name: 'ame'
+};
+const admin = Object.create(user, {
+  age: {
+    value: 22,
+    enumerable: true
+  }
+});
+for (const key in admin) {
+  console.log(key); // age name
+}
+```
+
+对象的`hasOwnProperty()`方法可以判断对象是否存在指定属性，该方法只会查找对象本身，并不会查找对象的原型，下面遍历对象本身拥有的属性
+
+```javascript
+const user = {
+  name: 'ame'
+};
+const admin = Object.create(user, {
+  age: {
+    value: 22,
+    enumerable: true
+  }
+});
+for (const key in admin) {
+  if (admin.hasOwnProperty(key)) {
+    console.log(key); // age
+  }
+}
+```
+
+### 借用原型
+
+通过前面的学习我们知道，读取对象属性时首先会在对象本身中查找该属性，若该对象自身没有该属性，则查找该对象的原型对象中是否有该属性。因此，通过函数对象的`call`或`apply`方法我们可以通过对象的原型去借用一些方法。
+
+下面的`user2`对象不能使用`max`方法，但我们可以借用`user1`对象的原型方法
+
+```javascript
+const user1 = {
+  data: [3, 2, 1, 4, 5]
+};
+Object.setPrototypeOf(user1, {
+  max: function () {
+    return this.data.sort((pre, cur) => {
+      return cur - pre;
+    })[0];
+  }
+});
+console.log(user1.max());
+
+const user2 = {
+  lessons: {
+    js: 100,
+    php: 78,
+    node: 78
+  },
+  get data() {
+    return Object.values(this.lessons);
+  }
+};
+console.log(user1.__proto__.max.apply(user2)); // 100
+```
+
+利用`Math.max()`静态方法进行优化
+
+```javascript
+const user1 = {
+  data: [3, 2, 1, 4, 5]
+};
+console.log(Math.max.apply(null, Object.values(Object.values(user1.data))));
+const user2 = {
+  lessons: {
+    js: 100,
+    php: 78,
+    node: 78
+  }
+}
+console.log(Math.max.apply(null, Object.values(user2.lessons))); // 100
+```
+
+下面获取设置了`class`属性的按钮，但`NodeList`不能使用数组的`filter`等方法，但通过借用数组原型中的方法我们就可以操作了
+
+```html
+<button class="test">click me</button>
+<button>test</button>
+
+<script>
+  let btns = document.querySelectorAll('button');
+  btns = Array.prototype.filter.call(btns, item => {
+    return item.hasAttribute('class');
+  });
+  console.log(btns); // [button.test]
+</script>
+```
+
+### this
+
+函数上下文不受继承影响，它还是指向与函数调用相关联的对象
+
+```javascript
+const user1 = {
+  name: 'ame'
+};
+const user2 = {
+  name: 'rain',
+  show() {
+    return this.name;
+  }
+};
+user1.__proto__ = user2;
+console.log(user1.show()); // ame
+console.log(user2.show()); // rain
+```
+
+## 原型总结
+
+### prototype
+
+函数对象的`prototype`属性指向通过该构造函数实例化的所有对象的原型，该原型中保存着可以由该类所有实例对象所共享的属性和方法。
+
+当通过构造函数实例化对象时，会将构造函数的`prototype`原型属性赋予到这个新生成对象。
+
+```javascript
+function User(name) {
+  this.name = name;
+};
+User.prototype = {
+  constructor: User,
+  show() {
+    return this.name;
+  }
+};
+let user = new User('ame');
+console.log(user.show()); // ame
+console.log(user.__proto__ === User.prototype); // true
+```
+
+函数对象的`prototype`原型对象默认有一个`constructor`属性指向拥有该原型对象的构造函数
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+let user1 = new User('ame');
+console.log(User.prototype.constructor === User); // true
+console.log(user1.__proto__ === User.prototype); // true
+let user2 = new user1.constructor('rain');
+console.log(user2.name); // rain
+console.log(user2.__proto__ === user1.__proto__); // true
+```
+
+原型中保存的属性值会造成对象共享属性，所以一般只会在原型中定义方法
+
+```javascript
+function User() {}
+// 重写原型对象
+User.prototype = {
+  lessons: ['math', 'english']
+};
+const user1 = new User('ame');
+const user2 = new User('rain');
+user1.lessons.push('chinese');
+console.log(user2.lessons); // ["math", "english", "chinese"]
+```
+
+为`Object`的原型对象添加方法，由于`Object`是所有引用类型的基类，因此会影响所有引用类型
+
+```javascript
+Object.prototype.show = function () {
+  console.log('haha');
+};
+let user = {
+  name: 'ame'
+};
+user.show() // haha
+function test() {}
+test.show(); // haha
+```
+
+了解了原型后可以为系统对象添加方法，比如为字符串原型添加一截断函数，不要重写系统构造函数的原型，避免引起不必要的错误
+
+```javascript
+String.prototype.truncate = function (len = 5) {
+  return this.length <= len ? this : this.substr(0, len) + '...';
+}
+console.log('我饿了我想吃好吃的'.truncate()); // 我饿了我想...
+```
+
+### Object.create
+
+使用`Object.create()`静态方法可以创建一个以指定对象作为原型的对象，可以使用第二个属性设置新对象的属性描述
+
+```javascript
+let user = {
+  show() {
+    return this.name;
+  }
+};
+let obj = Object.create(user, {
+  name: {
+    enumerable: true,
+    value: 'ame'
+  }
+});
+console.log(obj.show()); // ame
+```
+
+### \__proto__
+
+实例化对象上的`__proto__`属性记录了该对象所属类所对应的构造函数的原型对象，因此可以通过对象访问到原型的属性或方法。
+
+- `__proto__`其实并不是对象的属性，可以将它理解为`prototype`的`getter/setter`实现，它只是浏览器厂商自己实现的一个非标准定义
+- `__proto__`内部使用`getter/setter`控制值，所以只允许返回对象或`null`
+- 建议使用标准的`Object.getPrototypeOf()`和`Object.setPrototypeOf()`替代非标准的`__proto__`
+
+下面修改对象的`__proto__`是不会成功的，因为`__proto__`内部使用`getter/setter`控制值，所以只允许值为对象或者`null`
+
+```javascript
+let user1 = {};
+user1.__proto__ = 'ame';
+console.log(typeof user1.__proto__); // object
+```
+
+下面定义的`__proto__`就会成功，因为这是一个极简对象，没有原型对象所以不会影响`__proto__`赋值
+
+```javascript
+let user2 = Object.create(null);
+user2.__proto__ = 'ame';
+console.log(user2.__proto__); // ame
+```
+
+下面通过改变对象的`__proto__`原型对象来实现继承
+
+```javascript
+let person = {
+  name: 'ame'
+};
+let user = {
+  show() {
+    return this.name;
+  }
+};
+let admin = {
+  handle() {
+    return `管理员：${this.name}`;
+  }
+};
+user.__proto__ = person;
+admin.__proto__ = user;
+console.log(admin.show()); // ame
+console.log(admin.handle()); // 管理员：ame
+```
+
+### 使用建议
+
+通过前面的知识我们可以知道有多种方法可以设置原型，总结如下：
+
+1. `prototype`指定构造函数的原型属性
+2. `Object.create()`可以创建对象时指定原型
+3. `__proto__`可以为对象设置原型，该属性为非标准属性，不建议使用
+4. `Object.setPrototypeOf()`设置对象原型，`Obejct.getPrototypeOf()`获取对象原型，建议使用此方法更改原型。
+
+## 构造函数
+
+### 原型属性
+
+通过`new`操作符调用构造函数生成实例化对象时会把构造函数的原型（`prototype`）赋值给新对象。当读取对象属性时，会从对象自身开始查找，若对象本身存在属性，就读取属性，不在原型上进行查找，否则会查找对象的原型直到找到指定属性或属性不存在时才停止查找。
+
+```javascript
+function User() {
+  this.show = function () {
+    return `show in object`;
+  };
+};
+User.prototype.show = function () {
+  return `prototype show`;
+};
+const user = new User();
+console.log(user.show()); // show in object
+```
+
+对象的原型引用的是构造函数的原型对象，这是在实例化对象时确定的，当构造函数原型对象改变时会影响后面的实例对象
+
+```javascript
+function User() {}
+User.prototype.name = 'ame';
+const user1 = new User();
+console.log(user1.name); // ame
+User.prototype = {
+  name: 'rain'
+};
+const user2 = new User();
+console.log(user2.name); // rain
+console.log(user1.name); // ame
+```
+
+### constructor
+
+构造函数的原型对象中的`constructor`属性指向该构造函数，下面通过`user1`读取`constructor`属性时，首先会搜索对象内部，对象内部无该属性，则查找对象的原型，最终在对象的原型上找到该属性，接着便停止查找
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+let user1 = new User('ame');
+let user2 = new user1.constructor('rain');
+console.log(user2.name); // rain
+```
+
+以下代码重写构造函数的原型会导致`constructor`属性丢失，我们在重写原型对象时一定要保证原型中的`constructor`属性指向构造函数。注意，原型中的所有属性和方法正常情况下是不可遍历的
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+User.prototype = {
+  constructor: User,
+  show: function () {
+    console.log('hi');
+  }
+};
+Object.defineProperties(User.prototype, {
+  constructor: {
+    enumerable: false
+  },
+  show: {
+    enumerable: false
+  }
+});
+const user1 = new User('ame');
+console.log(user1);
+```
+
+### 使用优化
+
+使用构造函数为每个实例化对象创建相同的方法会造成内存占用问题，及实例对象间的函数不能共享，而我们在原型中定义的方法可以由所有实例对象共享，能有效解决内存占用问题。
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+User.prototype.get = function () {
+  return `姓名：${this.name}`;
+};
+let user1 = new User('ame');
+let user2 = new User('rain');
+console.log(user1.get === user2.get); // true
+// 修改原型中的方法会影响所有对象的调用，因为原型是由实例对象共享的
+user1.__proto__.get = function () {
+  return '被修改了';
+};
+console.log(user2.get()); // 被修改了
+```
+
+结合`Object.assign()`静态方法可以一次性为原型对象添加多个方法或属性，后面会利用这个功能实现`Mixin`模式
+
+```javascript
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+Object.assign(User.prototype, {
+  getName() {
+    return this.name;
+  },
+  getAge() {
+    return this.age;
+  }
+});
+let user1 = new User('ame');
+console.log(user1.getName()); // ame
+console.dir(user1.__proto__);
+```
+
+## 继承与多态
+
+继承就是子类继承父类的属性和方法，使得子类对象（实例）具有父类的属性和方法，或子类从父类继承方法，使得子类具有父类相同的行为。
+
+多态是不同对象对于同一操作产生的不同效果。比如多个对象虽然都是由同一个构造函数创建的，但是执行同一个方法后结果各不相同，这就叫多态。
+
+### 继承实现
+
+继承是原型的继承。
+
+上面我们讲过原型链的特性，当访问一个对象的属性时，若对象本身有该属性，则不会查找其原型，否则查找对象的原型，直到找到该属性或属性不存在时停止查找，以此类推，形成了原型链。
+
+我们知道，原型对象本质也是一个由相应构造函数所实例化的对象，既然是对象那么肯定拥有自己的原型（`__proto__`），因此我们可以把一个子类构造函数的原型（`prototype`）设置为另一个父类构造函数的实例对象，这就实现了继承。
+
+小贴士：我们利用JavaScript中函数是第一类对象的特性可以实现静态属性和静态方法
+
+1. 静态方法和静态属性是代码执行完当前类后就一直存在的，只会创建一次后就会常驻内存。
+2. 不需要通过实例对象来调用静态方法和属性。
+3. 通过`类名.属性名`直接调用静态属性或者方法
+4. 构造函数的`name`属性为函数名，注意不要把他覆盖了
+
+下例的`Admin`继承于`User`
+
+```javascript
+// User类
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+User.prototype.getUserName = function () {
+  return this.name;
+};
+// 添加静态方法
+User.show = function () {
+  return "User static method";
+};
+
+// Admin 类
+function Admin(name, age, role) {
+  // 借用构造函数
+  User.call(this, name, age);
+  this.role = role;
+}
+// 设置原型
+Admin.prototype = Object.create(User.prototype, {
+  constructor: {
+    value: Admin,
+    enumerable: false
+  },
+  getRole: {
+    value: function () {
+      return this.role
+    },
+    enumerable: false
+  }
+});
+// 继承静态方法和属性
+Object.setPrototypeOf(Admin, User);
+Object.defineProperty(User, 'show', {
+  enumerable: false
+});
+
+const admin1 = new Admin('ame', 22, 'admin');
+console.log(admin1.getRole()); // admin
+console.log(admin1.getUserName()); // ame
+console.log(Admin.show()); // User static method
+console.dir(Object.getPrototypeOf(Admin));
+```
+
+给大家画张图方便理解
+
+<img src="images/继承.png" alt="继承" style="zoom:80%;" />
+
+千万注意，不要直接进行原型间的相互赋值来进行继承，这并不是继承，这可能会导致改变另一个构造函数的原型，造成原型紊乱
+
+```javascript
+function User() {}
+User.prototype.show = function () {
+  console.log('User prototype show');
+};
+const user1 = new User();
+user1.show(); // User prototype show
+
+function Admin() {}
+// 错误示范
+Admin.prototype = User.prototype;
+Admin.prototype.show = function () {
+  console.log('Admin prototype show');
+};
+const user2 = new User();
+user2.show(); // Admin prototype show
+```
+
+上面代码的原型图如下
+
+<img src="images/错误继承.png" alt="错误继承" style="zoom:80%;" />
+
+我们通过不同的方法来设置原型时可能会有些许差别，使用重写对象原型和`Object.create()`静态方法会直接更改原型对象，而使用`__proto__`属性和`Object.setPrototypeOf()`方法只会更改原型对象的原型。
+
+重写原型对象，下例对重写原型对象之后新生成的对象才产生效果
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+
+function Admin(name) {
+  User.call(this, name);
+}
+Admin.prototype.show = function () {
+  return this.name;
+};
+const admin1 = new Admin('ame');
+Admin.prototype = Object.create(User.prototype, {
+  constructor: {
+    value: Admin,
+    enumerable: false
+  }
+});
+const admin2 = new Admin('rain');
+console.log(admin1.show()); // ame
+console.log(admin2.show()); // Error
+```
+
+直接更改原型对象的原型（`__proto__`），对不管在前后实例化的对象都有效
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+
+function Admin(name) {
+  User.call(this, name);
+}
+Admin.prototype.show = function () {
+  return this.name;
+};
+const admin1 = new Admin('ame');
+Object.setPrototypeOf(Admin.prototype, User.prototype);
+const admin2 = new Admin('rain');
+console.log(admin1.show()); // ame
+console.log(admin2.show()); // rain
+```
+
+### 多态
+
+多态就是同一个操作作用于同一个对象会产生不同的结果。可以理解为同一个类的多种表现形式。
+
+```javascript
+function User() {}
+User.prototype.show = function () {
+  console.log(this.description());
+};
+
+function Admin() {}
+Admin.prototype = Object.create(User.prototype);
+Admin.prototype.description = function () {
+  return '管理员';
+};
+
+function Member() {}
+Member.prototype = Object.create(User.prototype);
+Member.prototype.description = function () {
+  return '会员';
+};
+
+for (const obj of [new Admin, new Member]) {
+  obj.show(); // 管理员 会员
+}
+```
+
+## 深挖继承
+
+继承是为了复用代码，继承的本质时将原型指向到另一个对象。我们通常使用原型来继承方法，构造函数来继承属性。
+
+### 构造函数
+
+我们希望借用父类构造函数完成完成对象属性初始化，这就需要我们利用函数对象的`call/appply`方法在子类构造函数中借用父类构造函数初始化对象属性，并将当前子类构造函数中新生成的对象（`this`）作为借用父类构造函数的函数上下文。
+
+```javascript
+function User(name) {
+  this.name = name;
+}
+User.prototype.getUserName = function () {
+  return this.name;
+};
+
+function Admin(name) {
+  // 借用父类构造函数
+  User.call(this, name)
+}
+Object.setPrototypeOf(Admin.prototype, User.prototype);
+let ame = new Admin('ame');
+console.log(ame.getUserName()); // ame
+```
+
+### 原型工厂
+
+原型工厂是将继承的过程封装起来，方便复用。ES5推荐使用这种方式实现继承。
+
+```javascript
+function extend(sub, sup) {
+  // 继承原型
+  sub.prototype = Object.create(sup.prototype, {
+    constructor: {
+      value: sub,
+      enumerable: false
+    }
+  });
+  // 继承静态属性和方法
+  Object.setPrototypeOf(sub, sup);
+  for (const key in sup) {
+    Object.defineProperty(sup, key, {
+      enumerable: false
+    });
+  }
+}
+
+// 构造函数继承属性
+function User(name) {
+  this.name = name;
+}
+User.VERSION = '1.0';
+User.prototype.show = function () {
+  return this.name;
+}
+
+function Admin(name, role) {
+  User.call(this, name);
+  this.role = role;
+}
+
+function Member(name, age) {
+  User.call(this, name);
+  this.age = age;
+}
+
+extend(Admin, User);
+extend(Member, User);
+const admin = new Admin('ame', '管理员');
+const member = new Member('rain', 22);
+console.log(admin.show()); // ame
+console.log(member.show()); // rain
+// 静态属性
+console.log(Admin.VERSION); // 1.0
+console.log(Member.VERSION); // 1.0
+```
+
+### 对象工厂
+
+在原型继承的基础上，将对象的生成使用函数完成，并在函数内部为对象添加属性或方法
+
+```javascript
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+User.prototype.show = function () {
+  return `${this.name}，${this.age}`;
+};
+User.VERSION = '1.0';
+
+function Admin(name, age) {
+  let instance = Object.create(User.prototype);
+  User.call(instance, name, age);
+  Object.setPrototypeOf(Admin, User);
+  instance.role = function () {
+    return '管理员';
+  }
+  return instance;
+}
+let admin = new Admin('ame', 22);
+console.log(admin.role()); //管理员
+console.log(admin.show()); // ame,22
+console.log(Admin.VERSION); // 1.0
+```
+
+### Mixin模式
+
+JavaScript不能实现多继承，如果想要使用多个类的方法可以使用`Mixin`混合模式来完成
+
+- `mixin`类是一个包含许多供其他类使用的方法的类
+- `mixin`类不用来继承作为其他类的父类
+- `mixin`类也可以继承其他类，可以利用`super`进行原型攀升
+
+下面利用`mixin`模式实现多继承
+
+```javascript
+function extend(sub, sup) {
+  sub.prototype = Object.create(sup.prototype, {
+    constructor: {
+      value: sub,
+      enumerable: false
+    }
+  });
+  // 继承惊涛属性
+  Object.setPrototypeOf(sub, sup);
+  for (const key in sup) {
+    Object.defineProperty(sup, key, {
+      enumerable: false
+    });
+  }
+}
+
+function User(name, age) {
+  this.name = name;
+  this.age = age;
+}
+User.prototype.show = function () {
+  console.log(this.name, this.age);
+};
+const Request = {
+  ajax() {
+    return '请求后台';
+  }
+};
+const Credit = {
+  __proto__: Request,
+  total() {
+    // 原型攀升，call/apply借用方法时若继承链较长会使得this一直为此对象
+    console.log(super.ajax() + '，统计积分');
+  }
+}
+
+function Admin(...args) {
+  User.apply(this, args);
+}
+extend(Admin, User);
+// mixin
+Object.assign(Admin.prototype, Request, Credit);
+let ame = new Admin('ame', 22);
+ame.show(); // ame 22
+ame.total(); //请求后台，统计积分
+console.log(ame.ajax()); //请求后台
+```
+
+### 实例
+
+选项卡制作
+
+```html
+<style>
+  * {
+    padding: 0;
+    margin: 0;
+  }
+
+  body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+    height: 100vh;
+  }
+
+  main {
+    width: 400px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  main nav {
+    display: flex;
+    height: 50px;
+    align-items: center;
+  }
+
+  main nav a {
+    background-color: #95a5a6;
+    margin-right: 5px;
+    padding: 10px 20px;
+    border: 1px solid #333;
+    color: #fff;
+    text-decoration: none;
+  }
+
+  main nav a:first-of-type {
+    background-color: #e67e22;
+  }
+
+  section {
+    height: 200px;
+    width: 100%;
+    background-color: #f1c40f;
+    font-size: 5em;
+    display: none
+  }
+
+  .tab section:first-of-type {
+    display: block;
+  }
+
+  section:nth-child(even) {
+    background-color: #27ae60;
+  }
+</style>
+
+<body>
+  <main class="tab">
+    <nav>
+      <a href="javascript:;">rain</a>
+      <a href="javascript:;">ame</a>
+    </nav>
+    <section>1</section>
+    <section>2</section>
+  </main>
+  <script>
+    // 继承工厂
+    function extend(sub, sup) {
+      sub.prototype = Object.create(sup.prototype, {
+        constructor: {
+          value: sub,
+          enumerable: false
+        }
+      });
+      // 静态属性方法
+      Object.setPrototypeOf(sub, sup);
+      for (const key in sup) {
+        Object.defineProperty(sup, key, {
+          enumerable: false
+        });
+      }
+    }
+
+    // 动画类
+    function Animation() {}
+    Animation.prototype.show = function () {
+      this.style.display = 'block';
+    };
+    // 隐藏所有元素
+    Animation.prototype.hide = function () {
+      this.style.display = 'none';
+    };
+    // 改变元素背景
+    Animation.prototype.background = function (color) {
+      this.style.backgroundColor = color;
+    };
+
+    // 选项卡类
+    function Tab(tab) {
+      this.tab = tab;
+      this.links = null;
+      this.sections = null;
+    }
+    // 继承
+    extend(Tab, Animation);
+    Tab.prototype.run = function () {
+      this.links = this.tab.querySelectorAll('a');
+      this.sections = this.tab.querySelectorAll('section');
+      this.bindEvent();
+      this.action(0);
+    }
+    // 绑定事件
+    Tab.prototype.bindEvent = function () {
+      this.links.forEach((el, ind) => {
+        el.addEventListener('click', () => {
+          // 先全部隐藏再打开指定面板
+          this.reset();
+          this.action(ind);
+        })
+      })
+    };
+    // 触发动作,显示
+    Tab.prototype.action = function (i) {
+      this.background.call(this.links[i], '#e67e22');
+      this.show.call(this.sections[i]);
+    };
+    // 重置，隐藏
+    Tab.prototype.reset = function () {
+      this.links.forEach((el, i) => {
+        this.background.call(el, '#95a5a6');
+        this.hide.call(this.sections[i]);
+      })
+    };
+    new Tab(document.querySelector('.tab')).run();
+  </script>
+</body>
+```
+
+<img src="images/选项卡.gif" alt="选项卡" style="zoom:80%;" />
+
