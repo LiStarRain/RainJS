@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 按键名遍历对象属性
+    // const user = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // for (const key of Object.keys(user)) {
+    //   console.log(key, user[key]); // name ame age 22
+    // }
+
+    // 原理
+    // const user = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // const keysArray = Object.keys(user);
+    // console.log(keysArray instanceof Array); // true
+    // const iterator = keysArray.values();
+    // let result;
+    // while (!(result = iterator.next()).done) {
+    //   // name ame age 22
+    //   console.log(result.value, user[result.value]);
+    // }
+
+    // 获取对象所有属性值
+    // const user = {
+    //   name: 'user',
+    //   age: 22
+    // };
+    // for (const value of Object.values(user)) {
+    //   console.log(value); // user 22
+    // }
+
+    // // 原理
+    // const valuesArray = Object.values(user);
+    // console.log(valuesArray instanceof Array); // true
+    // const iterator = valuesArray.values();
+    // let result;
+    // while (!(result = iterator.next()).done) {
+    //   console.log(result.value); // user 22
+    // }
+
+    // 同时获取对象的键名与属性值
+    // const user = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // for (const [key, value] of Object.entries(user)) {
+    //   console.log(key, value); // name ame age 22
+    // }
+
+    // const user = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // const array = Object.entries(user);
+    // console.log(array instanceof Array); // true
+    // const iterator = array.values();
+    // let result;
+    // while (!(result = iterator.next()).done) {
+    //   const [key, value] = result.value;
+    //   console.log(key, value); // name ame age 22
+    // }
+
+    // 添加DOM元素练习
+    const lessons = [{
+        name: 'ame',
+        age: 22
+      },
+      {
+        name: 'rain',
+        age: 32
+      }
+    ];
+    const ul = document.createElement('ul');
+    for (const value of lessons) {
+      const li = document.createElement('li');
+      li.innerHTML = `课程：${value.name}，年龄：${value.age}`;
+      ul.append(li);
+    }
+    document.body.append(ul);
+  </script>
+</body>
+
+</html>

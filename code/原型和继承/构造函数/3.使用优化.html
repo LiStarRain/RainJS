@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function User(name) {
+    //   this.name = name;
+    // }
+    // User.prototype.get = function () {
+    //   return `姓名：${this.name}`;
+    // };
+    // let user1 = new User('ame');
+    // let user2 = new User('rain');
+    // console.log(user1.get === user2.get); // true
+    // // 修改原型中的方法会影响所有对象的调用，因为原型是由实例对象共享的
+    // user1.__proto__.get = function () {
+    //   return '被修改了';
+    // };
+    // console.log(user2.get()); // 被修改了
+
+    function User(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    Object.assign(User.prototype, {
+      getName() {
+        return this.name;
+      },
+      getAge() {
+        return this.age;
+      }
+    });
+    let user1 = new User('ame');
+    console.log(user1.getName()); // ame
+    console.dir(user1.__proto__);
+  </script>
+</body>
+
+</html>

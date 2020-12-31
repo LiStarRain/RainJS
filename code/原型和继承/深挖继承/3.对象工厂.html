@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function User(name, age) {
+      this.name = name;
+      this.age = age;
+    }
+    User.prototype.show = function () {
+      return `${this.name}，${this.age}`;
+    };
+    User.VERSION = '1.0';
+
+    function Admin(name, age) {
+      let instance = Object.create(User.prototype);
+      User.call(instance, name, age);
+      Object.setPrototypeOf(Admin, User);
+      instance.role = function () {
+        return '管理员';
+      }
+      return instance;
+    }
+    let admin = new Admin('ame', 22);
+    console.log(admin.role()); //管理员
+    console.log(admin.show()); // ame,22
+    console.log(Admin.VERSION); // 1.0
+  </script>
+</body>
+
+</html>

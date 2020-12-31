@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let user1 = {};
+    // user1.__proto__ = 'ame';
+    // console.log(typeof user1.__proto__); // object
+
+    // let user2 = Object.create(null);
+    // user2.__proto__ = 'ame';
+    // console.log(user2.__proto__); // ame
+
+    // 继承
+    let person = {
+      name: 'ame'
+    };
+    let user = {
+      show() {
+        return this.name;
+      }
+    };
+    let admin = {
+      handle() {
+        return `管理员：${this.name}`;
+      }
+    };
+    user.__proto__ = person;
+    admin.__proto__ = user;
+    console.log(admin.show()); // ame
+    console.log(admin.handle()); // 管理员：ame
+  </script>
+</body>
+
+</html>

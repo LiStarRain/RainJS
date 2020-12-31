@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let user = {
+    //   name: 'ame'
+    // };
+    // Object.assign(user, { age: 22 }, { sex: 'male' });
+    // console.log(user); // {name: "ame", age: 22, sex: "male"}
+
+    // 浅拷贝
+    let user = {
+      name: 'ame',
+      age: 22
+    };
+    let grade = {
+      lessons: {
+        math: 99
+      }
+    };
+    Object.assign(user, grade);
+    console.log(user.lessons.math); // 99
+    grade.lessons.math = 250;
+    console.log(user.lessons.math); // 250
+  </script>
+</body>
+
+</html>

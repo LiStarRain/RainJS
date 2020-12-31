@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function User(name) {
+    //   this.name = name;
+    //   this.show = function () {
+    //     console.log(this.name);
+    //   };
+    // }
+    // const user1 = new User('ame');
+    // user1.show();
+    // const user2 = new User('rain');
+    // user2.show(); // rain
+
+    // 设置返回值
+    // function User(name) {
+    //   this.name = name;
+    //   return {
+    //     name,
+    //     show() {
+    //       console.log(this.name);
+    //     }
+    //   };
+    // }
+    // const user1 = new User('ame');
+    // console.log(user1); // {name: "ame", show: ƒ}
+
+    // 当返回值为非引用类型时
+    function User(name) {
+      this.name = name;
+      return '会忽略自定义返回值';
+    }
+    const user1 = new User('ame');
+    console.log(user1); // User {name: "ame"}
+  </script>
+</body>
+
+</html>

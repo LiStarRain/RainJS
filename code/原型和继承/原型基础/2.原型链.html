@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let user = {
+      name: 'ame',
+      age: 22
+    }
+    let admin = {
+      role: 'root'
+    };
+    // 设置原型
+    Object.setPrototypeOf(admin, user);
+    console.log(admin.name); // ame
+    console.log(Object.getPrototypeOf(admin) === user) // true;
+    console.log(Object.getPrototypeOf(admin).__proto__ === Object.prototype); // true
+  </script>
+</body>
+
+</html>

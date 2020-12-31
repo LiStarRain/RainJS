@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // // 使用 for-in 来进行对象拷贝
+    // let obj = {
+    //   name: 'ame',
+    //   grade: {
+    //     math: 99
+    //   }
+    // };
+    // let ame = {};
+    // for (const key in obj) {
+    //   ame[key] = obj[key];
+    // }
+    // obj.name = 'rain';
+    // obj.grade.math = 100;
+    // console.log(obj.name, obj.grade); // rain {math: 100}
+    // console.log(ame.name, obj.grade); // ame {math: 100}
+
+    // Object.assign()
+    // let user = {
+    //   name: 'ame',
+    // };
+    // let obj = {
+    //   grade: {
+    //     math: 99
+    //   }
+    // };
+    // Object.assign(user, obj);
+    // console.log(user.grade.math); // 99
+    // obj.grade.math = 111;
+    // console.log(user.grade.math); // 111
+
+    // 展开语法实现浅拷贝
+    let obj = {
+      name: 'ame'
+    };
+    let user = {
+      ...obj
+    };
+    obj.name = 'rain';
+    console.log(obj); // {name: "rain"}
+    console.log(user); // {name: "ame"}
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function User(name, age) {
+      this.name = name;
+      this.age = age;
+      this.info = function () {
+        return this.age > 50 ? '中年' : '年轻';
+      };
+      this.about = function () {
+        return `${this.name}是${this.info()}人`;
+      };
+    }
+    const user1 = new User('ame', 22);
+    console.log(user1.about()); // ame是年轻人
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const user1 = {
+      name: 'ame'
+    };
+    const user2 = {
+      name: 'rain',
+      show() {
+        return this.name;
+      }
+    };
+    user1.__proto__ = user2;
+    console.log(user1.show()); // ame
+    console.log(user2.show()); // rain
+  </script>
+</body>
+
+</html>

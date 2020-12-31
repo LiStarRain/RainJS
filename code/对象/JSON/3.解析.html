@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let user = {
+      "name": "ame",
+      "age": 22
+    };
+    let jsonStr = JSON.stringify(user);
+    console.log(JSON.parse(jsonStr).name); //ame
+    console.log(JSON.parse(jsonStr, (key, value) => {
+      if (key == 'name') {
+        return `[天才]${value}`;
+      }
+      return value;
+    })); // {name: "[天才]ame", age: 22}
+  </script>
+</body>
+
+</html>

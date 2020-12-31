@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 继承
+    // User类
+    // function User(name, age) {
+    //   this.name = name;
+    //   this.age = age;
+    // }
+    // User.prototype.getUserName = function () {
+    //   return this.name;
+    // };
+    // // 添加静态方法
+    // User.show = function () {
+    //   return "User static method";
+    // };
+
+    // // Admin 类
+    // function Admin(name, age, role) {
+    //   // 借用构造函数
+    //   User.call(this, name, age);
+    //   this.role = role;
+    // }
+    // // 设置原型
+    // Admin.prototype = Object.create(User.prototype, {
+    //   constructor: {
+    //     value: Admin,
+    //     enumerable: false
+    //   },
+    //   getRole: {
+    //     value: function () {
+    //       return this.role
+    //     },
+    //     enumerable: false
+    //   }
+    // });
+    // // 继承静态方法和属性
+    // Object.setPrototypeOf(Admin, User);
+    // Object.defineProperty(User, 'show', {
+    //   enumerable: false
+    // });
+
+    // const admin1 = new Admin('ame', 22, 'admin');
+    // console.log(admin1.getRole()); // admin
+    // console.log(admin1.getUserName()); // ame
+    // console.log(Admin.show()); // User static method
+    // console.dir(Object.getPrototypeOf(Admin));
+
+    // 不能使用以下这种方式继承
+    // function User() {}
+    // User.prototype.show = function () {
+    //   console.log('User prototype show');
+    // };
+    // const user1 = new User();
+    // user1.show(); // User prototype show
+
+    // function Admin() {}
+    // 错误示范
+    // Admin.prototype = User.prototype;
+    // Admin.prototype.show = function () {
+    //   console.log('Admin prototype show');
+    // };
+    // const user2 = new User();
+    // user2.show(); // Admin prototype show
+
+    // 重写原型对象
+    // function User(name) {
+    //   this.name = name;
+    // }
+
+    // function Admin(name) {
+    //   User.call(this, name);
+    // }
+    // Admin.prototype.show = function () {
+    //   return this.name;
+    // };
+    // const admin1 = new Admin('ame');
+    // Admin.prototype = Object.create(User.prototype, {
+    //   constructor: {
+    //     value: Admin,
+    //     enumerable: false
+    //   }
+    // });
+    // const admin2 = new Admin('rain');
+    // console.log(admin1.show()); // ame
+    // console.log(admin2.show()); // Error
+
+    // 更改原型
+    function User(name) {
+      this.name = name;
+    }
+
+    function Admin(name) {
+      User.call(this, name);
+    }
+    Admin.prototype.show = function () {
+      return this.name;
+    };
+    const admin1 = new Admin('ame');
+    Object.setPrototypeOf(Admin.prototype, User.prototype);
+    const admin2 = new Admin('rain');
+    console.log(admin1.show()); // ame
+    console.log(admin2.show()); // rain
+  </script>
+</body>
+
+</html>

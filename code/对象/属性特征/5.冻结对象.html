@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    "use strict";
+    const user = {
+      name: 'ame'
+    };
+    Object.freeze(user);
+    console.log(JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2));
+    console.log(Object.isFrozen(user)); // true
+    user.name = 'rain'; // Error
+  </script>
+</body>
+
+</html>

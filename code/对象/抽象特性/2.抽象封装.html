@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function User(name, age) {
+      let data = {
+        name,
+        age
+      };
+      let info = function () {
+        return data.age > 50 ? '中年人' : '恶魔人';
+      };
+      this.message = function () {
+        return `${data.name}是${info()}`;
+      };
+    }
+    const user = new User('ame', 22);
+    console.log(user.message()); //ame是恶魔人
+  </script>
+</body>
+
+</html>

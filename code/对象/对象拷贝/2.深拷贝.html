@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let obj = {
+      name: 'ame',
+      grade: {
+        math: 99,
+        english: 100
+      },
+      hobbies: ['food', 'music']
+    };
+
+    function copy(object) {
+      // 判断是不是数组类型的
+      let obj = object instanceof Array ? [] : {};
+      for (const [key, value] of Object.entries(object)) {
+        // 判断是不是引用类型的值
+        obj[key] = typeof value === 'object' ? copy(value) : value;
+      }
+      return obj;
+    }
+    let newObj = copy(obj);
+    obj.grade.math = 20;
+    console.log(obj.grade.math); // 20
+    console.log(newObj.grade.math); // 99
+  </script>
+</body>
+
+</html>

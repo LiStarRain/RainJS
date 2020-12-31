@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 设置默认值
+    // let [name, age = 22] = ['ame'];
+    // console.log(name, age); // ame 22
+    // let {food, price = 100} = {food: 'cola', price: 6};
+    // console.log(food,price); // cola 6
+
+    // 使用默认值特性可以方便对函数参数进行预设
+    function createElement(options) {
+      let {
+        width = '200px',
+          height = '100px',
+          backgroundColor = 'red'
+      } = options;
+
+      const div = document.createElement('div');
+      div.style.width = width;
+      div.style.height = height;
+      div.style.backgroundColor = backgroundColor;
+      document.body.append(div);
+    }
+    createElement({
+      backgroundColor: 'green'
+    });
+  </script>
+</body>
+
+</html>

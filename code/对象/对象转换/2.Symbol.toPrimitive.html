@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let ame = {
+      num: 99,
+      [Symbol.toPrimitive]: function () {
+        return this.num;
+      }
+    };
+    console.log(ame + 1); // 100
+    console.log(ame + '1'); // 991
+    console.log(String(ame)); // 99
+  </script>
+</body>
+
+</html>

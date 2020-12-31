@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 对象使用
+    // let info = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // let {name:n, age:a} = info;
+    // console.log(n,a); // ame 22
+
+    // 如果属性名与变量名相同可以省略属性名定义
+    // let {good,price} = {good: 'apple', price: 100};
+    // console.log(good, price); // apple 100
+
+    // 函数返回值直接解构到变量
+    function test() {
+      return {
+        name: 'ame',
+        age: 22
+      };
+    }
+    let {
+      age: a
+    } = test();
+    console.log(a); // 22
+
+    // 函数传参
+    // "use strict";
+    // function test({name,age}) {
+    //   console.log(name, age);
+    // }
+    // test({name: 'ame', age: 22}); // ame 22
+  </script>
+</body>
+
+</html>

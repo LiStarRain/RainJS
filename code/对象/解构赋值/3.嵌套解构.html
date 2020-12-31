@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 可以操作多层复杂得数据结构
+    const user = {
+      name: 'ame',
+      grade: {
+        math: 120,
+        english: 100
+      }
+    };
+    const {
+      name,
+      grade: {
+        math
+      }
+    } = user;
+    console.log(name, math); // ame 120
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 原型对象
+    // let arr = [1, 2];
+    // console.log(arr.hasOwnProperty('concat')); // false
+    // console.log(arr.__proto__.hasOwnProperty('concat')); // true
+    // console.log(arr.concat(3)); // [1,2,3]
+
+    // let obj = {
+    //   name: 'ame'
+    // };
+    // console.log(obj);
+
+    // Object.create()
+    // let user = Object.create(null, {
+    //   name: {
+    //     value: 'ame',
+    //     enumerable: true
+    //   },
+    //   age: {
+    //     get() {
+    //       return 22;
+    //     }
+    //   }
+    // });
+    // console.log(user.age); // 22
+    // console.log(user);
+    // console.log(Object.keys(user)); // ["name"]
+
+    // 函数对象的原型
+    // function User() {}
+    // User.__proto__.show = function () {
+    //   console.log('User function show method');
+    // };
+    // console.log(User.__proto__ === Function.prototype); // true
+    // User.show(); // User function show method
+    // User.prototype.show = function () {
+    //   console.log('User prototype show method');
+    // };
+    // let user = new User();
+    // console.log(user.__proto__ === User.prototype); // true
+    // user.show(); // User prototype show method
+
+    // // 通过构造函数创建对象
+    // function User() {}
+    // const user1 = new User();
+    // console.log(User.prototype === user1.__proto__); // true
+
+    // 获取原型对象
+    // function User() {}
+    // User.prototype.show = function () {
+    //   console.log('User prototype show method');
+    // };
+    // const user = new User();
+    // console.log(Object.getPrototypeOf(user).show()); // User prototype show method
+
+    // 给对象设置指定原型
+    // let user = {
+    //   name: 'ame'
+    // };
+    // let obj = {
+    //   show() {
+    //     console.log(this.name);
+    //   }
+    // };
+    // // 将 obj 设置为 user对象 的原型对象
+    // Object.setPrototypeOf(user, obj);
+    // user.show(); // ame
+    // console.log(user);
+
+    // constructor 属性
+    function User() {
+      this.show = function () {
+        return `show method`;
+      };
+    }
+    const user1 = new User();
+    console.log(user1 instanceof User); // true
+    // user1 没有该上古星，查找其原型对象，最终在原型对象上查找到了该属性
+    const user2 = new user1.constructor();
+    console.log(user2 instanceof User); // true
+    console.log(Object.create(null));
+  </script>
+</body>
+
+</html>

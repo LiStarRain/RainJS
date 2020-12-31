@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function User(name) {
+    //   this.name = name;
+    // }
+    // let user1 = new User('ame');
+    // let user2 = new user1.constructor('rain');
+    // console.log(user2.name); // rain
+
+    // 重写原型
+    function User(name) {
+      this.name = name;
+    }
+    User.prototype = {
+      constructor: User,
+      show: function () {
+        console.log('hi');
+      }
+    };
+    Object.defineProperties(User.prototype, {
+      constructor: {
+        enumerable: false
+      },
+      show: {
+        enumerable: false
+      }
+    });
+    const user1 = new User('ame');
+    console.log(user1);
+  </script>
+</body>
+
+</html>

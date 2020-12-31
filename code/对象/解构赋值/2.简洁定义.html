@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 简洁定义
+    // let user = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // let { name, age } = user;
+    // console.log(name, age); // ame 22
+
+    // 只赋值部分变量
+    // let [, age] = ['ame', 22];
+    // console.log(age); // 22
+    // let {name} = {name:'ame',age: 22};
+    // console.log(name); // ame
+
+    // 直接使用变量赋值对象属性
+    let name = 'ame',
+      age = 22;
+    // 标准写法如下
+    let user = {
+      name: name,
+      age: age
+    };
+    console.log(user); // {name: "ame", age: 22}
+    // 如果属性和值变量同名可以写成以下简写形式
+    let info = {
+      name,
+      age
+    };
+    console.log(info); // {name: "ame", age: 22}
+  </script>
+</body>
+
+</html>

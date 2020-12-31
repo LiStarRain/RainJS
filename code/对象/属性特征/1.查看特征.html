@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 查看对象属性
+    // const user = {
+    //   name: 'ame'
+    // };
+    // let desc = Object.getOwnPropertyDescriptor(user, 'name');
+    // console.log(JSON.stringify(desc, null, 2));
+
+    // 查看对象所有属性的特征
+    const user = {
+      name: 'ame',
+      age: 22
+    };
+    let desc = Object.getOwnPropertyDescriptors(user);
+    console.log(JSON.stringify(desc, null, 2));
+  </script>
+</body>
+
+</html>

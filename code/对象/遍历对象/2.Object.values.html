@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const user = {
+      name: 'ame',
+      getName() {
+        return this.name;
+      }
+    };
+    console.log(Object.values(user)); // ["ame", ƒ]
+  </script>
+</body>
+
+</html>

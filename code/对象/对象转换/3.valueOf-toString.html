@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let ame = {
+      name: 'ame',
+      num: 99,
+      valueOf() {
+        return this.num;
+      },
+      toString() {
+        return this.name;
+      }
+    };
+    console.log(ame + 3); // 102
+    console.log(`${ame}饿了`); // ame 饿了
+  </script>
+</body>
+
+</html>

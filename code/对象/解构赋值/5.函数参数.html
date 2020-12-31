@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 数组参数的使用
+    // function test([a, b]) {
+    //   console.log(a, b);
+    // }
+    // test([1, 2]); // 1 2
+
+    // 对象参数的使用
+    // function test({name, age = 22}) {
+    //   console.log(name, age);
+    // }
+    // test({ name: 'ame' }); // ame 22
+
+    // 对象解构传参
+    function user(name, {
+      sex,
+      age
+    }) {
+      console.log(name, sex, age);
+    }
+    user('ame', {
+      sex: 'male',
+      age: 22
+    }); // ame male 22
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function User() {
+    //   this.show = function () {
+    //     return `show in object`;
+    //   };
+    // };
+    // User.prototype.show = function () {
+    //   return `prototype show`;
+    // };
+    // const user = new User();
+    // console.log(user.show()); // show in object
+
+    function User() {}
+    User.prototype.name = 'ame';
+    const user1 = new User();
+    console.log(user1.name); // ame
+    User.prototype = {
+      name: 'rain'
+    };
+    const user2 = new User();
+    console.log(user2.name); // rain
+    console.log(user1.name); // ame
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let user = {
+    //   "name": "ame",
+    //   "age": 22,
+    //   "grade": {
+    //     "math": 99
+    //   }
+    // };
+    // {"name":"ame","age":22,"grade":{"math":99}}
+    // console.log(JSON.stringify(user));
+    // {"name":"ame","age":22}
+    // console.log(JSON.stringify(user, ["name", "age"]));
+    /*{
+      "name": "ame",
+      "age": 22,
+      "grade": {
+        "math": 99
+      }
+    }*/
+    // console.log(JSON.stringify(user, null, 2));
+
+    // toJSON
+    let user = {
+      "name": "ame",
+      "age": 22,
+      "grade": {
+        "math": 99
+      },
+      toJSON() {
+        return {
+          "name": "ame",
+          "age": 22
+        };
+      }
+    };
+    console.log(JSON.stringify(user)); // {"name":"ame","age":22}
+  </script>
+</body>
+
+</html>

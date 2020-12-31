@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    body {
+      padding: 0;
+      margin: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #34495e;
+    }
+
+    input {
+      border: 10px solid #ddd;
+      height: 30px;
+    }
+
+    .error {
+      border: 10px solid red;
+    }
+  </style>
+</head>
+
+<body>
+  <input type="text" validate rule="max:12,min:3">
+  <input type="text" validate rule="max:12,isNumber">
+
+  <script>
+    "use strict";
+    // 验证处理类
+    class Validate {
+      max(value, len) {
+        return value.length <= len;
+      }
+      min(value, len) {
+        return value.length >= len;
+      }
+      isNumber(value) {
+        return /^\d+$/.test(value);
+      }
+    }
+
+    // 代理工厂
+    function makeProxy(target) {
+      return new Proxy(target, {
+        get(target, key) {
+          return target[key];
+        },
+        set(target, key, el) {
+          const rules = el.getAttribute('rule');
+          const validate = new Validate();
+          let state = rules.split(',').every(rule => {
+            const info = rule.split(':');
+            return validate[info[0]](el.value, info[1]);
+          });
+          el.classList[state ? 'remove' : 'add']('error');
+          return true;
+        }
+      });
+    }
+
+    const nodes = makeProxy(document.querySelectorAll('[validate]'));
+    nodes.forEach((item, i) => {
+      item.addEventListener('keyup', function () {
+        nodes[i] = this;
+      })
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 检测操作符右边对象的prototype属性所指的原型对象是否在操作符左边对象的原型链上
+    // function A() {}
+    // function B() {}
+    // function C() {}
+
+    // const c = new C();
+    // B.prototype = c;
+    // const b = new B();
+    // A.prototype = b;
+    // const a = new A();
+
+    // console.log(a instanceof A); // true
+    // console.log(a instanceof B); // true
+    // console.log(a instanceof C); // true
+    // console.log(b instanceof C); // true
+    // console.log(c instanceof B); // false
+
+    // 检测一个对象是否在另一个对象的原型链中 
+    const a = {};
+    const b = {};
+    const c = {};
+    Object.setPrototypeOf(a, b);
+    Object.setPrototypeOf(b, c);
+    console.log(b.isPrototypeOf(a)); // true
+    console.log(c.isPrototypeOf(a)); // true
+    console.log(c.isPrototypeOf(b)); // true
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function extend(sub, sup) {
+      // 继承原型
+      sub.prototype = Object.create(sup.prototype, {
+        constructor: {
+          value: sub,
+          enumerable: false
+        }
+      });
+      // 继承静态属性和方法
+      Object.setPrototypeOf(sub, sup);
+      for (const key in sup) {
+        Object.defineProperty(sup, key, {
+          enumerable: false
+        });
+      }
+    }
+
+    // 构造函数继承属性
+    function User(name) {
+      this.name = name;
+    }
+    User.VERSION = '1.0';
+    User.prototype.show = function () {
+      return this.name;
+    }
+
+    function Admin(name, role) {
+      User.call(this, name);
+      this.role = role;
+    }
+
+    function Member(name, age) {
+      User.call(this, name);
+      this.age = age;
+    }
+
+    extend(Admin, User);
+    extend(Member, User);
+    const admin = new Admin('ame', '管理员');
+    const member = new Member('rain', 22);
+    console.log(admin.show()); // ame
+    console.log(member.show()); // rain
+    // 静态属性
+    console.log(Admin.VERSION); // 1.0
+    console.log(Member.VERSION); // 1.0
+  </script>
+</body>
+
+</html>

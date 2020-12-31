@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 字面量声明
+    let obj = {
+      name: 'ame',
+      get: function () {
+        return this.name;
+      }
+    };
+    console.log(obj.get()); // ame
+
+    // 属性与方法简写
+    let name = 'rain';
+    let rain = {
+      name,
+      get() {
+        return this.name;
+      }
+    }
+    console.log(rain.get()); // rain
+
+    let ame = {};
+    let lsr = new Object();
+    console.log(ame, lsr);
+    console.log(ame.constructor);
+    console.log(lsr.constructor);
+    console.log(ame.constructor === lsr.constructor); // true
+  </script>
+</body>
+
+</html>

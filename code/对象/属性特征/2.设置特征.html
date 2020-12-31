@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    "use strict";
+    const user = {
+      name: 'ame',
+      age: 22
+    };
+    // console.log(Object.keys(user)); // ["name", "age"]
+    // Object.defineProperty(user, 'name', {
+    //   value: 'rain',
+    //   writable: false,
+    //   enumerable: false,
+    //   configurable: false
+    // });
+    // // 不能被遍历
+    // console.log(Object.keys(user)); // ["age"]
+    // // 不允许修改属性
+    // user.name = 'haha';
+    // console.log(user.name); // rain
+    // // 不允许删除属性
+    // delete user.name;
+    // console.log(user.name); // rain
+    // // 不允许重定义属性特性
+    // Object.defineProperty(user, 'name', {
+    //   value: 'haha'
+    // }); //Cannot redefine property: name
+
+    // 同时设置多个属性特征
+    Object.defineProperties(user, {
+      name: {
+        value: 'rain',
+        writable: false
+      },
+      age: {
+        enumerable: false
+      }
+    });
+    user.name = "haha"; // Cannot assign to read only property 'name' of object '#<Object>'
+  </script>
+</body>
+
+</html>

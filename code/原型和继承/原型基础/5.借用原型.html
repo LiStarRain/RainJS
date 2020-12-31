@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button class="test">click me</button>
+  <button>test</button>
+
+  <script>
+    let btns = document.querySelectorAll('button');
+    btns = Array.prototype.filter.call(btns, item => {
+      return item.hasAttribute('class');
+    });
+    console.log(btns); // [button.test]
+
+    // const user1 = {
+    //   data: [3, 2, 1, 4, 5]
+    // };
+    // Object.setPrototypeOf(user1, {
+    //   max: function () {
+    //     return this.data.sort((pre, cur) => {
+    //       return cur - pre;
+    //     })[0];
+    //   }
+    // });
+    // console.log(user1.max());
+
+    // const user2 = {
+    //   lessons: {
+    //     js: 100,
+    //     php: 78,
+    //     node: 78
+    //   },
+    //   get data() {
+    //     return Object.values(this.lessons);
+    //   }
+    // };
+    // console.log(user1.__proto__.max.apply(user2)); // 100
+
+    // 优化
+    // const user1 = {
+    //   data: [3, 2, 1, 4, 5]
+    // };
+    // console.log(Math.max.apply(null, Object.values(Object.values(user1.data))));
+    // const user2 = {
+    //   lessons: {
+    //     js: 100,
+    //     php: 78,
+    //     node: 78
+    //   }
+    // }
+    // console.log(Math.max.apply(null, Object.values(user2.lessons))); // 100
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let id = 0;
+    // const user = {
+    //   [`id-${++id}`]: id,
+    //   [`id-${++id}`]: id,
+    //   [`id-${++id}`]: id
+    // };
+    // console.log(user); // id-1: 1, id-2: 2, id-3: 3}
+
+    // 为文章定义键名
+    const lessons = [{
+        title: '科学养猪',
+        category: '生活'
+      },
+      {
+        title: '朋克养生',
+        category: '生活'
+      },
+      {
+        title: '小汉堡的100种做法',
+        category: '美食'
+      }
+    ];
+    let lessonsObj = lessons.reduce((obj, cur, index) => {
+      obj[`${cur['category']}-${index}`] = cur.title;
+      return obj;
+    }, {});
+    console.log(lessonsObj); // {生活-0: "科学养猪", 生活-1: "朋克养生", 美食-2: "小汉堡的100种做法"}
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    "use strict";
+    const user = {
+      name: 'ame',
+      age: 22
+    };
+    Object.seal(user);
+    console.log(JSON.stringify(Object.getOwnPropertyDescriptors(user), null, 2));
+    user.age = 100;
+    console.log(user.age); // 100
+    delete user.name; // Error
+    console.log(Object.isSealed(user)); // true
+  </script>
+</body>
+
+</html>

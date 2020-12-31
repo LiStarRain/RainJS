@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const user1 = {
+    //   name: 'ame',
+    //   show() {
+    //     console.log(this.name);
+    //   }
+    // };
+    // const user2 = {
+    //   name: 'rain',
+    //   show() {
+    //     console.log(this.name);
+    //   }
+    // };
+    // user1.show(); // ame
+    // user2.show(); // rain
+
+    // 使用工厂函数
+    function createUser(name) {
+      return {
+        name,
+        show() {
+          console.log(this.name);
+        }
+      };
+    }
+    const user1 = createUser('ame');
+    user1.show(); // ame
+    const user2 = createUser('rain');
+    user2.show(); // rain
+  </script>
+</body>
+
+</html>

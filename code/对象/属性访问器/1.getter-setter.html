@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // "use strict";
+    // const user = {
+    //   data: {
+    //     name: 'ame',
+    //     age: null
+    //   },
+    //   set age(value) {
+    //     if (typeof value != 'number' || value > 100 || value < 10) {
+    //       throw new Error('年龄格式错误');
+    //     }
+    //     this.data.age = value;
+    //   },
+    //   get age() {
+    //     return `年龄是：${this.data.age}岁`;
+    //   }
+    // };
+    // user.age = 99;
+    // console.log(user.age); // 年龄是：99岁
+
+    // 使用getter设置制度课程的总价
+    // let lessons = {
+    //   lists: [{
+    //       name: 'js',
+    //       price: 100
+    //     },
+    //     {
+    //       name: 'css',
+    //       price: 99
+    //     },
+    //     {
+    //       name: 'html',
+    //       price: 22
+    //     }
+    //   ],
+    //   get total() {
+    //     return this.lists.reduce((total, cur) => {
+    //       return total += cur.price;
+    //     }, 0);
+    //   }
+    // }
+    // console.log(lessons.total); // 221
+    // // 访问器属性和普通属性同时存在时，会忽略普通属性，优先执行访问器属性
+    // lessons.total = 99999; // 无效
+    // console.log(lessons);
+    // console.log(lessons.total); // 221
+
+    // 批量设置属性
+    // const web = {
+    //   name: 'ame',
+    //   url: 'wasser.net.cn',
+    //   get site() {
+    //     return `${this.name}：${this.url}`;
+    //   },
+    //   set site(value) {
+    //     [this.name, this.url] = value.split(',');
+    //   }
+    // };
+    // web.site = 'rain,listarrain.io';
+    // console.log(web.site); // rain：listarrain.io
+
+    // 存储token 
+    // let Request = {
+    //   get token() {
+    //     let con = localStorage.getItem('token');
+    //     if (!con) {
+    //       alert('请登陆后获取token');
+    //     } else {
+    //       return con;
+    //     }
+    //   },
+    //   set token(con) {
+    //     localStorage.setItem('token', con)
+    //   }
+    // };
+    // Request.token = 'ame';
+    // console.log(Request.token); // ame
+
+    // 定义内部私有属性
+    "use strict";
+    const user = {
+      get name() {
+        return this._name;
+      },
+      set name(value) {
+        if (value.length <= 3) {
+          throw new Error('用户名不能小于3位');
+        }
+        this._name = value;
+      }
+    };
+    user.name = 'rain';
+    console.log(user.name);
+    console.log(user); // {_name: "rain"}
+  </script>
+</body>
+
+</html>

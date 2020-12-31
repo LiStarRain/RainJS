@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function User() {}
+    User.prototype.show = function () {
+      console.log(this.description());
+    };
+
+    function Admin() {}
+    Admin.prototype = Object.create(User.prototype);
+    Admin.prototype.description = function () {
+      return '管理员';
+    };
+
+    function Member() {}
+    Member.prototype = Object.create(User.prototype);
+    Member.prototype.description = function () {
+      return '会员';
+    };
+
+    for (const obj of [new Admin, new Member]) {
+      obj.show(); // 管理员 会员
+    }
+  </script>
+</body>
+
+</html>

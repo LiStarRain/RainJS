@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function User(name) {
+    //   this.name = name;
+    // };
+    // User.prototype = {
+    //   constructor: User,
+    //   show() {
+    //     return this.name;
+    //   }
+    // };
+    // let user = new User('ame');
+    // console.log(user.show()); // ame
+    // console.log(user.__proto__ === User.prototype); // true
+
+    // function User(name) {
+    //   this.name = name;
+    // }
+    // let user1 = new User('ame');
+    // console.log(User.prototype.constructor === User); // true
+    // console.log(user1.__proto__ === User.prototype); // true
+    // let user2 = new user1.constructor('rain');
+    // console.log(user2.name); // rain
+    // console.log(user2.__proto__ === user1.__proto__); // true
+
+    // 对象会共享原型中的属性
+    // function User() {}
+    // // 重写原型对象
+    // User.prototype = {
+    //   lessons: ['math', 'english']
+    // };
+    // const user1 = new User('ame');
+    // const user2 = new User('rain');
+    // user1.lessons.push('chinese');
+    // console.log(user2.lessons); // ["math", "english", "chinese"]
+
+    // Object
+    // Object.prototype.show = function () {
+    //   console.log('haha');
+    // };
+    // let user = {
+    //   name: 'ame'
+    // };
+    // user.show() // haha
+    // function test() {}
+    // test.show(); // haha
+
+    // 字符串截断
+    String.prototype.truncate = function (len = 5) {
+      return this.length <= len ? this : this.substr(0, len) + '...';
+    }
+    console.log('我饿了我想吃好吃的'.truncate()); // 我饿了我想...
+  </script>
+</body>
+
+</html>

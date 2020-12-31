@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const stringDot = {
+      get(target, key) {
+        const title = target[key].title;
+        const len = 5;
+        return title.length > len ? title.substr(0, len) + '.'.repeat(3) : title;
+      }
+    };
+    const lessons = [{
+        title: '鲱鱼罐头的100中吃法',
+        price: 99
+      },
+      {
+        title: '说话的艺术',
+        price: 100
+      }
+    ];
+    const stringDotProxy = new Proxy(lessons, stringDot);
+    console.log(stringDotProxy[0]); // 鲱鱼罐头的...
+  </script>
+</body>
+
+</html>

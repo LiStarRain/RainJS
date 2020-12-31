@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // in 操作符
+    // const a = {
+    //   name: 'ame',
+    //   age: 22
+    // };
+    // let b = {
+    //   show() {
+    //     console.log(this.name, this.age);
+    //   }
+    // };
+    // Object.setPrototypeOf(a, b);
+    // console.log("show" in a); // true
+    // console.log(a.hasOwnProperty('name')); // true
+    // console.log(a.hasOwnProperty('show')); // false
+
+    // for/in
+    const user = {
+      name: 'ame'
+    };
+    const admin = Object.create(user, {
+      age: {
+        value: 22,
+        enumerable: true
+      }
+    });
+    for (const key in admin) {
+      // console.log(key); // age name
+      if (admin.hasOwnProperty(key)) {
+        console.log(key); // age
+      }
+    }
+  </script>
+</body>
+
+</html>

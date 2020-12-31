@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let user = {
+    //   name: 'lsr'
+    // };
+    // console.log(user.name); // lsr
+    // console.log(user['name']); // lsr
+    // let property = 'name';
+    // console.log(user[property]); // lsr
+
+    // let user = {};
+    // user['my-age'] = 22;
+    // console.log(user['my-age']); // 22
+
+    const user1 = {
+      name: 'ame'
+    };
+    user1.age = 22;
+    user1.show = function () {
+      return `${this.name}已经${this.age}岁了`;
+    };
+    console.log(user1.show()); // ame已经22岁了
+    console.log(user1); // {name: "ame", age: 22, show: ƒ}
+    delete user1.show;
+    delete user1.age;
+    console.log(user1); // {mame: "ame"}
+    console.log(user1.age); // undefined
+  </script>
+</body>
+
+</html>
