@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // Promise.resolve()
+    // Promise.resolve('success').then(res => console.log(res)); // success
+
+    // 自记忆函数
+    // function query(name, url, method = 'GET') {
+    //   const cache = query.cache || (query.cache = new Map());
+    //   if (cache.has(name)) {
+    //     console.log('走缓存了');
+    //     return Promise.resolve(cache.get(name));
+    //   }
+    //   return new Promise((resolve, reject) => {
+    //     const xhr = new XMLHttpRequest();
+    //     url = `${url}/?name=${name}`;
+    //     xhr.open(method, url);
+    //     xhr.onload = function () {
+    //       try {
+    //         if (this.status === 200) {
+    //           resolve(JSON.parse(this.response));
+    //           cache.set(name, JSON.parse(this.response));
+    //           console.log('没走缓存');
+    //         } else {
+    //           reject(`${this.status}: ${this.statusText}`);
+    //         }
+    //       } catch (error) {
+    //         reject(error);
+    //       }
+    //     };
+    //     xhr.onerror = function () {
+    //       reject(`${this.status}: ${this.statusText}`);
+    //     };
+    //     xhr.timeout = 5000;
+    //     xhr.ontimeout = function () {
+    //       reject('请求超时');
+    //     };
+    //   });
+    // }
+
+    // thenable 对象
+    const obj = {
+      then(resolve, reject) {
+        // resolve('ame');
+        reject('rain');
+      }
+    };
+    Promise.resolve(obj).then(v => {
+      console.log(v); // ame
+    }, error => {
+      console.log(error); // rain
+    });
+  </script>
+</body>
+
+</html>

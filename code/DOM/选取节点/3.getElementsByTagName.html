@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="ame"></div>
+  <div class="rain"></div>
+
+  <script>
+    // const divs = document.getElementsByTagName('div');
+    // console.log(divs); // HTMLCollection(2) [div.ame, div.rain]
+
+    // 通配符 *
+    // const els = document.getElementsByTagName('*');
+    // console.log(els); // HTMLCollection(9)
+
+    // 通过元素节点对象调用
+    const els = document.body.getElementsByTagName('*');
+    console.log(els); // HTMLCollection(3) [div.ame, div.rain, script]
+  </script>
+</body>
+
+</html>

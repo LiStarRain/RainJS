@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <h1>ame</h1>
+    <p><span>哈哈</span></p>
+    <ul>
+      <li>
+        <span>rain</span>
+      </li>
+    </ul>
+  </div>
+  <script>
+    // const node = document.querySelector('#app');
+    // console.log(node.childNodes); // 所有子节点
+    // console.log(node.firstChild); // 第一个子节点是文本节点（空格）
+    // console.log(node.lastChild); // 最后一个节点也是文本节点
+
+    // const h1 = document.querySelector('h1');
+    // console.log(h1.parentNode); // 父节点是div#app
+    // console.log(h1.nextSibling); // 下一个兄弟节点是文本节点
+    // console.log(h1.previousSibling); // 上一个节点是文本节点
+    // console.log(h1.nextSibling.data); // 四个空格
+
+    // document节点是顶级节点
+    // console.log(document.documentElement.parentNode); // #document
+
+    // 查找所有元素的父节点
+    // function parentNodes(node) {
+    //   let nodes = [];
+    //   while (node = node.parentNode) nodes.push(node);
+    //   return nodes;
+    // }
+    // const el = document.querySelector('span');
+    // console.log(parentNodes(el)); // [li, ul, div#app, body, html, document]
+
+    // 获取所有后代元素中span的元素
+    function getChildNodeByName(el, name) {
+      let items = [];
+      for (const node of el.childNodes) {
+        if (node.nodeName === name.toUpperCase()) items.push(node);
+        items = [...items, ...getChildNodeByName(node, name)];
+      }
+      return items;
+    }
+    const app = document.querySelector('#app');
+    const nodes = getChildNodeByName(app, 'span');
+    console.log(nodes); // [span, span]
+  </script>
+</body>
+
+</html>

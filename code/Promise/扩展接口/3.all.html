@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const p1 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve('第一个promise');
+    //   }, 500);
+    // });
+    // const p2 = new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve('第二个promise');
+    //     // reject('test');
+    //   }, 1000)
+    // });
+    // const promises = Promise.all([p1, p2]).catch(e => console.log(e));
+    // promises.then(res => console.log(res)); // ["第一个promise", "第二个promise"]
+    // setTimeout(() => {
+    //   console.log(promises); // Promise {<fulfilled>: Array(2)}
+    // }, 1000);
+
+    // 传入非Promise对象作为元素项
+    const promise = Promise.all([1, 2]);
+    promise.then(res => console.log(res)); // [1, 2]
+  </script>
+</body>
+
+</html>

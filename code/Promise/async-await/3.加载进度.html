@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      height: 50px;
+      width: 0px;
+      background-color: green;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="loading"></div>
+  <script>
+    function query(name, url = 'http://test.com') {
+      url = `${url}/?name=${name}`;
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        xhr.send();
+        xhr.onload = function () {
+          try {
+            if (this.status === 200) {
+              resolve(JSON.parse(this.response));
+            } else {
+              reject(`${this.status}: ${this.statusText}`);
+            }
+          } catch (error) {
+            reject(error);
+          }
+        };
+        xhr.onerror = function () {
+          reject(`${this.status}: ${this.statusText}`);
+        };
+      });
+    }
+    (async () => {
+      const users = ['qme', 'rain'];
+      const loading = document.querySelector('.loading');
+      for (let i = 0; i < users.length; i++) {
+        await query(users[i]);
+        let progress = (i + 1) / users.length;
+        loading.style.width = progress * 100 + '%';
+      }
+    })();
+  </script>
+</body>
+
+</html>

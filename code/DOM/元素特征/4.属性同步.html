@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <div id="app" class="on">ame</div> -->
+  <input type="text" name="username" value="ame" />
+
+  <script>
+    // 大多数普通情况下会同步改变
+    // const app = document.querySelector('#app');
+    // console.log(app.getAttribute('class')); // on
+    // console.log(app.attributes['class'].nodeValue); // on
+    // app.setAttribute('class', 'off');
+    // console.log(app.getAttribute('class')); // off
+    // console.log(app.attributes['class'].nodeValue); // off
+
+    // 改变input元素的值特征集不会同步改变
+    // const username = document.querySelector('input[name="username"]');
+    // username.value = 'rain';
+    // console.log(username.attributes.getNamedItem('value').value); // ame
+
+    // 改变`input`元素特征集中的属性值会影响到元素节点的对应属性值
+    const username = document.querySelector('input[name="username"]');
+    username.attributes['value'].nodeValue = 'rain';
+    console.log(username.value); // rain
+  </script>
+</body>
+
+</html>

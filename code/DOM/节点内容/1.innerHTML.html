@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 更改div内容 -->
+  <!-- <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain">rain</div>
+  </div> -->
+
+  <!-- 重绘节点 -->
+  <div id="app">
+    <button>clicke me</button>
+    <img src="https://dss1.bdstatic.com/70cFuXSh_Q1YnxGkpoWK1HF6hhy/it/u=148200059,2148086178&fm=111&gp=0.jpg" alt="啊哈">
+  </div>
+
+  <script>
+    // 更改div的子树
+    // const app = document.querySelector('#app');
+    // console.log(app.innerHTML);
+    // app.innerHTML = `<h1>Ame</h1>`;
+
+    // 重绘节点
+    const app = document.querySelector('#app');
+    app.querySelector('button').addEventListener('click', function () {
+      console.log(this.innerHTML);
+      this.parentElement.innerHTML += `<hr>Ame</hr>`;
+    });
+  </script>
+</body>
+
+</html>

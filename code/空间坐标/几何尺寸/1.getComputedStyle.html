@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .ame {
+      padding: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ame">
+    <span>ren</span>
+  </div>
+  <script>
+    const ame = document.querySelector('.ame');
+    // 获取的时元素默认的width值（content-box）
+    console.log(window.getComputedStyle(ame).width); // 464px
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // class User {
+    //   constructor(name) {
+    //     this.name = name;
+    //   }
+    //   show() {
+    //     console.log(this.name);
+    //   }
+    // }
+    // class Admin extends User {
+    //   constructor(name) {
+    //     super(name);
+    //   }
+    // }
+    // let admin = new Admin('ame');
+    // admin.show(); // ame
+
+    // super 原理
+    function Person(name) {
+      this.name = name;
+    }
+    function User(...args) {
+      Person.apply(this, args);
+    }
+    User.prototype = Object(User.prototype);
+    User.prototype.constructor = User;
+    const user = new User('ame');
+    console.log(user.name); // ame
+  </script>
+</body>
+
+</html>

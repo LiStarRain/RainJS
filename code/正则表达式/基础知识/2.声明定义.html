@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="content">ame and rain</div>
+
+  <script>
+    // 字面量
+    // let str = 'ame666rain';
+    // let ame = '555'
+    // console.log(/ame/.test(str)); // true
+
+    // 利用eval()函数
+    // let str = 'ame555rain';
+    // let ame = '555';
+    // console.log(eval(`/${ame}/`).test(str)); // true
+
+    // // 调用构造函数
+    // let test = 'ame666rain';
+    // let str = '666';
+    // let reg = new RegExp(str);
+    // console.log(reg.test(test)); // true
+
+    // 根据用户输入高亮显示内容
+    const content = prompt('请输入要搜索的内容，支持正则表达式：');
+    const reg = new RegExp(content, 'g');
+    let target = document.querySelector('#content');
+    let newContent = target.innerHTML.replace(reg, str => {
+      return `<span style="background-color: red;">${str}</span>`;
+    });
+    target.innerHTML = newContent;
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <p class="source">
+    <a href="https://a.com/1.jpg">a</a>
+    <a href="https://c.com/2.jpg">b</a>
+    <a href="https://b.com/3.jpg">c</a>
+  </p>
+
+  <script>
+    // 获取前面不是数字的字符
+    // let str = 'ame666rain';
+    // const reg = /(?<!\d+)[a-z]+/i;
+    // console.log(reg.exec(str)[0]); // ame
+
+    // 替换静态资源网址
+    const el = document.querySelector('.source');
+    const reg = /https?:\/\/(\w+)?(?<!ame)\..+?(?=\/)/ig;
+    el.innerHTML = el.innerHTML.replace(reg, v => {
+      console.log(v);
+      return `https://ame.com`;
+    });
+  </script>
+</body>
+
+</html>

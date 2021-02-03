@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // // 操作 thenable 对象
+    // class User {
+    //   constructor(name) {
+    //     this.name = name;
+    //   }
+    //   then(resolve, reject) {
+    //     setTimeout(() => {
+    //       resolve('ame');
+    //     }, 1000);
+    //   }
+    // }
+    // async function test() {
+    //   let user = await new User('ame');
+    //   console.log(user);
+    // }
+    // test(); // ame
+
+    // 类方法
+    class User {
+      constructor(message) {
+        this.get(message);
+      }
+      async get(message) {
+        let p1 = await this.create(message);
+        console.log(p1);
+      }
+      create(message) {
+        return new Promise(resolve => {
+          setTimeout(() => {
+            resolve(message);
+          }, 1000);
+        });
+      }
+    }
+    new User('ame'); // ame
+  </script>
+</body>
+
+</html>

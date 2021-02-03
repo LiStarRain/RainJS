@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script src="./Ame.js"></script>
+  <script>
+    let p1 = Ame.reject('ame').then();
+    setTimeout(() => {
+      // Ame {status: "rejected", value: "ame", callbacks: Array(0)}
+      console.log(p1);
+    });
+  </script>
+</body>
+
+</html>

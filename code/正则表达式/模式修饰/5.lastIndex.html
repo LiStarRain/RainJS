@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let str1 = `ame今晚想吃ame猪扒饭，哈哈！`;
+    let reg = /ame(.{3})/g;
+    reg.lastIndex = 7; // 从索引位置 7 处开始匹配
+    console.log(reg.exec(str1));
+    console.log(reg.lastIndex); // 13
+    reg = /\p{sc=Han}/gu;
+    while (res = reg.exec(str1)) {
+      console.log(res[0]); // 今 晚 想 吃 猪 扒 饭 哈 哈
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .slide {
+      width: 300px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .slide dt {
+      height: 30px;
+      background: #34495e;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      padding-left: 10px;
+      cursor: pointer;
+    }
+
+    .slide dt:first-of-type {
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+
+    .slide dd {
+      height: 100px;
+      background-color: #f1c40f;
+    }
+
+    .slide dd:last-of-type {
+      border-bottom-right-radius: 10px;
+      border-bottom-left-radius: 10px;
+    }
+  </style>
+</head>
+
+<body>
+  <dl class="slide">
+    <dt>Ame</dt>
+    <dd></dd>
+    <dt>Rain</dt>
+    <dd></dd>
+  </dl>
+
+  <script>
+    // 动画类
+    class Animation {
+      constructor(el) {
+        this.el = el;
+        this.timeout = 5;
+        this.isShow = true;
+        this.defaultHeight = this.height;
+      }
+      // 隐藏
+      hide(callback) {
+        this.isShow = false;
+        let timer = setInterval(() => {
+          if (this.height <= 0) {
+            clearInterval(timer);
+            callback && callback();
+            return;
+          }
+          this.height = this.height - 1;
+        }, this.timeout);
+      }
+      // 显示
+      show(callback) {
+        this.isShow = true;
+        let timer = setInterval(() => {
+          if (this.height >= this.defaultHeight) {
+            clearInterval(timer);
+            callback && callback();
+            return;
+          }
+          this.height = this.height + 1;
+        }, this.timeout);
+      }
+      // 访问器
+      get height() {
+        return window.getComputedStyle(this.el).height.slice(0, -2) * 1;
+      }
+      set height(height) {
+        this.el.style.height = height + 'px';
+      }
+    }
+    // 面板类
+    class Panel extends Animation {
+      constructor(el) {
+        super(el);
+      }
+      // 用来函数节流，防止多次触发事件导致抖动
+      static num = 0;
+      static hideAll(items, callback) {
+        if (Panel.num > 0) return;
+        items.forEach(item => {
+          Panel.num++;
+          item.hide(() => {
+            Panel.num--;
+          });
+        });
+        callback && callback();
+      }
+      static filter(items, i) {
+        return items.filter((item, index) => index != i);
+      }
+    }
+    // 滑块管理
+    class Slide {
+      constructor(el) {
+        this.el = document.querySelector(el);
+        this.links = this.el.querySelectorAll('dt');
+        this.panels = [...this.el.querySelectorAll('dd')].map(item => {
+          return new Panel(item);
+        });
+        this.bind();
+      }
+      bind() {
+        this.links.forEach((item, i) => {
+          item.addEventListener('click', () => {
+            this.action(i);
+          });
+        });
+      }
+      action(i) {
+        Panel.hideAll(Panel.filter(this.panels, i), () => {
+          this.panels[i].show();
+        });
+      }
+    }
+    new Slide('.slide')
+  </script>
+</body>
+
+</html>

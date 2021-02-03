@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class Controller {
+      // 该方法会被添加到Controller.prototype中
+      sum() {
+        return this.data.reduce((t, c) => t += c.price, 0);
+      }
+    }
+    class Lesson extends Controller {
+      constructor(lessons) {
+        super();
+        this.data = lessons;
+      }
+      // info 方法会被添加到Lesson.prototype中，而Lesson.prototype的原型对象为Controller.prototype
+      info() {
+        return {
+          totalPrice: super.sum(),
+          data: this.data
+        };
+      }
+    }
+    let data = [
+      { name: 'js', price: 111 },
+      { name: 'css', price: 101 },
+      { name: 'html', price: 25 }
+    ];
+    const lessons = new Lesson(data);
+    console.log(lessons.info()); // {totalPrice: 237, data: Array(3)}
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 如果then方法的返回值与调用该方法的Promise对象相同，则出错
+    // let p1 = new Promise((resolve, reject) => {
+    //   resolve('success');
+    // }).then(() => {
+    //   return p1; // Error
+    // });
+
+    // promise
+    // new Promise((resolve, reject) => {
+    //   resolve(
+    //     new Promise((resolve, reject) => {
+    //       setTimeout(() => {
+    //         resolve('success');
+    //       }, 1000);
+    //     })
+    //   );
+    // }).then(res => {
+    //   console.log(res); // success
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(() => {
+    //       reject('fail');
+    //     }, 1000);
+    //   });
+    // }).then(null, error => {
+    //   console.log(error); // fail
+    // });
+
+    // Thenables
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve({
+    //     then(resolve, reject) {
+    //       resolve('fulfilled');
+    //     }
+    //   });
+    // }).then(v => {
+    //   console.log(v); // fulfilled
+    //   return {
+    //     then(resolve, reject) {
+    //       setTimeout(() => {
+    //         reject('rejected');
+    //       }, 1000);
+    //     }
+    //   };
+    // }).then(null, error => {
+    //   console.log(error); // rejected
+    //   return {
+    //     then(resolve, reject) { }
+    //   }
+    // });
+    // setTimeout(() => {
+    //   console.log(promise); //Promise {<pending>}
+    // }, 4000);
+
+    // // 包含`then`方法的对象可以当作`Promise`对象使用
+    // class User {
+    //   constructor(id) {
+    //     this.id = id;
+    //   }
+    //   then(resolve, reject) {
+    //     resolve('fulfilled');
+    //   }
+    // }
+    // new Promise((resolve, reject) => {
+    //   resolve('success');
+    // }).then(v => {
+    //   console.log(v);
+    //   return new User(100);
+    // }).then(v => {
+    //   console.log(v); // fulfilled
+    // });
+
+    // 当然也可以是类
+    // new Promise((resolve, reject) => {
+    //   resolve(
+    //     class {
+    //       static then(resolve, reject) {
+    //         setTimeout(() => {
+    //           resolve('解决状态');
+    //         }, 500);
+    //       }
+    //     }
+    //   )
+    // }).then(msg => {
+    //   console.log(msg); // 解决状态
+    // });
+
+    // 对象中的then不是函数
+    new Promise((resolve, reject) => {
+      resolve('success');
+    }).then(msg => {
+      console.log(msg); // success
+      return {
+        then: 'ame'
+      };
+    }).then(res => {
+      console.log(res.then); // ame
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>ame</h1>
+  <h1>rain</h1>
+  <button id="add">添加元素</button>
+
+  <script>
+    const elements = document.getElementsByTagName('h1');
+    console.log(elements); // HTMLCollection(2) [h1, h1]
+    const button = document.querySelector('#add');
+    button.addEventListener('click', () => {
+      document.body.insertAdjacentHTML('afterbegin', `<h1>哈哈</h1>`);
+      console.log(elements); // 动态改变
+    });
+  </script>
+</body>
+
+</html>

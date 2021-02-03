@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul></ul>
+
+  <script>
+    const ul = document.querySelector('ul');
+    const fragment = document.createDocumentFragment();
+    for (let i = 0; i < 100; i++) {
+      const li = document.createElement('li');
+      li.textContent = i;
+      fragment.append(li);
+    }
+    ul.append(fragment);
+    console.log(fragment.nodeName); // #document-fragment
+    console.log(fragment.nodeValue); // null
+    ul.append(fragment); // 没用
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body id="test">
+  <!-- ame -->
+  <h1>哈哈</h1>
+  <script>
+    // document 节点，nodetype为9
+    console.log(document.nodeType); // 9
+    // 第一个子节点为ducument type节点，nodeType为10
+    console.log(document.childNodes[0].nodeType); // 10
+    // body是标签节点，nodeType为1
+    console.log(document.body.nodeType); // 1
+    // 标签的属性节点的nodeType为2
+    console.log(document.body.attributes[0].nodeType); // 2
+    // body标签的第一个子节点为文本节点（因为是个空白字符），nodeType为3
+    console.log(document.body.firstChild.nodeType); // 3
+    // body 的第二个节点为注释节点，nodeType为8
+    console.log(document.body.childNodes.item(1).nodeType); // 8
+  </script>
+</body>
+
+</html>

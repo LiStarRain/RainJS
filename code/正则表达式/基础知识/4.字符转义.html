@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 匹配 / 
+    // const url = 'https://www.bilibili.com';
+    // console.log(/https:\/\//.test(url)); // true
+
+    // 字符转义
+    let price = 12.23;
+    //  . 含义1：除换行外的任何字符 含义2：普通点
+    // 含义1：d 字母d 含义2：\d 数字0-9
+    // 字面量定义
+    console.log(/\d+\.\d+/.test(price)); // true
+    // 字符串中 \d 与 d 是一样的
+    console.log('\d' === 'd'); // true
+    // 使用构造函数定义
+    console.log('\\d+\\.\\d+');
+    let reg = new RegExp('\\d+\\.\\d+');
+    console.log(reg.test(price)); // true
+  </script>
+</body>
+
+</html>

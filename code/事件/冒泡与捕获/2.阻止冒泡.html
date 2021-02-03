@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app" style="background-color: red;">
+    <button id="btn">click me</button>
+  </div>
+
+  <script>
+    const app = document.querySelector("#app");
+    const btn = app.querySelector('#btn');
+    app.addEventListener('click', (event) => {
+      console.log(`currentTarget:${event.currentTarget}`);
+      console.log(`target:${event.target}`);
+      console.log('app event');
+    });
+    btn.addEventListener('click', (e) => {
+      console.log(`currentTarget:${event.currentTarget}`);
+      console.log(`target:${event.target}`);
+      console.log('button event');
+      // 阻止冒泡
+      // event.stopPropagation(); // 结果：button event  哈哈
+      // 阻止冒泡并阻止同类型其它事件处理器执行
+      event.stopImmediatePropagation();// 结果：button event
+    });
+    // 为button#btn注册第二个事件处理程序
+    btn.addEventListener('click', () => {
+      console.log('哈哈');
+    });
+  </script>
+</body>
+
+</html>

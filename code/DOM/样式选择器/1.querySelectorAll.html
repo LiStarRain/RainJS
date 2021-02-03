@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="ame" test="ame1">ame</div>
+  <div class="rain ame">rain and ame</div>
+  <div id="app">
+    <div class="ame">app ame</div>
+    <div class="ame" test="ame2">test</div>
+  </div>
+
+  <script>
+    // const nodes = document.querySelectorAll('div');
+    // console.log(nodes); // NodeList(2) [div.ame, div.rain.ame]
+
+    // 获取`id`为`app`元素中的`ame`类的子元素
+    // const nodes = document.querySelectorAll('#app .ame');
+    // console.log(nodes); // NodeList [div.ame]
+
+    // 利用属性选择器来选择相应的元素
+    // const nodes = document.querySelectorAll('div[test]');
+    // console.log(nodes); // NodeList(2) [div.ame, div.ame]
+
+    // 同时匹配多个元素
+    const nodes = document.querySelectorAll(`.rain, #app`);
+    console.log(nodes); // NodeList(2) [div.rain.ame, div#app]
+  </script>
+</body>
+
+</html>

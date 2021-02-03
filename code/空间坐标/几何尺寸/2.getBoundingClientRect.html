@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    #app {
+      width: 200px;
+      border: 20px solid #efbc0f;
+      background-color: #e34334;
+      color: #fff;
+      font-size: 30px;
+      text-align: center;
+      padding: 50px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">ame</div>
+
+  <script>
+    const app = document.querySelector('#app');
+    let info = app.getBoundingClientRect();
+    console.log(info);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <ul>
+    <li data-action="hidden">ame</li>
+    <li data-action="color" data-color="red">rain</li>
+  </ul>
+
+  <script>
+    class Ame {
+      constructor(el) {
+        this.$el = document.querySelector(el);
+        this.$el.addEventListener('click', e => {
+          const action = e.target.dataset.action;
+          this[action](e);
+        });
+      }
+      hidden(e) {
+        e.target.hidden = true;
+      }
+      color(e) {
+        e.target.style.color = event.target.dataset.color;
+      }
+    }
+    new Ame('ul');
+  </script>
+</body>
+
+</html>

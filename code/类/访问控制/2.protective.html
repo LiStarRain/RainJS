@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 命名保护
+    // class User {
+    //   _level = 1;
+    //   set level(value) {
+    //     if (!/^\d+$/.test(value)) {
+    //       throw new Error('格式错误');
+    //     }
+    //     this._level = value;
+    //   }
+    //   get level() {
+    //     return this._level;
+    //   }
+    // }
+    // let user = new User();
+    // console.log(user.level); // 1
+    // console.log(user._level); // 1
+    // user.level = '1ss';
+    // console.log(user.level); // 格式错误
+
+    // 继承时是可以使用的
+    // class Common {
+    //   _host = 'http://wasser.net.cn';
+    //   set host(url) {
+    //     if (!/^https?:\/\//i.test(url)) {
+    //       throw new Error('网址格式错误');
+    //     }
+    //     this.host = url;
+    //   }
+    // }
+    // class Article extends Common {
+    //   lists() {
+    //     return `${this._host}/article`;
+    //   }
+    // }
+    // let article = new Article();
+    // console.log(article.lists()); // http://wasser.net.cn/article
+    // article.host = '123'; // Error
+
+    // Symbol
+    // const protecteds = Symbol('保密');
+    // class Common {
+    //   constructor() {
+    //     this[protecteds] = {};
+    //     this[protecteds].host = 'http://wasser.net.cn';
+    //   }
+    //   set host(url) {
+    //     if (!/^https?:/i.test(url)) {
+    //       throw new Error('网址错误');
+    //     }
+    //     this[protecteds].host = url;
+    //   }
+    //   get host() {
+    //     return this[protecteds].host;
+    //   }
+    // }
+    // class User extends Common {
+    //   constructor(name) {
+    //     super();
+    //     this[protecteds].name = name;
+    //   }
+    //   get name() {
+    //     return this[protecteds].name;
+    //   }
+    // }
+    // let user = new User('ame');
+    // console.log(user.host); // http://wasser.net.cn
+    // user.host = 'http://bilibili.com';
+    // console.log(user.name); // ame
+    // console.log(user);
+    // // console.log(user[Symbol('保密')]); // undefined
+
+    // WeakMap
+    const protecteds = new WeakMap();
+    class Common {
+      constructor() {
+        protecteds.set(this, {
+          host: 'http://wasser.net.cn',
+          port: 80
+        });
+      }
+      set host(url) {
+        if (!/^https?:/i.test(url)) {
+          throw new Error('网址格式错误');
+        }
+        protecteds.set(this, {
+          ...protecteds.get(this),
+          host: url
+        });
+      }
+    }
+    class Article extends Common {
+      constructor() {
+        super();
+      }
+      lists() {
+        return `${protecteds.get(this).host}/article`;
+      }
+    }
+    let article = new Article();
+    console.log(article.lists()); // http://wasser.net.cn/article
+    article.host = 'https://bilibili.com';
+    console.log(article.lists()); // https://bilibili.com/article
+  </script>
+</body>
+
+</html>

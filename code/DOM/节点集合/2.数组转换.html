@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>ame</h1>
+  <h1>rain</h1>
+  <script>
+    // 借用原型方法
+    // const els = document.getElementsByTagName('h1');
+    // console.log(els);
+    // let arr = Array.prototype.slice.call(els, 0);
+    // console.log(arr); // [h1, h1]
+    // arr.map(h1 => {
+    //   h1.style.color = 'red';
+    // });
+
+    // 使用 Array.from() 转换
+    // const els = document.getElementsByTagName('h1');
+    // console.log(els);
+    // console.log(Array.from(els)); // [h1, h1]
+
+    // 使用展开语法
+    const els = document.getElementsByTagName('h1');
+    console.log(els);
+    console.log([...els]); // [h1, h2]
+    [...els].map(h1 => {
+      h1.addEventListener('click', () => {
+        h1.style.color = 'red';
+      });
+    });
+  </script>
+</body>
+
+</html>

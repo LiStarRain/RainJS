@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 绑定到属性 -->
+  <!-- <button onclick="console.log('ame')">click me</button> -->
+
+  <!-- 绑定函数 -->
+  <!-- <button onclick="show()">click me</button> -->
+
+  <!-- 绑定方法 -->
+  <!-- <button onclick="Ame.show()">click me</button> -->
+
+  <!-- 传入事件源与事件对象 -->
+  <button onclick="show(this,event,'ame')">clicke me</button>
+
+  <script>
+    // 绑定函数
+    // function show() {
+    //   console.log('show');
+    // }
+
+    // 绑定方法
+    // class Ame {
+    //   static show() {
+    //     console.log('Ame static show');
+    //   }
+    // }
+
+    // 传入事件源与事件对象
+    function show(...args) {
+      console.log(args); // [button, MouseEvent, "ame"]
+    }
+  </script>
+
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div name="rain">rain</div>
+  </div>
+  <script>
+    const collection = document.getElementsByTagName('div');
+    // namedItem方法
+    console.log(collection.namedItem('app'));
+    console.log(collection.namedItem('rain'));
+    console.log(collection.app);
+    console.log(collection['rain']);
+  </script>
+</body>
+
+</html>

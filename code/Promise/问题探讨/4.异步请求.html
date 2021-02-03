@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function ajax(url, resolve, reject) {
+      const xhr = new XMLHttpRequest();
+      // 创建一个链接
+      xhr.open('GET', url);
+      // 注册事件处理函数
+      xhr.onload = function () {
+        try {
+          if (this.status === 200) {
+            resolve(JSON.parse(this.response));
+          } else {
+            reject(this.status + ' ' + this.statusText);
+          }
+        } catch (error) {
+          reject(error.message)
+        }
+      };
+      xhr.onerror = function () {
+        reject(this.status + ' ' + this.statusText);
+      };
+      // 发送请求
+      xhr.send();
+    }
+
+    // 获取成绩
+    ajax('http://localhost:8888/php/user.php?name=ame', user => {
+      ajax(`http://locslhost:8888/php/score.php?id=${user['id']}`,
+        response => {
+          console.log(response[0]);
+        });
+    });
+  </script>
+</body>
+
+</html>

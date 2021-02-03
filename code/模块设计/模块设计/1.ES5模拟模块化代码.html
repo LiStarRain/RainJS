@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 利用闭包进行模块化
+    const MouseCounterModule = (function () {
+      let numClicks = 0;
+      const handleClick = function () {
+        console.log(++numClicks);
+      };
+      return {
+        countClicks() {
+          document.addEventListener('click', handleClick);
+        }
+      };
+    })();
+
+    // 模块扩展
+    (function (module) {
+      let numScrolls = 0;
+      const handleScroll = function () {
+        console.log(++numScrolls);
+      };
+      module.countScrolls = function () {
+        document.addEventListener('wheel', handleScroll);
+      };
+    })(MouseCounterModule);
+    MouseCounterModule.countClicks();
+    MouseCounterModule.countScrolls();
+  </script>
+</body>
+
+</html>

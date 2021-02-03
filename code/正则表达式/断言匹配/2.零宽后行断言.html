@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 替换超链接 -->
+  <!-- <p class="replace">
+    <a href="http://a.com">ame</a>
+    <a href="http://b.com">rain</a>
+  </p> -->
+
+  <!-- ame后的食品加上超链接 -->
+  <!-- <p class="ame">ame食品</p> -->
+
+  <script>
+    // 匹配前面是 ame 的数字
+    // let str = 'ame666rain';
+    // const reg = /(?<=ame)\d+/i;
+    // console.log(str.match(reg));
+    // console.log(str.match(reg)[0]); // 666
+
+    // 匹配前后都是数字的子字符串
+    // let str = '666ame666';
+    // const reg = /(?<=\d)[a-z]+(?=\d)/i;
+    // console.log(str.match(reg));
+    // console.log(str.match(reg)[0]); // ame
+
+    // 将所有超链接替换为 ame.com
+    // const el = document.querySelector('.replace');
+    // const reg = /(?<=<a.*href=(['"])).+?(?=\1)/;
+    // el.innerHTML = el.innerHTML.replace(reg, 'ame.com');
+    // console.log(el.children[0].getAttribute('href')); // ame.com
+
+    // 将ame后面的食品加上超链接
+    // const el = document.querySelector('.ame');
+    // const reg = /(?<=ame)食品/ig;
+    // el.innerHTML = el.innerHTML.replace(reg, str => {
+    //   return `<a href="javascript:;">${str}</a>`;
+    // });
+
+    // 将电话号码的后四位模糊处理
+    // let str = `
+    //   ame电话：12345678901
+    //   rain电话：98765432123
+    // `;
+    // const reg = /(?<=\d{7})\d+\s*/g;
+    // str = str.replace(reg, str => {
+    //   return '*'.repeat(4);
+    // });
+    // console.log(str);
+
+    // 获取标题中的内容
+    let str = `<h1>哈哈哈</h1>`;
+    const reg = /(?<=<(h[1-6]).*>)(?<content>[\s\S]*?)(?=<\/\1>)/ig;
+    console.log(str.match(reg)[0]); // 哈哈哈
+    console.log(reg.exec(str).groups.content); // 哈哈哈
+  </script>
+</body>
+
+</html>

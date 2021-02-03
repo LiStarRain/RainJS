@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .test {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain">rain</div>
+  </div>
+
+  <script>
+    // 设置类名
+    // const app = document.querySelector('#app');
+    // app.className = 'test';
+    // console.log(app.className);
+
+    // 利用hidden属性隐藏元素
+    const app = document.querySelector('#app');
+    app.addEventListener('click', function () {
+      this.hidden = true;
+    });
+  </script>
+</body>
+
+</html>

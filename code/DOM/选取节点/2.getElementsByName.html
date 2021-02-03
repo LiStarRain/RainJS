@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div name="ame"></div>
+  <input type="text" name="username" />
+
+  <script>
+    const div = document.getElementsByName('ame');
+    console.log(div); // NodeList [div]
+    const input = document.getElementsByName('username');
+    console.log(input); // NodeList [input]
+  </script>
+</body>
+
+</html>

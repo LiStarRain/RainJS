@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class User {
+      name = 'ame';
+      constructor(age) {
+        this.age = age;
+      }
+    }
+    let user = new User(22);
+    console.log(user.name, user.age); // ame 22
+    console.log(user);
+    Object.defineProperty(user, 'age', {
+      get: function () {
+        return '哈哈哈';
+      },
+      enumerable: false,
+      configurable: false
+    });
+    console.log(user);
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 未更改状态
+    // console.log(new Promise((resolve, reject) => { })); // Promise {<pending>}
+
+    // 更改状态后
+    // console.log(new Promise((resolve, reject) => {
+    //   resolve('解决了');
+    // })); // Promise {<fulfilled>: "解决了"}
+    // console.log(new Promise((resolve, reject) => {
+    //   reject('失败了');
+    // })); // Promise {<rejected>: "失败了"}
+
+    // 任务执行顺序
+    // let promise = new Promise((resolve, reject) => {
+    //   resolve('fulfilled');
+    //   console.log('哈哈');
+    // });
+    // promise.then(msg => {
+    //   console.log(msg);
+    // });
+    // console.log('嘿嘿');
+    // 结果： 哈哈 嘿嘿 fulfilled
+
+    // 三秒后更改 Promise 对象的状态
+    // new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     resolve('fulfilled');
+    //   }, 3000);
+    // }).then(msg => {
+    //   console.log(msg);
+    // }, error => {
+    //   console.log(error);
+    // });
+
+    // 状态只能改变一次
+    new Promise((resolve, reject) => {
+      resolve('操作成功');
+      reject('操作失败');
+    }).then(res => {
+      console.log(res);
+    }, error => {
+      console.log(error);
+    });
+    // 结果：操作成功
+  </script>
+</body>
+
+</html>

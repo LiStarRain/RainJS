@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // class 语法糖默认使用严格模式
+    class User {
+      constructor(name) {
+        this.name = name;
+      }
+      show() {
+        function test() {
+          // 严格模式下输出 undefined
+          console.log(this);
+        }
+        test();
+      }
+    }
+    const user = new User('ame');
+    user.show(); // undefined
+
+    // 原生方法
+    function Member(name) {
+      this.name = name;
+    }
+    Member.prototype.show = function () {
+      function test() {
+        console.log(this);
+      }
+      test();
+    };
+    const member = new Member('rain');
+    member.show(); // window
+  </script>
+</body>
+
+</html>

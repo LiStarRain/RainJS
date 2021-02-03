@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>ame</h1>
+  <h2>rain</h2>
+  <h3>哈哈</h3>
+
+  <script>
+    function search(string, reg) {
+      const matchs = [];
+      let data = null;
+      while (data = reg.exec(string)) {
+        matchs.push(data);
+      }
+      return matchs;
+    }
+    console.log(search(document.body.innerHTML, /<(h[1-6])>[\s\S]+<\/\1>/ig));
+  </script>
+</body>
+
+</html>

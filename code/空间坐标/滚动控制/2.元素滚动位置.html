@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #app {
+      height: 300px;
+      width: 300px;
+      overflow: auto;
+    }
+
+    .ame {
+      height: 3000px;
+      width: 3000px;
+      background-color: #833ca4;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame"></div>
+  </div>
+  <script>
+    const app = document.querySelector('#app');
+    app.addEventListener('scroll', function () {
+      console.log(this.scrollLeft);
+      console.log(this.scrollTop);
+    });
+  </script>
+</body>
+
+</html>

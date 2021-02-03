@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function create(message) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(message);
+        }, 500);
+      });
+    }
+
+    // 顺序执行
+    // async function test() {
+    //   let p1 = await create('p1');
+    //   console.log(p1);
+    //   let p2 = await create('p2');
+    //   console.log(p2);
+    // }
+    // test(); // p1 p2
+
+    // 并发执行
+    // async function test() {
+    //   let res = await Promise.all([create('p1'), create('p2')]);
+    //   console.log(res);
+    // }
+    // test(); // ["p1", "p2"]
+
+    // 让Promise对象先执行然后再用await处理结果
+    async function test() {
+      let p1 = create('p1');
+      let p2 = create('p2');
+      console.log(p1, p2); // Promise {<pending>} Promise {<pending>}
+      let res1 = await p1;
+      let res2 = await p2;
+      console.log(res1, res2); // p1 p2
+    }
+    test();
+  </script>
+</body>
+
+</html>

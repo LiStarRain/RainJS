@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 原生写法
+    // function User() {}
+    // User.VERSION = '1.0';
+    // console.dir(User);
+    // const user1 = new User();
+    // console.log(user1.VERSION); // undefined
+    // console.log(User.VERSION); // 1.0
+
+    // class 语法糖
+    class Request {
+      static HOST = 'http://wasser.net.cn';
+      query(api) {
+        return Request.HOST + '/' + api;
+      }
+    }
+    let request = new Request();
+    console.log(request.query('?id=1')); // http://wasser.net.cn/?id=1
+  </script>
+</body>
+
+</html>

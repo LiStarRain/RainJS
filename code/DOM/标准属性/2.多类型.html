@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="number" name="test" value="90" />
+  <input id="test" type="checkbox">
+  <label for="test">test</label>
+  <a href="#test">test</a>
+  <script>
+    // 类型转换
+    // const input = document.querySelector('[name="test"]');
+    // input.value = parseFloat(input.value) + 10;
+
+    // 选择框
+    const input = document.querySelector('input[type="checkbox"]');
+    input.addEventListener('change', function () {
+      // value 改变时触发该事件
+      console.log(this.checked);
+    });
+
+    // 属性值并非都与标签中定义的值一样
+    const el = document.querySelector('a');
+    console.log(el.href); // 完整链接
+  </script>
+</body>
+
+</html>

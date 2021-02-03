@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain ame">rain and ame</div>
+  </div>
+
+  <script>
+    const app = document.querySelector('#app');
+    const el = app.children[1];
+    console.log(el.classList); // DOMTokenList(2)["rain", "ame", value: "rain ame"]
+    // 添加类名
+    el.classList.add('test');
+    console.log(el.className); // rain ame test
+    // 移除类名
+    el.classList.remove('ame', 'test');
+    console.log(el.className); // rain
+    // 切换类
+    el.classList.toggle('on');
+    console.log(el.className); // rain on
+    el.classList.toggle('on');
+    console.log(el.className); // rain
+    // 检测元素中是否存在指定类
+    console.log(el.classList.contains('rain')); // true
+  </script>
+</body>
+
+</html>

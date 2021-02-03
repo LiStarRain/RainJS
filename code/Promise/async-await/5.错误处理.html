@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // async function test() {
+    //   ame();
+    // }
+    // test().catch(err => console.log('ha')); // ha
+
+    // try catch
+    // async function run() {
+    //   try {
+    //     await Promise.reject('fail');
+    //     console.log('哈哈');
+    //   } catch (e) {
+    //     console.log(e); // fail
+    //   }
+    // }
+    // run(); // fail
+
+    // await错误处理
+    // async function run() {
+    //   let res = await Promise.reject('fail').catch(() => '哈哈');
+    //   console.log(res); // 哈哈
+    // }
+    // run();
+
+    // 忽略不必要的错误
+    // async function run() {
+    //   try {
+    //     await Promise.reject('嘻嘻');
+    //   } catch (error) { }
+    //   console.log(await Promise.resolve('哈哈'));
+    // }
+    // run(); // 哈哈
+
+    // 统一处理
+    async function run() {
+      try {
+        await Promise.resolve('嘻嘻');
+        await Promise.reject('哈哈');
+        await Promise.resolve('西瓜');
+      } catch (error) {
+        console.log('错误');
+      }
+    }
+    run(); // 错误
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 类声明
+    class User {}
+    console.log(new User()); // User {}
+
+    // 类表达式
+    const Admin = class {};
+    console.log(new Admin()); // Admin {}
+
+    // 类的方法之间不需要逗号分隔
+    class Member {
+      show() {}
+      get() {
+        console.log("get");
+      }
+    }
+    const ame = new Member();
+    ame.get(); // get
+    console.log(Object.getPrototypeOf(ame)); //{constructor: ƒ, show: ƒ, get: ƒ
+  </script>
+</body>
+
+</html>

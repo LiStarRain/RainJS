@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain">
+      <!--rain-->
+    </div>
+  </div>
+  <script>
+    // const node = document.querySelector('#app');
+    // console.log(node.nodeType); // 1
+    // console.log(node.firstChild.nodeType); // 3 空白字符（换行符）
+    // const rain = document.querySelector('.rain');
+    // console.log(rain.childNodes[1].nodeType); // 8
+    // console.log(rain.attributes[0].nodeType); // 2
+
+    // 原型链
+    // const div = document.querySelector('#app');
+    // const comment = div.querySelector('.rain').childNodes[1];
+    // console.log(div instanceof HTMLDivElement); // true
+    // console.log(comment instanceof HTMLDivElement); //false
+    // console.log(comment instanceof Comment); // true
+
+    // 递归获取所有元素
+    function getEls(el) {
+      let items = [];
+      [...el.childNodes].map(node => {
+        if (node.nodeType === 1) {
+          items.push(node, ...getEls(node));
+        }
+      })
+      return items;
+    }
+    const div = document.querySelector('#app');
+    console.log(getEls(div)); // [div.ame, div.rain]
+  </script>
+</body>
+
+</html>

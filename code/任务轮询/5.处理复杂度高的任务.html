@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <table>
+    <tbody></tbody>
+  </table>
+
+  <script>
+    // 复杂任务
+    // 查找tbody元素，我们将在其中插入大量的行数
+    // const tbody = document.querySelector('tbody');
+    // // 创建20000行，非常多
+    // for (let i = 0; i < 20000; i++) {
+    //   // 创建一行
+    //   const tr = document.createElement('tr');
+    //   for (let j = 0; j < 6; j++) {
+    //     // 每一行有6个单元格
+    //     const td = document.createElement('td');
+    //     // 每个单元格有一个文本节点
+    //     td.append(document.createTextNode(i + ',' + j));
+    //     tr.append(td);
+    //   }
+    //   tbody.append(tr);
+    // }
+
+    // 优化后
+    const rowCount = 20000;
+    // 切分成多少个切片
+    const divideInto = 4;
+    // 每个切片中的操作数
+    const chunkSize = rowCount / divideInto;
+    // 记录处理过的切片数
+    let iteration = 0;
+    const tabody = document.querySelector('tbody');
+    setTimeout(function generationRows() {
+      // 计算上一次离开的地方
+      const base = iteration * chunkSize;
+      for (let i = 0; i < chunkSize; i++) {
+        const tr = document.createElement('tr');
+        for (let j = 0; j < 6; j++) {
+          const td = document.createElement('td');
+          td.append(document.createTextNode((i + base) + ',' + j + ',' + iteration));
+          tr.append(td);
+        }
+        tabody.append(tr);
+      }
+      iteration++;
+      if (iteration < divideInto) {
+        // 不传入时间或者将时间设置为0表示下一次迭代应尽快执行，但仍必须在UI更新后
+        setTimeout(generationRows, 0);
+      }
+    }, 0);
+  </script>
+</body>
+
+</html>

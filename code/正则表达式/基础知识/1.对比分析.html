@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 普通处理方法
+    // let str = "ame666rain";
+    // let nums = [...str].filter(item => !Number.isNaN(parseFloat(item))).join('');
+    // console.log(nums); // 666
+
+    // 使用正则表达式
+    let str = "ame666rain";
+    console.log(str.match(/\d/g).join('')); // 666
+  </script>
+</body>
+
+</html>

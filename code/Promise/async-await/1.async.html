@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 使用async关键字
+    // async function test() {
+    //   return '哈哈';
+    // }
+    // console.log(test()); // Promise {<fulfilled>: "哈哈"}
+    // test().then(() => {
+    //   console.log('嘻嘻'); // 嘻嘻
+    // });
+
+    // 顺序执行多个异步任务
+    function create(message) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve(message);
+        }, 500);
+      });
+    }
+    async function run() {
+      let p1 = await create('ame');
+      console.log(p1);
+      let p2 = await create('rain');
+      console.log(p2);
+      let p3 = create('lsr');
+      p3 = await p3.then(() => '嘿嘿');
+      console.log(p3);
+      return '橘子';
+    }
+    let promise = run(); // ame rain 嘿嘿
+    setTimeout(() => {
+      console.log(promise); // Promise {<fulfilled>: "橘子"}
+    }, 1600);
+  </script>
+</body>
+
+</html>

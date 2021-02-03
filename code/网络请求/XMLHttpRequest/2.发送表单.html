@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="" id="form">
+    <input type="text" name="username" />
+    <input type="submit" />
+  </form>
+
+  <script>
+    const form = document.querySelector('#form');
+    form.addEventListener('submit', function () {
+      // 阻止默认行为
+      event.preventDefault();
+      post('ame.php', new FormData(this));
+    });
+    function post(url, data) {
+      const xhr = new XMLHttpRequest();
+      xhr.open('POST', url);
+      xhr.send(data);
+      xhr.onload = function () {
+        if (this.status === 200) {
+          console.log(this.response);
+        } else {
+          console.log(`${this.status}:${this.statusText}`);
+        }
+      };
+    }
+  </script>
+</body>
+
+</html>

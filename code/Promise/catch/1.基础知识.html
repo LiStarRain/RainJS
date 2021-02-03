@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 使用reject触发拒绝状态
+    // new Promise((resolve, reject) => {
+    //   reject('rejected');
+    // }).then(null, error => {
+    //   console.log(error); // rejected
+    // });
+
+    // 使用未定义的变量触发拒绝状态
+    // new Promise((resolve, reject) => {
+    //   ame();
+    // }).then(null, error => {
+    //   console.log(error.message); // ame is not defined
+    // });
+
+    // onFufilled或onRejected抛出异常
+    // let promise = new Promise((resolve, reject) => {
+    //   throw new Error('fail');
+    // });
+    // let p2 = promise.then();
+    // // 穿刺传值
+    // p2.then().then(null, error => {
+    //   console.log(error);
+    //   throw new Error('fail too');
+    // }).then(null, error => {
+    //   console.log(error.message); // fail too
+    // });
+
+    // 利用 catch 方法捕获错误
+    // const promise = new Promise((resolve, reject) => {
+    //   reject(new Error('哈哈'));
+    // }).catch(error => {
+    //   console.log(error.message); // 哈哈
+    // });
+
+    // 统一捕获错误
+    // new Promise((resolve, reject) => {
+    //   resolve('success');
+    // }).then(res => {
+    //   console.log(res); // success
+    //   throw new Error('test');
+    // }).then(() => { }).catch(error => {
+    //   console.log(error.message); // test
+    // });
+
+    // 若不处理错误会一直传递
+    const promise = new Promise((resolve, reject) => {
+      reject('test');
+    })
+      .then(() => { })
+      .then()
+      .catch(error => {
+        console.log(error); // test
+      });
+  </script>
+</body>
+
+</html>

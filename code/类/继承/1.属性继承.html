@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 原生写法
+    // function User(name) {
+    //   this.name = name;
+    // }
+    // function Admin(name) {
+    //   User.call(this, name);
+    // }
+    // let admin = new Admin('ame');
+    // console.log(admin); // Admin {name: "ame"}
+
+    //　class 语法糖
+    class User {
+      constructor(name) {
+        this.name = name;
+      }
+    }
+    class Admin extends User {
+      constructor(name) {
+        // 原型攀升，调用父类构造函数
+        super(name);
+      }
+    }
+    let admin = new Admin('ame');
+    console.log(admin); // Admin {name: "ame"}
+  </script>
+</body>
+
+</html>

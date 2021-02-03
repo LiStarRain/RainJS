@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="myButton">click me</button>
+  <script>
+    // 注册10ms后延迟执行函数
+    setTimeout(function timeoutHandler() {
+      // 假设这里的代码需要执行6ms
+      console.log('timeoutHandler');
+    });
+    // 注册10ms间歇调用函数
+    setInterval(function intervalHandler() {
+      // 假设这里的代码需要执行8ms
+      console.log('intervalHandler');
+    }, 10);
+    // 为单击事件注册事件处理器
+    const button = document.querySelector('#myButton');
+    button.addEventListener('click', function clickHandler() {
+      // 假设这里的代码需要执行10ms
+      console.log('clickHandler');
+    });
+    console.log("假设这里的代码运行需要18ms");
+  </script>
+</body>
+
+</html>

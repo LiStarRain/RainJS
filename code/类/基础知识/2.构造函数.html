@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class User {
+      constructor(name) {
+        // this 指向构造函数新生成的对象
+        this.name = name;
+        this.show = function () {
+          return '每生成一个实例对象都要生成一个新的show方法';
+        }
+      }
+      getName() {
+        return this.name;
+      }
+    }
+    const user = new User('ame');
+    console.log(user.show());
+    console.log(user.getName()); // ame
+    console.log(user.__proto__); // {constructor: ƒ, getName: ƒ}
+    console.log(user); // User {name: "ame", show: ƒ}
+  </script>
+</body>
+
+</html>

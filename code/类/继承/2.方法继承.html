@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // class Person {
+    //   constructor(name) {
+    //     this.name = name;
+    //   }
+    //   show() {
+    //     return `姓名：${this.name}`;
+    //   }
+    // }
+    // class User extends Person {
+    //   constructor(name) {
+    //     super(name);
+    //   }
+    //   run() {
+    //     // User.prototype的原型对象是Person.prototype
+    //     return super.show();
+    //   }
+    // }
+    // const ame = new User("ame");
+    // console.log(ame.run()); // 姓名：ame
+
+    // 可以用extends继承表达式返回的类
+    function controller() {
+      // 匿名类
+      return class {
+        show() {
+          console.log("controller.show");
+        }
+      }
+    }
+    class Admin extends controller() {
+      info() {
+        this.show();
+      }
+    }
+    let ame = new Admin();
+    ame.show();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let str1 = 'LiStarRain';
+    str1 = str1.replace(/a/i, "@");
+    // 没有使用 g 全局修饰符，只替换了第一个查找到的字符
+    console.log(str1); // LiSt@rRain
+
+    let str2 = 'LiStarRain';
+    str2 = str2.replace(/a/ig, "@");
+    // 使用全局修饰符后替换了全部的 a
+    console.log(str2); // LiSt@rR@in
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class User {
+      // 私有属性
+      #host = 'http://wasser.net.cn';
+      constructor(name) {
+        this.name = name;
+        this.flag = this.#check();
+      }
+      set host(url) {
+        if (!/^https?:/i.test(url)) {
+          throw new Error('网址格式错误');
+        }
+        this.#host = url;
+      }
+      get host() {
+        return this.#host;
+      }
+      #check = () => {
+        if (this.name.length <= 5) {
+          throw Error('用户名长度不能小于5位')
+        }
+        return true;
+      }
+    }
+    let user = new User('amerain');
+    // console.log(user.#host); // Private field '#host' must be declared in an enclosing class
+    console.log(user.host); // http://wasser.net.cn
+    console.log(user.flag); // true
+    console.log(user);
+  </script>
+</body>
+
+</html>

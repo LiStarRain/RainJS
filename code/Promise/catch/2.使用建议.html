@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 使用 then 方法来处理错误
+    // new Promise((resolve, reject) => {
+    //   reject('test1');
+    // }).then(
+    //   res => {
+    //     console.log(res);
+    //   },
+    //   error => {
+    //     console.log(error); // test1
+    //     throw new Error('test2');
+    //   }
+    // ).then(() => { }, error => {
+    //   console.log(error.message); // test2
+    // });
+
+    // catch方法统一捕获
+    new Promise((resolve, reject) => {
+      reject('error1');
+    }).then(v => {
+      console.log(v);
+    }, e => {
+      // 对上一步发生的错误进行处理
+      console.log(e); // error1
+      ame();
+    }).catch(e => {
+      // 对最后一次发生的错误进行处理
+      console.log(e.message); // ame is not defined
+    });
+  </script>
+</body>
+
+</html>

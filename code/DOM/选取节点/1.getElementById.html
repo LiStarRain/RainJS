@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="ame">ame</div>
+  <div id="rain">rain</div>
+
+  <script>
+    // const ame = document.getElementById('ame');
+    // console.log(ame); // div#ame
+
+    // 批量按id选择元素
+    // function getElementsById(ids) {
+    //   return ids.map(id => document.getElementById(id));
+    // }
+    // const nodes = getElementsById(['ame', 'rain']);
+    // console.log(nodes); // [div#ame, div#rain]
+
+    // 可以作为window对象的属性进行访问
+    // console.log(window.ame); // div#ame
+    // console.log(window.rain); // div#rain
+    // console.log(ame); // div#ame
+    // console.log(rain); // div#rain
+
+    // 声明同名变量
+    // let ame = 1;
+    // console.log(ame);
+    // console.log(window.ame);
+    // var rain = 1; // var 声明的变量会将它添加到window对象作为属性
+    // console.log(rain);
+    // console.log(window.rain);
+
+    // 不能通过元素节点对象获取拥有指定 id 的子元素
+    const body = document.body;
+    const node = body.getElementById('ame');
+    console.log(node); // Error ... is not a function
+  </script>
+</body>
+
+</html>

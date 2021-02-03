@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="rain" id="ame">test</div>
+
+  <script>
+    const div = document.querySelector('div');
+    // 方括号语法
+    // console.log(div.attributes); // NamedNodeMap {0: class, 1: id, class: class, id: id, length: 2}
+    // console.log(div.attributes[0]); // class="rain"
+    // console.log(div.attributes[0].nodeType); // 2
+    // console.log(div.attributes[0].nodeName); // class
+    // console.log(div.attributes[0].nodeValue); // rain
+    // console.log(div.attributes['class']); // class="rain"
+    // 方法
+    // console.log(div.attributes.getNamedItem('class')); // class="rain"
+    // console.log(div.attributes.item(0)); // class="rain"
+
+    // 删除和设置属性节点
+    // console.log(div.attributes.removeNamedItem('class')); // class="rain"
+    // console.log(div.getAttribute('class')); // null
+    // const attr = document.createAttribute('class');
+    // console.log(attr.specified); // true
+    // attr.nodeValue = 'rain';
+    // div.attributes.setNamedItem(attr);
+    // console.log(div.getAttributeNode('class')); // class="rain"
+
+    // for of 语法糖遍历属性
+    // for (const { nodeName, nodeValue } of div.attributes) {
+    //   console.log(nodeName, nodeValue); // class rain  id ame
+    // }
+
+    // for of 原理
+    console.log(div.attributes); // NamedNodeMap类型
+    const iterator = Object.values(div.attributes).values();
+    let res = null;
+    while (!(res = iterator.next()).done) {
+      console.log(res.value.nodeName, res.value.nodeValue); // class rain id ame
+    }
+  </script>
+</body>
+
+</html>

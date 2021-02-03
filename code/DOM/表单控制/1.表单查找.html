@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <form action="" name="ame">
+    <input type="text" name="username" />
+    <label for="male">男</label>
+    <input type="radio" name="sex" id="male" />
+    <label for="female">女</label>
+    <input type="radio" name="sex" id="female" />
+  </form>
+
+  <script>
+    const form = document.forms.ame;
+    console.log(ame);
+    console.log(ame.elements); // HTMLFormControlsCollection(3)
+    console.log(form.elements.username); // input[name="username"]
+    console.log(form.elements.sex); // RadioNodeList(2) [input#male, input#female, value: ""]
+    // 反向查找
+    console.log(ame.sex[0].form);
+  </script>
+</body>
+
+</html>

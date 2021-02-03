@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // // 使用\p{L}属性匹配字母
+    // let str1 = 'ame666@rain';
+    // console.log(str1.match(/\p{L}+/ug)); // ["ame", "rain"]
+    // // 使用\p{L}属性匹配标点
+    // console.log(str1.match(/\p{P}+/gu)); // ["@"]
+
+    // 获取中文
+    // let str2 = `
+    //   哈哈: 010-12345678,
+    //   嘿嘿: 020-87654321
+    // `;
+    // console.log(str2.match(/\p{sc=Han}+/gu)); // ["哈哈", "嘿嘿"]
+
+    // 匹配特殊字符
+    let str = '𝒳𝒴';
+    console.log(str.match(/𝒳𝒴/u));
+  </script>
+</body>
+
+</html>

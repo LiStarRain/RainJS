@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .ame {
+      border: 1px solid #ddd;
+      background-color: purple;
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <ul>
+    <li>ame</li>
+    <li>rain</li>
+  </ul>
+
+  <script>
+    'use strict';
+    const ul = document.querySelector('ul');
+    ul.addEventListener('click', () => {
+      if (event.target.tagName === 'LI') {
+        event.target.classList.toggle('ame');
+      }
+    });
+  </script>
+</body>
+
+</html>

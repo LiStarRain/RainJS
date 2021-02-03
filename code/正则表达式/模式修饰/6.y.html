@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // g
+    // let str1 = 'ame666@rain';
+    // let reg = /a/g;
+    // console.log(reg.exec(str1));
+    // console.log(reg.lastIndex); // 1
+    // console.log(reg.exec(str1));
+    // console.log(reg.lastIndex); // 9
+    // console.log(reg.exec(str1)); // null
+    // console.log(reg.lastIndex); // 0\
+
+    // y
+    // let str2 = 'ame666@rain';
+    // let reg = /a/y;
+    // console.log(reg.exec(str2));
+    // console.log(reg.lastIndex); // 1
+    // console.log(reg.exec(str2)); // null
+    // console.log(reg.lastIndex); // 0
+
+    // 匹配qq
+    let str3 = `qq号：12345678,87655321,吃饭了，3212312`;
+    let reg = /(\d+),?/y;
+    reg.lastIndex = 4;
+    while (res = reg.exec(str3)) {
+      console.log(res[1]); // 12345678 87654321
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="test">ame</div>
+
+  <script>
+    // cloneNode
+    // const test = document.querySelector('div.test');
+    // const newTest = app.cloneNode(true);
+    // document.body.append(newTest);
+
+    // importNode
+    const test = document.querySelector('.test');
+    const newTest = document.importNode(test, true);
+    document.body.append(newTest);
+  </script>
+</body>
+
+</html>

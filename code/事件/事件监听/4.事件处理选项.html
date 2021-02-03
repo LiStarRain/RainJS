@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 只执行一次处理器 -->
+  <!-- <button id="app">click me</button> -->
+
+  <!-- 捕获/冒泡阶段调用 -->
+  <div id="app" style="background-color: red;">
+    <button id="btn">click me</button>
+  </div>
+
+  <script>
+    // 只执行一次处理器
+    // const app = document.querySelector('#app');
+    // app.addEventListener('click', function () {
+    //   console.log('哈哈');
+    // }, { once: true });
+
+    // 捕获阶段调用
+    // const app = document.querySelector('#app');
+    // const button = document.querySelector('#btn');
+    // app.addEventListener('click', function () {
+    //   console.log('div触发了点击事件');
+    // }, { capture: true });
+    // button.addEventListener('click', function () {
+    //   console.log('按钮触发了点击事件');
+    // }, { capture: true });
+    // 结果：div触发了点击事件 按钮触发了点击事件
+
+    // 冒泡阶段调用
+    const app = document.querySelector('#app');
+    const button = document.querySelector('#btn');
+    app.addEventListener('click', function () {
+      console.log('div触发了点击事件');
+    }, false);
+    button.addEventListener('click', function () {
+      console.log('按钮触发了点击事件');
+    }, { capture: false });
+    // 结果：按钮触发了点击事件 div触发了点击事件
+  </script>
+</body>
+
+</html>

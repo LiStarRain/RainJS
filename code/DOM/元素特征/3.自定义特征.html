@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <div class="ame" data-content="ame">rain</div> -->
+  <div class="ame" data-content="rain" data-title-color="red">ame</div>
+
+  <script>
+    // const div = document.querySelector('div');
+    // console.log(div.dataset); // DOMStringMap {content: "ame"}
+    // const content = div.dataset.content;
+    // console.log(content); // ame
+    // div.innerHTML = `<span style="color: red;">${content}</span>`;
+
+    // 驼峰命名法
+    // const div = document.querySelector('div');
+    // div.innerHTML = `<span style="color: ${div.dataset.titleColor}">${div.dataset.content}</span>`;
+
+    // dataset的改变也会也影响到页面中的元素
+    const div = document.querySelector('div');
+    div.addEventListener('click', function () {
+      this.dataset.titleColor = ['red', 'blue', 'yellow'][Math.floor(Math.random() * 3)];
+      this.style.color = this.dataset.titleColor;
+    });
+  </script>
+</body>
+
+</html>

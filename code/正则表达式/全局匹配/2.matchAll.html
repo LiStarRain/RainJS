@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // let str = 'ame';
+    // let reg = /[a-z]/ig;
+    // for (const value of str.matchAll(reg)) {
+    //   console.log(value);
+    // }
+
+    // 自定义 matchAll 方法
+    String.prototype.matchAll = function (reg) {
+      let res = this.match(reg);
+      if (res) {
+        let str = this.replace(res[0], '^'.repeat(res[0].length));
+        // 递归调用
+        let match = str.matchAll(reg) || [];
+        return [res, ...match];
+      }
+    };
+    let str = 'ame666rain';
+    console.log(str.matchAll(/(a)/i));
+  </script>
+</body>
+
+</html>

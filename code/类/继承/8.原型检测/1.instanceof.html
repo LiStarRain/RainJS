@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // function User() { }
+    // function Admin() { }
+    // Admin.prototype = Object.create(User.prototype, {
+    //   constructor: {
+    //     value: Admin,
+    //     enumerable: false
+    //   }
+    // });
+    // let admin1 = new Admin();
+    // console.log(admin1 instanceof Admin); // true
+    // console.log(admin1 instanceof User); // true
+    // console.log(admin1.__proto__ === Admin.prototype); // true
+    // console.log(admin1.__proto__.__proto__ === User.prototype); // true
+
+    // 递归检测原型
+    // function checkPrototype(obj, constructor) {
+    //   if (!obj.__proto__) return false;
+    //   if (obj.__proto__ === constructor.prototype) return true;
+    //   return checkPrototype(obj.__proto__, constructor);
+    // }
+    // console.log(checkPrototype([], Array)); // true
+    // console.log(checkPrototype([], Object)); // true
+
+    // class语法糖
+    class User { }
+    class Admin extends User { }
+    let admin = new Admin();
+    console.log(admin instanceof Admin); // true
+    console.log(admin instanceof User); // true
+  </script>
+</body>
+
+</html>

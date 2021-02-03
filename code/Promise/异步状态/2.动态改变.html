@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 后面的then是对p1状态的处理
+    // const p1 = new Promise((resolve, reject) => {
+    //   reject('失败了~');
+    // });
+    // const p2 = new Promise((resolve, reject) => {
+    //   resolve(p1);
+    // }).then(res => {
+    //   console.log('成功：' + res);
+    // }, error => {
+    //   console.log('失败：' + error);
+    // });
+    // 结果：失败：失败了
+
+    // p1 的状态将被改变为p2的状态
+    // const p1 = new Promise((resolve, reject) => {
+    //   // p2
+    //   resolve(new Promise((resolve, reject) => {
+    //     reject('失败');
+    //   }));
+    // }).then(res => {
+    //   console.log(res);
+    // }, error => {
+    //   console.log(error + '哈哈');
+    // });
+    // 结果：失败哈哈
+
+    // Promise对象作为 resolve函数的参数传递
+    const p1 = new Promise((resolve, reject) => {
+      setTimeout(() => {
+        resolve('成功');
+      }, 1000);
+    });
+    const p2 = new Promise((resolve, reject) => {
+      resolve(p1);
+    }).then(res => {
+      console.log(res); // 成功
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain">rain</div>
+  </div>
+
+  <script>
+    // 将app节点缓存下来
+    const app = document.querySelector('#app');
+    console.log(app.outerHTML);
+    app.outerHTML = `<h1>Ame</h1>`;
+  </script>
+</body>
+
+</html>

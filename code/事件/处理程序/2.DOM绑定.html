@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">click me</button>
+
+  <script>
+    const button = document.querySelector('#btn');
+    // 绑定到节点对象属性
+    // button.onclick = function () {
+    //   console.log('ame');
+    // };
+
+    // 使用元素节点的setAttribute()方法设置元素属性
+    // function show(...args) {
+    //   console.log('show');
+    //   console.log(args); // (3) [button#btn, MouseEvent, "ame"]
+    // }
+    // button.setAttribute('onclick', 'show(this,event,"ame")');
+
+    // 绑定多个事件处理程序
+    button.onclick = function () {
+      console.log('click one');
+    };
+    button.onclick = function () {
+      console.log('click two');
+    };
+    // 结果：click two
+  </script>
+</body>
+
+</html>

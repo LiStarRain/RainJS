@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain">
+      <!-- rain -->
+    </div>
+  </div>
+  <script>
+    const app = document.querySelector('#app');
+    console.log(app.nodeName); // DIV
+    console.log(document.childNodes[1].nodeName); // HTML
+    console.log(document.nodeName); // #document
+    console.log(document.firstChild.nodeName); // html
+    const rain = document.querySelector('.rain');
+    console.log(rain.childNodes[1].nodeName); // #comment
+    console.log(rain.attributes[0].nodeName); // class 
+  </script>
+</body>
+
+</html>

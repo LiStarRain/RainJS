@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let str = `
+      #1 js,200元 #
+      #2 php,130元 #
+      #6 css,233元 #
+      #3 vue,180元 #
+    `;
+    let lessons = str.match(/^\s*#\d+\s+.+\s+#$/gm);
+    lessons = lessons.map(value => {
+      value = value.replace(/\s*#\d+\s*/, '').replace(/\s+#/, '');
+      let [name, price] = value.split(',');
+      return { name, price };
+    });
+    console.log(lessons);
+  </script>
+</body>
+
+</html>

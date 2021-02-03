@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // fetch('ame.php').then(response => {
+    //   return response.json();
+    // }).then(res => {
+    //   console.log(res);
+    // });
+
+    // 结合async/await
+    async function query() {
+      const response = await fetch('1.php');
+      const res = await response.json();
+      console.log(res);
+    }
+  </script>
+</body>
+
+</html>

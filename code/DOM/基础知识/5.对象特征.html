@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1 id="ame" title="哈哈">ame</h1>
+  <script>
+    // id属性
+    const ame = document.querySelector('#ame');
+    console.log(ame.id); // ame
+
+    // title属性
+    console.log(ame.title); // 哈哈
+
+    // 合并属性
+    Object.assign(ame, {
+      color: 'blue',
+      change() {
+        this.textContent = 'rain';
+        this.style.color = this.color;
+      },
+      onclick() {
+        this.change();
+      }
+    });
+
+    // 更改样式属性
+    Object.assign(ame.style, {
+      color: 'red',
+      backgroundColor: 'yellow'
+    });
+  </script>
+</body>
+
+</html>

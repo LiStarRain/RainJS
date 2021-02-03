@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app"></div>
+
+  <script>
+    // 添加节点
+    // const app = document.querySelector('#app');
+    // const p = document.createElement('p');
+    // const text = document.createTextNode('我是一个文本节点');
+    // p.append(text);
+    // app.append(p);
+
+    // 结合Promise加载外部js文件
+    function js(file) {
+      return new Promise((resolve, reject) => {
+        const script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = file;
+        script.onload = resolve;
+        script.onerror = reject;
+        document.body.append(script);
+      });
+    }
+
+    // 加载外部css文件
+    function css(file) {
+      return new Promise((resolve, reject) => {
+        const link = document.createElement('link');
+        link.rel = 'stylesheet';
+        link.href = file;
+        link.onerror = reject;
+        link.onload = resolve;
+        document.head.append(link)
+      });
+    }
+  </script>
+</body>
+
+</html>

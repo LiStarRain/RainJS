@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #outerContainer {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+    }
+
+    #innerContainer {
+      width: 50px;
+      height: 50px;
+      background-color: blue;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 创建两个嵌套的元素 -->
+  <div id="outerContainer">
+    <div id="innerContainer"></div>
+  </div>
+
+  <script>
+    const outerContainer = document.querySelector('#outerContainer');
+    const innerContainer = document.querySelector('#innerContainer');
+    document.addEventListener('click', () => {
+      console.log('document click!');
+    });
+    // 在外层容器上注册单击事件
+    outerContainer.addEventListener('click', e => {
+      console.log('outerContainer click!');
+    }, true);
+    innerContainer.addEventListener('click', e => {
+      console.log('innerContainer click!');
+    }, false);
+    // 单击innerContainer结果：outerContainer click! innerContainer click! document click!
+  </script>
+</body>
+
+</html>

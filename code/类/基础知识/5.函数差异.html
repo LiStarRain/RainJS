@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // class 语法糖
+    // class User {
+    //   constructor(name) {
+    //     this.name = name;
+    //   }
+    //   show() {
+    //     console.log(this.name);
+    //   }
+    // }
+    // let user1 = new User('ame');
+    // for (const key in user1) {
+    //   console.log(key); // name 不会枚举show属性
+    // }
+    // console.log(Object.getOwnPropertyDescriptors(user1.__proto__));
+
+    // 函数定义
+    function Member(name) {
+      this.name = name;
+    }
+    Member.prototype.show = function () {
+      console.log(this.name);
+    };
+    const member = new Member('rain')
+    for (const key in member) {
+      console.log(key); // name show
+    }
+    // 自己设置
+    Object.defineProperty(Member.prototype, 'show', {
+      enumerable: false
+    });
+    for (const key in member) {
+      console.log(key); // name
+    }
+  </script>
+</body>
+
+</html>

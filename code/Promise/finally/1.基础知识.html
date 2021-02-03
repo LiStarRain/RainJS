@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // finally 中动作的执行与否与 Promise对象的状态无关
+    new Promise((resolve, reject) => {
+      reject('rejected');
+    }).then(msg => {
+      console.log(msg);
+    }).catch(err => {
+      console.log(err); // rejected
+    }).finally(() => {
+      console.log('哈哈'); // 哈哈
+    });
+  </script>
+</body>
+
+</html>

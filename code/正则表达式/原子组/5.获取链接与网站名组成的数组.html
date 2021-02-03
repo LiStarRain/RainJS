@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <a href="https://www.bilibili.com">bilibili</a>
+  <a href="https://www.ame.com">ame</a>
+  <a href="http://wasser.net.cn">rain</a>
+  <script>
+    let content = document.body.innerHTML;
+    const links = [];
+    let reg = /<a\s*.+?(?<link>https?:\/\/(\w+.)+(com|cn|org|cn)).*>(?<content>.*)<\/a>/ig;
+    for (const value of content.matchAll(reg)) {
+      links.push(value.groups);
+    }
+    console.log(links);
+  </script>
+</body>
+
+</html>

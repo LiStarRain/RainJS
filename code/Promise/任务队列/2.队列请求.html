@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    class User {
+      // 获取数据
+      ajax(user, url = 'http://test.com') {
+        url = `${url}/?name=${user}`;
+        return new Promise((resolve, reject) => {
+          const xhr = new XMLHttpRequest();
+          xhr.open('GET', url);
+          xhr.send();
+          xhr.onload = function () {
+            if (this.status === 200) {
+              resolve(JSON.parse(this.response));
+            } else {
+              reject(this.status);
+            }
+          }
+        });
+        xhr.onerror = function () {
+          reject(this.status);
+        };
+      }
+
+      // 启动
+      run(users) {
+        users.reduce((promise, user) => {
+          return promise.then(() => {
+            return this.ajax(user);
+          }).then((user) => {
+            this.view(user);
+          }).catch(error => {
+            console.log(error.message);
+          });
+        }, Promise.resolve());
+      }
+
+      // 渲染
+      render(user) {
+        return new Promise(resolve => {
+          let h1 = document.createElement('h1');
+          h1.innerHTML = user.name;
+          document.body.append(h1);
+          resolve();
+        });
+      }
+    }
+    new User().run(['ame', 'rain']);
+  </script>
+</body>
+
+</html>

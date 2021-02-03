@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 捕获错误
+    // new Promise((resolve, reject) => {
+    //   throw new Error('test');
+    // }).catch(error => {
+    //   console.log(error.message); // test
+    // });
+
+    // 可以理解为如下代码
+    // new Promise((resolve, reject) => {
+    //   try {
+    //     throw new Error('test');
+    //   } catch (error) {
+    //     reject(error);
+    //   }
+    // }).catch(error => {
+    //   console.log(error.message); // test
+    // });
+
+    // 使用系统错误处理
+    // new Promise((resolve, reject) => {
+    //   setTimeout(() => {
+    //     throw new Error('test');
+    //   });
+    // }).then(null, e => {
+    //   console.log(e);
+    // }).catch(error => {
+    //   console.log(error.message);
+    // });
+
+    // 在 then 方法中抛出了错误
+    // new Promise((resolve, reject) => {
+    //   resolve();
+    // }).then(() => {
+    //   ame();
+    // }).catch(error => {
+    //   console.log(error.message); // ame is not defined
+    // });
+
+    // 在 catch 方法中抛出了错误
+    new Promise((resolve, reject) => {
+      reject();
+    }).catch(() => {
+      ame();
+    }).then(null, error => {
+      console.log(error.message); // ame is not defined
+    });
+  </script>
+</body>
+
+</html>

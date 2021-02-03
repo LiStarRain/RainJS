@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // await把异步变同步
+    // async function test() {
+    //   let p1 = new Promise(resolve => {
+    //     setTimeout(() => {
+    //       resolve('hello');
+    //     }, 500);
+    //   });
+    //   let res = await p1;
+    //   console.log('等一下'); // 待res获得值后才会继续执行
+    //   console.log(res);
+    //   return res;
+    // }
+    // let test1 = test(); // hello
+    // console.log(test1); // Promise {<pending>}
+    // setTimeout(() => {
+    //   console.log(test1); // Promise {<fulfilled>: "hello"}
+    // }, 1000);
+
+    // 立即执行函数
+    // (async () => {
+    //   let p1 = Promise.resolve('success');
+    //   let res = await p1;
+    //   console.log(res); // success
+    // })();
+
+    // 设置定时器
+    function sleep(ms = 1000) {
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve();
+        }, ms);
+      });
+    }
+    async function run() {
+      for (const value of ['ame', 'rain']) {
+        await sleep();
+        console.log(value);
+      }
+    }
+    run();
+  </script>
+</body>
+
+</html>

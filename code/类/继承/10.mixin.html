@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    const Tool = {
+      max(key) {
+        return this.data.sort((a, b) => b[key] - a[key])[0];
+      }
+    };
+    class Lesson {
+      constructor(lessons) {
+        this.lessons = lessons;
+      }
+      get data() {
+        return this.lessons;
+      }
+    }
+    Object.assign(Lesson.prototype, Tool);
+    const data = [
+      { name: 'js', price: 111 },
+      { name: 'css', price: 101 },
+      { name: 'html', price: 25 }
+    ];
+    let lessons = new Lesson(data);
+    console.log(lessons.max('price')); // {name: "js", price: 111}
+  </script>
+</body>
+
+</html>

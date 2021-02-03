@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button>click me</button>
+  <script type="module">
+    // 基本用法
+    // let api = import('./test.js').then(module => {
+    //   console.log(module.VERSION); // 1.0
+    // }).catch(err => console.log(err));
+
+    // 单机后加载模块
+    document.querySelector('button').addEventListener('click', function () {
+      let api = import('./test.js').then(({ VERSION, show }) => {
+        console.log(VERSION); // 1.0
+        console.log(show()); // test module show function
+      }).catch(err => console.log(err));
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" name="username" />
+
+  <script>
+    const input = document.querySelector(`input[name="username"]`);
+    const reg = /^(?!.*ame.*)\w*$/i;
+    input.addEventListener('keyup', function () {
+      console.log(this.value.match(reg));
+      console.log(reg.test(this.value));
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 错误示范
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve('ame');
+    // });
+    // promise.then(res => {
+    //   res += '-rain';
+    //   console.log(res); // ame-rain
+    // });
+    // promise.then(res => {
+    //   res += '-rain';
+    //   console.log(res); // ame-rain
+    // });
+
+    // 链式调用
+    // new Promise((resolve, reject) => {
+    //   resolve('ame');
+    // }).then(res => {
+    //   res += '-rain';
+    //   console.log(res); // ame-rain
+    //   return res;
+    // }).then(res => {
+    //   res += '-lsr';
+    //   console.log(res); // ame-rain-lsr
+    // });
+
+    // 后一个then是对最新返回的Promise对象的处理
+    new Promise((resolve, reject) => {
+      resolve('第一个promise');
+    }).then(msg => {
+      console.log(msg);
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          reject('第二个promise');
+        }, 1000);
+      });
+    }).then(null, error => {
+      console.log(error);
+    });
+  </script>
+</body>
+
+</html>

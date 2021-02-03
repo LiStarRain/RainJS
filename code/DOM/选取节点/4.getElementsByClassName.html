@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="ame"></div>
+  <div class="rain ame"></div>
+  <div class="rain"></div>
+
+  <script>
+    const els = document.getElementsByClassName('ame');
+    console.log(els); // HTMLCollection(2) [div.ame, div.rain.ame]
+
+    // 通过某个元素节点调用
+    const body = document.body;
+    console.log(body.getElementsByClassName('rain')); // HTMLCollection(2) [div.rain.ame, div.rain]
+  </script>
+</body>
+
+</html>

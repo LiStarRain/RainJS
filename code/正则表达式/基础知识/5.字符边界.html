@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <input type="text" name="username" />
+
+  <script>
+    // const url = 'www.test.com';
+    // console.log(/^www/.test(url)); // true
+    // console.log(/.com$/.test(url)); // true
+
+    // 检测用户名
+    const username = document.querySelector('[name="username"]');
+    username.addEventListener('keyup', function () {
+      let res = this.value.match(/^[a-z]{3,6}$/i);
+      console.log(res);
+      console.log(res ? '正确' : '错误');
+    }); 
+  </script>
+</body>
+
+</html>

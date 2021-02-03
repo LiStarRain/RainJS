@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 调用父类原型的方法
+    // let user = {
+    //   name: 'ame',
+    //   show() {
+    //     return this.name;
+    //   }
+    // };
+    // let admin = {
+    //   __proto__: user,
+    //   name: 'admin',
+    //   show() {
+    //     return this.__proto__.show.call(this);
+    //   }
+    // }
+    // console.log(admin.show()); // admin
+
+    // 多层继承会引起原型的循环调用
+    // let common = {
+    //   name: 'common',
+    //   show() {
+    //     return this.name;
+    //   }
+    // };
+    // let user = {
+    //   __proto__: common,
+    //   name: 'user',
+    //   show() {
+    //     return this.__proto__.show.call(this);
+    //   }
+    // };
+    // let admin = {
+    //   __proto__: user,
+    //   name: 'user',
+    //   get() {
+    //     return this.__proto__.show.call(this);
+    //   }
+    // };
+    // console.log(admin.get()); // Error
+
+    // super 关键字解决该问题
+    // let common = {
+    //   show() {
+    //     return this.name;
+    //   }
+    // };
+    // let user = {
+    //   __proto__: common,
+    //   name: 'user',
+    //   show() {
+    //     return super.show();
+    //   }
+    // };
+    // let admin = {
+    //   __proto__: user,
+    //   name: 'admin',
+    //   get() {
+    //     return super.show();
+    //   }
+    // };
+    // console.log(admin.get()); // admin
+
+    // super 关键字只能在类或对象的方法中使用，而不能在函数中使用
+    let user = {
+      name: 'user',
+      show() {
+        return this.name;
+      }
+    };
+    let admin = {
+      __proto__: user,
+      name: 'admin',
+      get: function () {
+        return super.show();
+      }
+    };
+    console.log(admin.get()); // Error
+  </script>
+</body>
+
+</html>

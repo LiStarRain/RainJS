@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // const promise = new Promise((resolve, reject) => {
+    //   // resolve('success');
+    //   reject('失败');
+    // }).then(
+    //   value => {
+    //     console.log(`解决：${value}`);
+    //   },
+    //   reason => {
+    //     console.log(`拒绝：${reason}`);
+    //   }
+    // );
+
+    // 只关心成功状态
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve('success');
+    // }).then(msg => {
+    //   console.log(`成功：${msg}`);
+    // });
+
+    // 只关心失败状态
+    // const promise = new Promise((resolve, reject) => {
+    //   reject('rejected');
+    // }).then(null, error => {
+    //   console.log(`拒绝：${error}`);
+    // });
+
+    // 穿刺传递
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve('success');
+    // })
+    //   .then()
+    //   .then(msg => {
+    //     console.log(msg); // success
+    //   });
+
+    // onFulfilled 不是函数
+    // const promise = new Promise((resolve, reject) => {
+    //   resolve('success');
+    // });
+    // let p2 = promise.then();
+    // p2.then(null, null).then(msg => {
+    //   console.log(msg); // success
+    // });
+
+    // onRejected 不是函数
+    const promise = new Promise((resolve, reject) => {
+      reject('rejected');
+    });
+    let p2 = promise.then();
+    p2.then(null, error => {
+      console.log(error); // rejected
+    });
+  </script>
+</body>
+
+</html>

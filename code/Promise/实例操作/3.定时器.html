@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // setTimeout
+    // function timeout(delay) {
+    //   return new Promise((resolve, reject) => {
+    //     setTimeout(resolve, delay);
+    //   });
+    // }
+    // timeout(1000).then(() => {
+    //   console.log('1s');
+    //   return timeout(1000);
+    // }).then(() => {
+    //   console.log('2s');
+    //   return timeout(1000);
+    // }).then(() => {
+    //   console.log('3s');
+    // });
+
+    // setInterval
+    function interval(callback, delay = 1000) {
+      return new Promise(resolve => {
+        let timer = setInterval(() => {
+          callback(timer, resolve);
+        }, delay);
+      });
+    }
+    interval((timer, resolve) => {
+      resolve();
+      console.log(1);
+      clearInterval(timer);
+    }).then(() => {
+      interval((timer, resolve) => {
+        resolve();
+        console.log(2);
+        clearInterval(timer);
+      })
+    });
+  </script>
+</body>
+
+</html>

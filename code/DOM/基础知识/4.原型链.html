@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1 id="ame">ame</h1>
+  <input type="text" value="ame" />
+  <script>
+    // 获取原型链
+    // function prototype(el) {
+    //   console.log(el.__proto__);
+    //   el.__proto__ ? prototype(el.__proto__) : '';
+    // }
+    // const el = document.getElementById('ame');
+    // prototype(el);
+
+    // 添加内容截取方法 substr
+    const Util = {
+      // 是否为表单元素
+      isForm(node) {
+        return node instanceof HTMLInputElement;
+      },
+      // 获取原型链
+      prototype(node) {
+        const prototypes = [];
+        prototypes.push(node.__proto__);
+        prototypes.push(...(node.__proto__ ? this.prototype(node.__proto__) : []));
+        return prototypes;
+      }
+    }
+    // 添加原型方法
+    Node.prototype.substr = function (start, len) {
+      if (Util.isForm(this)) {
+        return this.value.substr(start, len);
+      } else {
+        return this.textContent.substr(start, len);
+      }
+    }
+    // 标签测试
+    console.log(document.querySelector('#ame').substr(0, 1)); // a
+    console.log(document.querySelector('input').substr(-2, 2)); // me
+  </script>
+</body>
+
+</html>

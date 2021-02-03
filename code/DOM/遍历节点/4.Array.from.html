@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div class="ame">ame</div>
+  <div class="rain">rain</div>
+
+  <script>
+    const nodes = document.getElementsByTagName('div');
+    let arr = Array.from(nodes, (node, index) => {
+      console.log(node, index);
+      return {
+        node, index
+      };
+    });
+    console.log(arr); // (2) [{…}, {…}]
+  </script>
+</body>
+
+</html>

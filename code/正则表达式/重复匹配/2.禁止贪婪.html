@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <main>
+    <span>ame</span>
+    <span>rain</span>
+    <span>LiStarRain</span>
+  </main>
+
+  <script>
+    // 简单例子
+    // let str = 'aaa';
+    // console.log(str.match(/a+/)[0]); // aaa
+    // console.log(str.match(/a+?/)[0]); // a
+    // console.log(str.match(/a{2,3}/)[0]); // aaa
+    // console.log(str.match(/a{2,3}?/)[0]); // aa
+    // console.log(str.match(/a{2,}?/)[0]); // aa
+
+    // 更换 span 标签
+    const main = document.querySelector('main');
+    const reg = /<span>([\s\S]+?)<\/span>/ig;
+    main.innerHTML = main.innerHTML.replace(reg, (value, p1) => {
+      console.log(p1);
+      return `<h4 style="color: red;">ame-${p1}</h4>`;
+    });
+  </script>
+</body>
+
+</html>

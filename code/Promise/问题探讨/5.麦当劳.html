@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // Promise
+    // const mcDonald = new Promise((resolve, reject) => {
+    //   console.log('麦当劳厨房已经开始备餐了');
+    //   resolve('我是麦当劳，您的餐已经做好了');
+    // });
+    // let ame = mcDonald.then(res => {
+    //   return new Promise((resolve, reject) => {
+    //     console.log(`收到麦当劳消息：${res}`);
+    //     setTimeout(() => {
+    //       resolve('虫宝，我吃了2s了，不烫，快吃吧');
+    //     }, 2000);
+    //   });
+    // });
+    // let kjy = ame.then(msg => {
+    //   return new Promise((resolve, reject) => {
+    //     console.log(`收到爸爸消息：${msg}`);
+    //     setTimeout(() => {
+    //       resolve('爷爷，我吃饱了，咱们走吧');
+    //     }, 2000);
+    //   });
+    // });
+    // let lxy = kjy.then(msg => {
+    //   console.log(`收到孙子消息：${msg}`);
+    // });
+
+    // 回调地狱
+    function notice(msg, then) {
+      then(msg);
+    }
+    function meal() {
+      notice('麦当劳开始做饭', msg => {
+        console.log(msg);
+        notice('我是麦当劳，您的餐已经准备好了', msg => {
+          console.log(`收到麦当劳消息：${msg}`);
+          setTimeout(() => {
+            notice('虫宝，我吃了2s，不烫，快吃吧', msg => {
+              console.log(`收到爸爸消息：${msg}`);
+              setTimeout(() => {
+                notice('爷爷，我和爸爸吃完饭了', msg => {
+                  console.log(`收到孙子消息：${msg}`);
+                });
+              }, 2000);
+            });
+          }, 2000);
+        });
+      });
+    }
+    meal();
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function load(file, resolve, reject) {
+      const script = document.createElement('script');
+      script.src = file;
+      script.onload = function () {
+        resolve(script);
+      };
+      script.onerror = function () {
+        reject(new Error('load fail'));
+      };
+      document.body.append(script);
+    }
+
+    // 加载单个文件
+    // load(
+    //   './3.js',
+    //   script => {
+    //     console.log(`${script.src}`);
+    //     test();
+    //   },
+    //   error => {
+    //     console.log(error);
+    //   }
+    // );
+
+    // 加载多个文件
+    load(
+      './3.2.js',
+      script => {
+        load(
+          './3.1.js',
+          script => {
+            test1();
+          },
+          error => {
+            console.log(error);
+          }
+        );
+      },
+      error => {
+        console.log(error);
+      }
+    );
+  </script>
+</body>
+
+</html>

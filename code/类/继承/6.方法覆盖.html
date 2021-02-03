@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // class User {
+    //   constructor(name) {
+    //     this.name = name;
+    //   }
+    //   show() {
+    //     return this.name;
+    //   }
+    // }
+    // class Admin extends User {
+    //   constructor(name) {
+    //     super(name);
+    //   }
+    //   show() {
+    //     return `姓名：${super.show()}`;
+    //   }
+    // }
+    // const admin = new Admin('ame');
+    // console.log(admin.show()); // 姓名：ame
+
+    class Controller {
+      getByKey(key) {
+        return this.data.filter(item => item.name.includes(key));
+      }
+    }
+    class Lesson extends Controller {
+      constructor(lessons) {
+        super();
+        this.data = lessons;
+      }
+      getByKey(key) {
+        return super.getByKey(key).map(item => item.name);
+      }
+    }
+    let data = [
+      { name: 'js', price: 111 },
+      { name: 'css', price: 101 },
+      { name: 'html', price: 25 }
+    ];
+    const lessons = new Lesson(data);
+    console.log(lessons.getByKey('s')); // ["js","css"]
+  </script>
+</body>
+
+</html>

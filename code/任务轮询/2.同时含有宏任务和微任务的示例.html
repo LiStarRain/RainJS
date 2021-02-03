@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="firstButton">first button</button>
+  <button id="secondButton">second button</button>
+  <script>
+    const firstButton = document.querySelector('#firstButton');
+    const secondButton = document.querySelector('#secondButton');
+    firstButton.addEventListener('click', function () {
+      Promise.resolve().then(() => {
+        console.log('promise');
+      });
+    });
+    secondButton.addEventListener('click', function () {
+      console.log('I am second button');
+    });
+  </script>
+</body>
+
+</html>

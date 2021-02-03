@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .ame {
+      height: 3000px;
+      background-color: #e34334;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="ame"></div>
+  <script>
+    const html = document.documentElement;
+
+    // scrollBy
+    // let timer = setInterval(() => {
+    //   html.scrollBy({ top: 30, behavior: "smooth" });
+    //   if (html.scrollTop + html.clientHeight >= 3000) {
+    //     clearInterval(timer);
+    //   }
+    // }, 100);
+
+    // scroll
+    // setTimeout(() => {
+    //   html.scroll({ top: 2000, behavior: 'smooth' });
+    // }, 1000);
+
+    // scrollIntoView
+    setTimeout(() => {
+      html.scrollIntoView({ block: 'end', behavior: 'smooth' });
+    }, 1000);
+  </script>
+</body>
+
+</html>

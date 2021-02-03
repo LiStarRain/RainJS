@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    h1 {
+      background-color: yellow;
+      font-size: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 style="color: red;">ame</h1>
+
+  <script>
+    // 通过style属性获取
+    const h1 = document.querySelector('h1');
+    // console.log(h1.style.color); // red
+    // console.log(h1.style.fontSize); // ''
+    // console.log(h1.style.backgroundColor); // ''
+
+    // 通过window.getComputedStyle(element)方法获取
+    let style = window.getComputedStyle(h1);
+    console.log(style); // CSSStyleDeclaration
+    console.log(style.color); // rgb(255, 0, 0)
+    console.log(style.fontSize); // 30px
+    console.log(style.backgroundColor); // rgb(255, 255, 0)
+  </script>
+</body>
+
+</html>

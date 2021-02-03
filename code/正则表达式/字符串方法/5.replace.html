@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 添加链接 -->
+  <!-- <p id="link">你吃不吃东西</p> -->
+
+  <!-- 补全链接 -->
+  <!-- <p id="links">
+    <a href="http://wasser.com">wasser</a>
+    <a href="http://www.rain.com">rain</a>
+    <a href="http://www.ame.com">ame</a>
+  </p> -->
+
+  <!-- 替换标题标签 -->
+  <!-- <div id="title">
+    <h1>ame</h1>
+    <h2>rain</h2>
+    <h3>哈哈</h3>
+  </div> -->
+
+  <!-- 删除页面中的标题元素 -->
+  <!-- <div id="deleteTitle">
+    <h1>ame</h1>
+    <h2>rain</h2>
+    <h3>哈哈</h3>
+  </div> -->
+
+  <!-- 回调函数添加链接 -->
+  <!-- <p id="content">ame不是rain</p> -->
+
+  <!-- 为所有标题加上样式 -->
+  <div class="content">
+    <h1>ame</h1>
+    <h2>rain</h2>
+    <h3>痞老板</h3>
+  </div>
+
+  <script>
+    // 基本用法
+    // let str = '2021/01/14';
+    // console.log(str.replace(/[-/]/g, '-')); // 2021-01-14
+
+    // 添加 = 
+    // let str = '=ame=';
+    // console.log(str.replace(/ame/g, "$`$`$&$'$'")); // ===ame===
+
+    // 连接电话号码
+    // let str = '(010)12345678,(020)87654321';
+    // 010-12345678,020-87654321
+    // console.log(str.replace(/\((\d{3,4})\)(\d{7,8})/g, "$1-$2"));
+
+    // 加上链接
+    // const el = document.querySelector('#link');
+    // el.innerHTML = el.innerHTML.replace(/吃/g, "<a href='javascript:;'>$&</a>");
+
+    // 补全链接
+    // const el = document.querySelector('#links');
+    // const reg = /(<a.*href=['"])(http)(:\/\/)(www\.)?(.*)/gi;
+    // el.innerHTML = el.innerHTML.replace(reg, (value, ...args) => {
+    //   args[1] += 's';
+    //   args[3] = args[3] || 'www.';
+    //   return args.splice(0, 5).join('');
+    // });
+
+    // 替换标题元素
+    // const el = document.querySelector('#title');
+    // const reg = /<(h[1-6])>([\s\S]*?)<\/\1>/g;
+    // const content = el.innerHTML.replace(reg, function (str, tag, content) {
+    //   return `<p>${content}</p>`;
+    // });
+    // el.innerHTML = content;
+
+    // 删除页面中的 h1~h6 元素
+    // const el = document.querySelector('#deleteTitle');
+    // const reg = /<(h[1-6])>[\s\S]*?<\/\1>/g;
+    // el.innerHTML = el.innerHTML.replace(reg, '');
+
+    // 回调函数添加链接
+    // const el = document.querySelector('#content');
+    // el.innerHTML = el.innerHTML.replace('ame', function (match, index, string) {
+    //   console.log(match); // ame
+    //   console.log(index); // 0
+    //   console.log(string); // ame不是rain
+    //   return `<a href="javascript:;">${match}</a>`;
+    // });
+
+    // 为所有标题加上样式
+    const el = document.querySelector('.content');
+    const reg = /<(h[1-6])>([\s\S]*?)<\/\1>/ig;
+    el.innerHTML = el.innerHTML.replace(reg, (search, p1, p2, index, string) => {
+      console.log(search);
+      console.log(p1);
+      console.log(p2);
+      console.log(index);
+      console.log(string);
+      return `<${p1} style="color: red;">${p2}</${p1}>`;
+    });
+  </script>
+</body>
+
+</html>

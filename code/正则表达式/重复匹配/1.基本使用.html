@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- <input type="text" name="username" /> -->
+  <input type="password" name="password">
+
+  <script>
+    // 重复匹配并不是贪婪匹配
+    // let str = 'ameeee';
+    // console.log(str.match(/ame+/i)[0]); // ameeee
+    // 结合原子组重复匹配
+    // console.log(str.match(/(ame)+/i)[0]); // ame
+
+    // 验证用户名
+    // const input = document.querySelector(`[name="username"]`);
+    // input.addEventListener('keyup', e => {
+    //   let value = e.target.value;
+    //   let state = /^[a-z][\w]{2,7}$/i.test(value);
+    //   console.log(state ? '正确' : '格式错误');
+    // });
+
+    // 验证密码
+    const input = document.querySelector(`[name="password"]`);
+    input.addEventListener('keyup', e => {
+      let value = e.target.value.trim();
+      let regs = [/^[a-zA-Z0-9]{5,10}$/, /[A-Z]/];
+      let state = regs.every(reg => reg.test(value));
+      console.log(state ? '正确' : "格式错误");
+    });
+  </script>
+</body>
+
+</html>

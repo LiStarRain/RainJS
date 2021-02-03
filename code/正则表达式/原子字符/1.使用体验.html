@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 匹配任意数字
+    // let str1 = 'ame666rain';
+    // console.log(str1.match(/\d/g)); // ["6", "6", "6"]
+
+    // // 匹配所有电话号码
+    // let str2 = `
+    //   ame: 010-12345678, rain: 020-87654321
+    // `;
+    // let res = str2.match(/\d{3}-\d{7,8}/g);
+    // console.log(res); // ["010-12345678", "020-87654321"]
+
+    // // 获取用户名
+    // let str3 = `
+    //   ame: 010-12345678, rain: 020-87654321
+    // `;
+    // let res = str3.match(/[^:\d-,\s]+/g); // ["ame", "rain"]
+    // console.log(res);
+
+    // 匹配任一非数字字符
+    // console.log(/\D/.test(2020)); // false
+
+    // 匹配数字字母下划线
+    // console.log('ame6@'.match(/\w/g)); // ["a", "m", "e", "6"]
+
+    // 匹配除了字母数字下划线外的任一字符
+    // console.log(/\W/.test('ame@')); // true
+
+    // // 匹配任意一个空白字符
+    // console.log(/\s/.test(' ')); // true
+    // console.log(/\s/.test('\n')); // true
+
+    // 匹配除了空白字符外的任意一个字符
+    // let test1 = 'ame@';
+    // console.log(test1.match(/\S/g)); // ["a", "m", "e", "@"]
+
+    // 匹配除了换行符外的任意一个字符
+    // let str = `
+    //   ame: 666
+    //   rain: 555
+    // `;
+    // console.log(str.match(/.+/)[0].trim()); // ame: 666
+
+    // 正则表达式中个空白符会作为字符处理
+    let tel = '010 - 12345678';
+    console.log(/\d+-\d+/.test(tel)); // false
+    console.log(/\d+ - \d+/.test(tel)); // true
+  </script>
+</body>
+
+</html>

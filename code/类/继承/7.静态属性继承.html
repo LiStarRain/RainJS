@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 原理
+    // function User() { }
+    // User.VERSION = '1.0';
+    // User.info = function () {
+    //   return 'User static method';
+    // };
+    // function Admin() { }
+    // // 函数是第一类对象
+    // // Admin.__proto__ = User;
+    // // 设置原型
+    // Object.setPrototypeOf(Admin, User);
+    // // 原型属性都是不可遍历的
+    // for (const key in User) {
+    //   Object.defineProperty(User, key, {
+    //     enumerable: false
+    //   });
+    // }
+    // console.log(Admin.VERSION); // 1.0
+    // console.log(Admin.info()); // User static method
+    // console.dir(Admin);
+
+    // class
+    class User {
+      static VERSION = '1.0';
+      static info() {
+        return 'User static info method';
+      }
+    }
+    class Admin extends User { }
+    console.log(Admin.VERSION) // 1.0
+    console.log(Admin.info()); // User static info method
+    console.dir(Admin);
+  </script>
+</body>
+
+</html>

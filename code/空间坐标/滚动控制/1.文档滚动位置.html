@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    div {
+      width: 3000px;
+      height: 3000px;
+      background-color: #e34334;
+    }
+  </style>
+</head>
+
+<body>
+  <div></div>
+
+  <script>
+    window.onscroll = function () {
+      // console.log(`X: ${document.documentElement.scrollLeft}`);
+      // console.log(`Y: ${document.documentElement.scrollTop}`);
+      // console.log('**********');
+
+      console.log(`X: ${window.pageXOffset}`);
+      console.log(`Y: ${window.pageYOffset}`);
+      console.log('**********');
+    }
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app" style="background-color: red;">
+    <button id="btn">click me</button>
+  </div>
+
+  <script>
+    const app = document.querySelector("#app");
+    const btn = app.querySelector('#btn');
+    app.addEventListener('click', function () {
+      console.log('app event');
+    }, { capture: true });
+    btn.addEventListener('click', function () {
+      console.log('button event');
+    }, { capture: true });
+    // 结果：app event  button event
+  </script>
+</body>
+
+</html>

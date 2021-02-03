@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <h1>ame</h1>
+  <h1>rain</h1>
+  <button id="add">添加元素</button>
+
+  <script>
+    // 静态特性
+    // const elements = document.querySelectorAll('h1');
+    // console.log(elements); // HTMLCollection(2) [h1, h1]
+    // const button = document.querySelector('#add');
+    // button.addEventListener('click', () => {
+    //   document.body.insertAdjacentHTML('afterbegin', `<h1>哈哈</h1>`);
+    //   console.log(elements); // 不会改变 HTMLCollection(2) [h1, h1]
+    // });
+
+    // 将动态节点列表转为静态节点列表
+    const nodes = document.getElementsByTagName('h1');
+    const clone = Array.prototype.slice.call(nodes, 0);
+    console.log(clone); // HTMLCollection(2) [h1, h1]
+    const button = document.querySelector('#add');
+    button.addEventListener('click', () => {
+      document.body.insertAdjacentHTML('afterbegin', `<h1>哈哈</h1>`);
+      console.log(clone); // 不会改变 HTMLCollection(2) [h1, h1]
+    });
+  </script>
+</body>
+
+</html>

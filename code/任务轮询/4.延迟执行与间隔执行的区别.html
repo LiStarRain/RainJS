@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    setTimeout(function repeatMe() {
+      // 注册延迟任务，每10ms重新执行自身
+      console.log('哈');
+      setTimeout(repeatMe, 10);
+    }, 10);
+    setInterval(() => {
+      // 注册周期任务，每10ms执行一次任务
+      console.log('嘿');
+    }, 10);
+  </script>
+</body>
+
+</html>

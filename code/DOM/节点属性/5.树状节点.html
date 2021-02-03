@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="app">
+    <div class="ame">ame</div>
+    <div class="rain">
+      <!-- rain -->
+    </div>
+  </div>
+  <script>
+    function element(node) {
+      if (node.nodeType != 1) return;
+      return Array.from(node.childNodes).filter(node => {
+        // 广度优先
+        return node.nodeType === 1;
+      }).map(node => {
+        return {
+          name: node.nodeName,
+          children: element(node)
+        }
+      });
+    }
+    const node = document.documentElement;
+    console.log(element(node));
+  </script>
+</body>
+
+</html>

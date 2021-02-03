@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <button id="btn">click me</button>
+
+  <script>
+    const button = document.querySelector('#btn');
+    function show() {
+      let count = 0;
+      return function () {
+        console.log(`我执行了${++count}次`);
+        if (count >= 3) button.removeEventListener('click', handleEvent);
+      };
+    }
+    const handleEvent = show();
+    button.addEventListener('click', handleEvent);
+  </script>
+</body>
+
+</html>

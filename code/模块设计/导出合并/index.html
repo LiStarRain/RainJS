@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script type="module">
+    import * as api from './index.js';
+    console.log(api);
+    console.log(api.ame.VERSION); // 1.0
+    console.log(api.ame.show()); // ame module show function
+    console.log(new api.rain('ame').show()); // ame
+  </script>
+</body>
+
+</html>

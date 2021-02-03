@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <!-- 加链接 -->
+  <!-- <p class="add-link">ame吃了大西瓜</p> -->
+
+  <!-- 用户名必须为5位 -->
+  <input type="text" name="username">
+
+  <script>
+    // const el = document.querySelector('p.add-link');
+    // const reg = /ame(?=吃)/ig;
+    // el.innerHTML = el.innerHTML.replace(reg, v => {
+    //   return `<a href="javascript:;">${v}</a>`;
+    // });
+
+    // 在价格后面加上 .00
+    // let lessons = `
+    //   炸洋芋,6元
+    //   饵块,4元
+    //   鸡排,3元
+    // `;
+    // const reg = /(\d+)(.00)?(?=元)/gi;
+    // lessons = lessons.replace(reg, (v, ...args) => {
+    //   // 没有就加上 .00
+    //   args[1] = args[1] || '.00';
+    //   return args.splice(0, 2).join('');
+    // });
+    // console.log(lessons);
+
+    // 用户名必须为5位
+    const el = document.querySelector('input[name="username"]');
+    el.addEventListener('keyup', function () {
+      let reg = /^(?=\w{5}$)/i;
+      // console.log(this.value.match(reg));
+      console.log(reg.test(this.value));
+    });
+  </script>
+</body>
+
+</html>

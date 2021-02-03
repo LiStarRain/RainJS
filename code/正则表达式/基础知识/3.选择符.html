@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    let tel = '010-12345678';
+    // 错误结果：只匹配 | 两侧任意字符
+    console.log(tel.match(/010|020-\d{7,8}/)[0]); // 010
+    // 正确结果：应把他放到原子组中
+    console.log(tel.match(/(010|020)-\d{7,8}/));
+
+    // 匹配字符串是否包含 ame 或者 rain
+    let str = 'ame666rain';
+    console.log(str.match(/ame|rain/g)); // ["ame","rain"]
+  </script>
+</body>
+
+</html>

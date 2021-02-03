@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script type="module">
+    // import Ame from './test.js';
+    // import { VERSION } from './test.js';
+    // import Ame, { VERSION } from './test.js';
+    // import { default as Ame, VERSION } from './test.js';
+    import * as api from './test.js';
+    console.log(new api.default('rain').show()); // rain
+    console.log(api.VERSION); // 1.0
+  </script>
+</body>
+
+</html>

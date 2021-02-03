@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      padding: 0;
+      margin: 0;
+    }
+
+    div {
+      width: 100px;
+      height: 100px;
+      background-color: red;
+      color: white;
+      text-align: center;
+      font-size: 1.1em;
+      line-height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <div>loading……</div>
+  <script>
+    function ajax(url) {
+      return new Promise((resolve, reject) => {
+        document.querySelector('div').style.display = 'block';
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', url);
+        // 交给XMLHttpRequest模块处理后推入宏任务队列
+        xhr.send();
+        xhr.onload = function () {
+          if (this.status === 200) {
+            // 延时1s好看效果
+            setTimeout(() => {
+              resolve(JSON.parse(this.response));
+            }, 1000);
+          } else {
+            setTimeout(() => {
+              // 延时1s好看效果
+              reject(this);
+            }, 1000);
+          }
+        };
+        xhr.onerror = function () {
+          reject(this);
+        }
+      });
+    }
+    ajax('http://test.com')
+      .then(msg => {
+        console.log(msg);
+      }).catch(error => {
+        console.log(error.message);
+      }).finally(() => {
+        document.querySelector('div').style.display = 'none';
+      });
+  </script>
+</body>
+
+</html>

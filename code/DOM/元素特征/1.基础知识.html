@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .ame {
+      color: red;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- <input type="number" value="88" /> -->
+  <h1 id="ame">ame</h1>
+  <a href="#ame">ame</a>
+
+  <script>
+    // 获得的属性值都是字符串类型的
+    // const input = document.querySelector('input');
+    // let value = input.getAttribute('value');
+    // console.log(typeof value); // string
+    // console.log(value * 1 + 12); // 100
+
+    // 操作、检测元素属性
+    // const h1 = document.querySelector('h1');
+    // h1.setAttribute('class', 'ame');
+    // h1.addEventListener('click', () => {
+    //   h1.removeAttribute('class');
+    //   console.log(h1.hasAttribute('class'));
+    // });
+
+    // 获取的属性值与标签中定义的一致
+    console.log(document.links[0].href); // 完整链接
+    console.log(document.links[0].getAttribute('href')); // #ame
+  </script>
+</body>
+
+</html>

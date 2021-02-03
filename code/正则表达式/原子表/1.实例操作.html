@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 匹配字母
+    // let str1 = 'ame666rain';
+    // console.log(/an/.test(str1)); // false
+    // console.log(/[an]/.test(str1)); // true
+
+    // 日期的匹配
+    // let date = '2021-01-13';
+    // console.log(date.match(/\d{4}([-\/])\d{2}\1\d{2}/)[0]); // 2021-01-13
+
+    // 获取 0-3 间的任意数字
+    // let num = '3';
+    // console.log(/[0-3]/.test(num)); // true
+
+    // 匹配 a-f 间的任意字符
+    // let letter = 'c';
+    // console.log(/[a-f]/.test(letter)); // true
+
+    // 原子表中的顺序为升序否则将报错
+    // console.log(/[3-0]/.test(num)); // Error
+
+    // 字母也要是升序否则将报错
+    // let str = 'b'
+    // console.log(/[f-a]/.test(str)); // Error
+
+    // 获取所有用户名
+    // let str = `
+    //   ame: 010-12345678,
+    //   rain: 020-87654321
+    // `;
+    // console.log(str.match(/[^:\d-\s,]+/g)); // ["ame", "rain"]
+
+    // 原子表中的转义
+    // let str = '(ame666rain)+';
+    // console.log(str.match(/[^().+]+/g)); // ["ame666rain"]
+    // 使用转义也没有问题
+    // console.log(str.match(/[^\(\)\.\+]+/g)); // ["ame666rain"]
+
+    // 匹配所有字符
+    let str = 'ame666rain';
+    const reg = /[\s\S]+/g;
+    console.log(str.match(reg)); // ["ame666rain"]
+  </script>
+</body>
+
+</html>

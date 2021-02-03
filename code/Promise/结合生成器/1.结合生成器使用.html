@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 化异步为同步
+    function async(generator) {
+      const iterator = generator();
+      function handle(iteratorResult) {
+        if (iteratorResult.done) return;
+        const iteratorValue = iteratorResult.value;
+        if (iteratorValue instanceof Promise) {
+          // 如果成功返回了Promise对象，则继续顺序发送请求
+          iteratorValue.then(res => handle(iterator.next(res))).catch(e => { iterator.throw(e) });
+        }
+      }
+      try {
+        handle(iterator.next());
+      } catch (error) {
+        iterator.throw(error)
+      }
+    }
+
+    function* test() {
+      try {
+        const ninjas = yield getJson('ninjias.json');
+        const missions = yield getJson(ninjias[0].missionsUrl);
+        const missiobDescriptionb = yield getJson(missions[0].detailsUrl);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    async(test);
+  </script>
+</body>
+
+</html>

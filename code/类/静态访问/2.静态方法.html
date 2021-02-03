@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    // 原生写法
+    // function User() {
+    //   this.show = function () {
+    //     console.log('这是实例对象的show方法');
+    //   }
+    // }
+    // User.show = function () {
+    //   console.log('这是User的静态方法');
+    // };
+    // const user1 = new User();
+    // user1.show(); // 这是实例对象的show方法
+    // User.show(); // 这是User的静态方法
+
+    // class 语法糖
+    // class User {
+    //   constructor(name) {
+    //     this.name = name;
+    //   }
+    //   static create(name) {
+    //     return new User(name);
+    //   }
+    // }
+    // const user = User.create('ame');
+    // console.log(user); // User {name: "ame"}
+
+    // 静态方法在课程类中的使用
+    const data = [{
+        name: 'js',
+        price: 100
+      },
+      {
+        name: 'mysql',
+        price: 222
+      },
+      {
+        name: 'vueJS',
+        price: 98
+      }
+    ];
+    class Lesson {
+      constructor(data) {
+        this.model = data;
+      }
+      get price() {
+        return this.model.price;
+      }
+      get name() {
+        return this.model.name;
+      }
+      // 批量生成对象
+      static createBatch(data) {
+        return data.map(item => {
+          return new Lesson(item);
+        });
+      }
+      // 最贵的课程
+      static maxPrice(collection) {
+        return collection.sort((a, b) => b.price - a.price)[0];
+      }
+    }
+    const lessons = Lesson.createBatch(data);
+    console.log(lessons);
+    console.log(Lesson.maxPrice(lessons).name); // mysql
+  </script>
+</body>
+
+</html>
