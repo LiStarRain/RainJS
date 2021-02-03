@@ -20122,6 +20122,79 @@ window.onresize = function () {
 | `input`           | `input/textarea/select`元素的`value`属性改变时会触发该事件   |
 | `submit`          | 表单提交事件                                                 |
 
+## 自定义事件
+
+使用`CustomEvent`构造函数我们可以创建自定义事件对象并且可以使用元素节点内置的`element.dispatchEvent()`方法向目标元素触发事件，创建自定义事件语法如下：
+
+```javascript
+event = new CustomEvent(typeName, customeEventInit);
+```
+
+参数说明：
+
+1. `typeName`参数代表自定义事件的名称，一个表示事件类型的字符串
+2. `customeEventInit`（可选）：一个事件配置对象，可以设置如下字段：
+   - `detail`：有关于事件的说明信息的对象
+   - `bubbles`：一个布尔值，表示事件能否冒泡（`chrome`中默认不冒泡）
+   - `cancelable`：一个布尔值，表示事件能否取消
+
+例如我们想要在页面发送`ajax`请求时显示一个旋转的风车，然后在请求结束时将其隐藏，以此作为处理请求的视觉反馈。如果我们将开始条件作为事件，名为`ajax-start`，结束为`ajax-complete`，在页面上为这些事件注册事件处理器，以此来实现我们想要的功能
+
+```html
+<style>
+  #whirlyThing {
+    display: none;
+  }
+</style>
+
+<body>
+  <button type="button" id="clickMe">start</button>
+  <img id="whirlyThing" src="./whirly-thing.gif" alt="loading...">
+
+  <script>
+    // 创建并派发事件
+    function triggerEvent(target, eventType, eventDetail) {
+      // 创建新事件
+      const event = new CustomEvent(eventType, {
+        // 为事件传入信息
+        detail: eventDetail
+      });
+      // 向目标元素触发事件
+      target.dispatchEvent(event);
+    }
+
+    // ajax请求，这里用延时操作模拟
+    function performAjaxOperation() {
+      let timer = null;
+      // 函数节流减少请求发送次数
+      return function () {
+        if (!timer) {
+          // 触发开始事件
+          triggerEvent(document, 'ajax-start', { url: 'my-url' });
+          timer = setTimeout(() => {
+            // 触发结束事件
+            triggerEvent(document, 'ajax-complete');
+          }, 3000);
+        }
+      }
+    }
+
+    const button = document.querySelector('#clickMe');
+    button.addEventListener('click', performAjaxOperation());
+
+    // 注册事件处理器
+    document.addEventListener('ajax-start', (e) => {
+      document.getElementById('whirlyThing').style.display = 'block';
+      e.detail.url === 'my-url' ? console.log('我们设置的事件信息') : console.log('事件信息错误');
+    });
+
+    document.addEventListener('ajax-complete', e => {
+      document.getElementById('whirlyThing').style.display = 'none';
+    });
+```
+
+![自定义事件](images/自定义事件.gif)
+
 # 网络请求
 
 ## 基础知识

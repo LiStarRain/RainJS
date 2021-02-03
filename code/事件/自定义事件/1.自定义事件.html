@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    #whirlyThing {
+      display: none;
+    }
+  </style>
+</head>
+
+<body>
+  <button type="button" id="clickMe">start</button>
+  <img id="whirlyThing" src="./whirly-thing.gif" alt="loading...">
+
+  <script>
+    // 创建并派发事件
+    function triggerEvent(target, eventType, eventDetail) {
+      // 创建新事件
+      const event = new CustomEvent(eventType, {
+        // 为事件传入信息
+        detail: eventDetail
+      });
+      // 向目标元素触发事件
+      target.dispatchEvent(event);
+    }
+
+    // ajax请求，这里用延时操作模拟
+    function performAjaxOperation() {
+      let timer = null;
+      // 函数节流减少请求发送次数
+      return function () {
+        if (!timer) {
+          // 触发开始事件
+          triggerEvent(document, 'ajax-start', { url: 'my-url' });
+          timer = setTimeout(function () {
+            // 触发结束事件
+            triggerEvent(document, 'ajax-complete');
+          }, 3000);
+        }
+      }
+    }
+
+    const button = document.querySelector('#clickMe');
+    button.addEventListener('click', performAjaxOperation());
+
+    // 注册事件处理器
+    document.addEventListener('ajax-start', (e) => {
+      document.getElementById('whirlyThing').style.display = 'block';
+      e.detail.url === 'my-url' ? console.log('我们设置的事件信息') : console.log('事件信息错误');
+    });
+
+    document.addEventListener('ajax-complete', e => {
+      document.getElementById('whirlyThing').style.display = 'none';
+    });
+  </script>
+</body>
+
+</html>
