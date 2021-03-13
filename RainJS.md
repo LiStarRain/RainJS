@@ -185,7 +185,7 @@ test();
 因为<code>a</code>已经赋值，所以<code>b</code>可以使用<code>a</code>变量，下面代码访问正常
 
 ```javascript
-function test(a = 3, b = b) {}
+function test(a = 3, b = a) {}
 test();
 ```
 
